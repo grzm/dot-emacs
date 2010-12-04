@@ -1,0 +1,12 @@
+# key: ctapt
+# --
+CREATE FUNCTION
+${1:function_name}()
+RETURNS SETOF TEXT
+LANGUAGE PLPGSQL AS $body$
+DECLARE
+BEGIN
+  $0
+  RETURN;
+END
+$body$;

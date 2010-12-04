@@ -1,0 +1,7 @@
+CREATE FUNCTION
+${1:function_name}(${2:parameter_list})
+RETURNS ${3:type}
+${STABLE}
+${STRICT} LANGUAGE ${sql} AS $body$
+$0
+$body$;

@@ -1,0 +1,6 @@
+CREATE TRIGGER ${1:trigger_name}
+AFTER INSERT ON ${2:table_name}
+FOR EACH ROW
+EXECUTE PROCEDURE ${3:function_name}();
+COMMENT ON TRIGGER $1 ON $2
+'$0';

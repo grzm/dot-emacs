@@ -1,0 +1,12 @@
+# key: cmybseq
+# --
+-- table-name: ${1:table-name}
+-- column-name: ${2:column-name}
+CREATE SEQUENCE $1_$2_seq;
+ALTER TABLE $1_$2_seq OWNER TO postgres;
+GRANT ALL ON SEQUENCE $1_$2_seq TO GROUP dba;
+GRANT SELECT, USAGE, UPDATE ON SEQUENCE $1_$2_seq TO GROUP developer;
+GRANT SELECT, USAGE, UPDATE ON SEQUENCE $1_$2_seq TO GROUP maintenance;
+GRANT SELECT, USAGE, UPDATE ON SEQUENCE $1_$2_seq TO GROUP webserver;
+ALTER SEQUENCE $1_$2_seq OWNED BY $1.$2;
+ALTER TABLE $1 ALTER $2 SET DEFAULT nextval('$1_$2_seq');

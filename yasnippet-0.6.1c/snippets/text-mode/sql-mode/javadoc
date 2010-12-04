@@ -1,0 +1,16 @@
+# key: jd
+# --
+/** 
+ *
+ * $0
+ *
+ * @author     Michael Glaesemann <michael.glaesemann@myyearbook.com>
+ * @since      `(format-time-string "%Y-%m-%d" (current-time))`
+ *
+ * @private
+ *
+ * @param[IN]   
+ * @param[OUT]  
+ * @return
+ *
+ */

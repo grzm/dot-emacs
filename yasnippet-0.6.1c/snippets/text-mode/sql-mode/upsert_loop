@@ -1,0 +1,19 @@
+# key: upsl
+# --
+  << upsert >>
+  LOOP
+    UPDATE ${1:table_name}
+      SET $0
+      WHERE ;
+     v_did_upsert := FOUND;
+     EXIT upsert WHEN v_did_upsert;
+    BEGIN
+      INSERT INTO $1
+        (${2:insert_columns})
+        VALUES ($2);
+       v_did_upsert := FOUND;
+       EXIT upsert WHEN v_did_upsert;
+    EXCEPTION WHEN unique_violation THEN
+      -- Loop to update
+    END;
+  END LOOP;

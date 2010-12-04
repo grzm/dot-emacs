@@ -1,0 +1,6 @@
+CREATE TABLE ${1:table_name}
+(
+  $0
+);
+COMMENT ON TABLE $1 IS
+'';

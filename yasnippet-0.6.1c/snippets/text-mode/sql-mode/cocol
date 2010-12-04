@@ -1,0 +1,2 @@
+COMMENT ON COLUMN ${1:table_qualified_column_name} IS
+'$0';
