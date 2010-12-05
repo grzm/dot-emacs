@@ -12,8 +12,8 @@
 
 (require 'cl) ;; besides being Lisp, provides labels and defvar, used below
 
-(defvar emacs-root (expand-file-name "~/emacs/")
-  "Libraries kept in ~/emacs, my home emacs directory.")
+(defvar emacs-root (expand-file-name "~/.emacs.d/")
+  "Libraries kept in ~/.emacs.d, my home emacs directory.")
 
 (labels ((add-path (p)
            (add-to-list 'load-path
