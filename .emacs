@@ -1,5 +1,16 @@
 (prefer-coding-system 'utf-8) ; Use UTF-8
 
+;;; Install package.el if it's not already installed.
+(if (not (file-exists-p (expand-file-name "~/.emacs.d/elpa/package.el")))
+    (let ((buffer (url-retrieve-synchronously
+                   "http://tromey.com/elpa/package-install.el")))
+      (save-excursion
+        (set-buffer buffer)
+        (goto-char (point-min))
+        (re-search-forward "^$" nil 'move)
+        (eval-region (point) (point-max))
+        (kill-buffer (current-buffer)))))
+
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
 ;;; interfacing with ELPA, the package archive.
