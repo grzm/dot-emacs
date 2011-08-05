@@ -1,5 +1,7 @@
 (require 'browse-kill-ring)
 (require 'column-marker)
+(require 'clean-up-buffer)
+
 (add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 (when aquamacs-p

@@ -43,6 +43,8 @@
 (load-library "grzm-config") ; personal keybindings and functions
 (load-library "paredit-config")
 (load-library "php-config")
+(load-library "phpunit-config")
 (load-library "yasnippet-config")
 (load-library "markdown-config")
 (load-library "clojure-config")
+(load-library "autopair-config")
