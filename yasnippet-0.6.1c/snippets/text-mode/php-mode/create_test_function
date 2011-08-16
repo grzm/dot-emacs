@@ -1,0 +1,9 @@
+# key: ctf
+# --
+  /**
+   * @test
+   */
+  public function ${1:test_name}()
+  {
+    $0
+  }

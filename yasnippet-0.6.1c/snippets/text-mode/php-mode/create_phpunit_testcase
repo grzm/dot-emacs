@@ -1,0 +1,16 @@
+# key: ctc
+# --
+<?php
+
+class ${1:classname} extends PHPUnit_Framework_TestCase
+{
+
+  /**
+   * @test
+   */
+  public function ${2:test_name}()
+  {
+    $0
+  }
+
+}

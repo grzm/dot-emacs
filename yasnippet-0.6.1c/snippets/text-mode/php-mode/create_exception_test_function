@@ -1,0 +1,10 @@
+# key: cetf
+# --
+  /**
+   * @test
+   * @expectedException ${1:exception}
+   */
+  public function ${2:test_name}()
+  {
+    $0
+  }

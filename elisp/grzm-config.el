@@ -77,3 +77,4 @@
   (sql-mode))
 
 (put 'downcase-region 'disabled nil)
+(setq recentf-max-menu-items 30)
