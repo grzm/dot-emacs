@@ -21,6 +21,12 @@
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
+;;; 2010-12-05
+;;; I should rewrite this command to install ELPA and my ELPA
+;;; dependencies if it's not already installed.
+;;; What would be involved with this?
+
+
 (require 'cl) ;; besides being Lisp, provides labels and defvar, used below
 
 (defvar emacs-root (expand-file-name "~/.emacs.d/")
@@ -31,6 +37,8 @@
                         (concat emacs-root p))))
 	(add-path "elisp") ;; personal elisp code and config
 	(add-path "misc") ;; directory for single-file elisp
+        (add-path "org/lisp")
+        (add-path "org/contrib/lisp")
 	)
 (defvar elisp-root (concat emacs-root "elisp/")
   "Directory which contains my Emacs customizations")
@@ -48,3 +56,5 @@
 (load-library "markdown-config")
 (load-library "clojure-config")
 (load-library "autopair-config")
+(load-library "erlang-config")
+(load-library "org-config")
