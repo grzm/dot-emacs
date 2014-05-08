@@ -4,6 +4,9 @@
 
 (add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
+;; hide toolbar
+(tool-bar-mode -1)
+
 (when aquamacs-p
     (set-frame-width (selected-frame) 120)
     (set-frame-height (selected-frame) 49)
@@ -58,6 +61,10 @@
 ;; save a script file (starting with "#!").
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
+
+
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
 
 (defvar gtd-file "~/Documents/lists/gtd.org")
 (defun gtd ()
