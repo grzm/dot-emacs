@@ -4,9 +4,17 @@ CREATE FUNCTION
 ${1:function_name}()
 RETURNS SETOF TEXT
 LANGUAGE PLPGSQL AS $body$
+/**
+ *
+ * @author     Michael Glaesemann <michael.glaesemann@meetme.com>
+ * @since      `(format-time-string "%Y-%m-%d" (current-time))`
+ *
+ * @private
+ *
+ */
 DECLARE
 BEGIN
   $0
-  RETURN;
+  RETURN NEXT ok(FALSE);
 END
 $body$;

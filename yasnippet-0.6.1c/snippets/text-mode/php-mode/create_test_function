@@ -1,7 +1,11 @@
 # key: ctf
 # --
   /**
+   *
+   *
    * @test
+   * @covers
+   * @return void
    */
   public function ${1:test_name}()
   {

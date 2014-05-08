@@ -3,5 +3,13 @@ ${1:function_name}(${2:parameter_list})
 RETURNS ${3:type}
 ${STABLE}
 ${STRICT} LANGUAGE ${sql} AS $body$
+/**
+ *
+ * @author     Michael Glaesemann <michael.glaesemann@meetme.com>
+ * @since      `(format-time-string "%Y-%m-%d" (current-time))`
+ *
+ * @private
+ *
+ */
 $0
 $body$;
