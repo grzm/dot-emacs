@@ -6,7 +6,7 @@
                     (c-set-offset 'substatement-open 0))))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 
-(add-hook 'php-mode-hook '(lambda() (autopair-mode 1)))
+;;(add-hook 'php-mode-hook '(lambda() (autopair-mode 1)))
 ;;(require 'flymake)
 ;;(add-hook 'php-mode-hook '(lambda() (flymake-mode 1)))
 
