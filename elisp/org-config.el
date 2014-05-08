@@ -1,3 +1,6 @@
+(require 'org-remember)
+(require 'remember)
+(require 'htmlize)
 (org-remember-insinuate)
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-myb-todo "~/Documents/myb/da-todo/grzm.org")
@@ -10,4 +13,10 @@
          "* TODO %^{Brief description} %^g\n  %i\n Added %U")
         ;;("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?\nEntered on %U\n  %i\n  %a")
 ))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((clojure . t)
+   (sql . t)
+   (js . t)
+   (ruby . t)))
 
