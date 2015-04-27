@@ -1,4 +1,4 @@
-(require 'js-comint)
+;;(require 'js-comint)
 (custom-set-variables '(js2-basic-offset 2)
                       '(js2-bounce-indent-p 2))
 (setq inferior-js-program-command "/opt/local/bin/node")

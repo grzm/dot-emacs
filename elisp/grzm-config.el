@@ -4,17 +4,13 @@
 
 (add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 ;; hide toolbar
 (tool-bar-mode -1)
 
-(when aquamacs-p
-    (set-frame-width (selected-frame) 120)
-    (set-frame-height (selected-frame) 49)
-    ;; hide tool bar
-    (tool-bar-mode -1))
-
 ;; Increase the number of recent items saved.
-;; Aquamacs default is 25
 (setq recentf-max-menu-items 50)
 
 

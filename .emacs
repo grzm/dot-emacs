@@ -30,12 +30,6 @@
 (defvar elisp-root (concat emacs-root "elisp/")
   "Directory which contains my Emacs customizations")
 
-(defvar aquamacs-p (boundp 'aquamacs-version))
-;(if aquamacs-p
-;  (setq custom-file (concat elisp-root "customizations-aquamacs.el"))
-;  (setq custom-file (concat elisp-root "customizations.el")))
-;(load custom-file)
-
 (load-library "grzm-config") ; personal keybindings and functions
 (load-library "paredit-config")
 (load-library "php-config")
