@@ -1,8 +1,8 @@
 (require 'browse-kill-ring)
-(require 'column-marker)
 (require 'clean-up-buffer)
 
-(add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
+;; column-marker (or, more likely, font-lock) interferes with magit highlighting
+;;(add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -13,12 +13,16 @@
 ;; Increase the number of recent items saved.
 (setq recentf-max-menu-items 50)
 
+;; always display column number
+(setq column-number-mode t)
 
 (setq-default indent-tabs-mode nil) ;; insert multiple spaces instead of tabs
+
 ;; Use C-x C-m as a shortcut for M-x: Let's save our small fingers!
 ;; Hint from Steve Yegge: http://steve.yegge.googlepages.com/effective-emacs
 ;; Invoice M-x without the alt key
 (global-set-key "\C-x\C-m" 'execute-extended-command)
+
 ;; Steve also recommends adding C-c C-m to allow for slop in hitting C-x
 ;; Don't know if I'll need that now, but it might be nice in the future
 ;;(global-set-key "\C-x\C-m" 'execute-extended-command)
@@ -58,7 +62,6 @@
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 
-
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 
@@ -68,16 +71,9 @@
   (interactive)
   (find-file gtd-file))
 
-(defvar myb-file "~/Documents/myb/myb.txt")
-(defun myb ()
-  "Visit myYearbook notes file"
-  (interactive)
-  (find-file myb-file))
-
-(defun sq()
-  "Switch to sql-mode"
-  (interactive)
-  (sql-mode))
-
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
 (setq recentf-max-menu-items 30)
+
+(setq vc-follow-symlinks t)

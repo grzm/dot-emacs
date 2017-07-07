@@ -6,7 +6,7 @@ RETURNS SETOF TEXT
 LANGUAGE PLPGSQL AS $body$
 /**
  *
- * @author     Michael Glaesemann <michael.glaesemann@meetme.com>
+ * @author     Michael Glaesemann <grzm@seespotcode.net>
  * @since      `(format-time-string "%Y-%m-%d" (current-time))`
  *
  * @private

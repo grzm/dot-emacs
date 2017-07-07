@@ -10,3 +10,5 @@
          (lambda (output)
            (replace-regexp-in-string "\033\\[[0-9]+[GK]" "" output)))))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-hook 'js2-mode-hook
+          (lambda () (electric-indent-local-mode -1)))

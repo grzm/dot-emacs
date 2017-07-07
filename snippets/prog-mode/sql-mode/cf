@@ -5,7 +5,7 @@ ${STABLE}
 ${STRICT} LANGUAGE ${sql} AS $body$
 /**
  *
- * @author     Michael Glaesemann <michael.glaesemann@meetme.com>
+ * @author     Michael Glaesemann <grzm@seespotcode.net>
  * @since      `(format-time-string "%Y-%m-%d" (current-time))`
  *
  * @private
