@@ -49,7 +49,7 @@
   :defer t
   :config
   (setq clojure-indent-style :align-arguments
-        clojure-align-forms-automatically)
+        clojure-align-forms-automatically t)
   (defun my-clojure-mode-hook ()
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
