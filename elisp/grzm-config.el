@@ -1,6 +1,18 @@
 (require 'browse-kill-ring)
 (require 'clean-up-buffer)
 
+(setq inhibit-startup-screen t)
+
+(when (window-system)
+  
+  (setq initial-frame-alist
+        `((top . 0)
+          (left . 600)
+          (height . 60)
+          (width . 100)))
+
+  (setq default-frame-alist (copy-alist initial-frame-alist)))
+
 ;; column-marker (or, more likely, font-lock) interferes with magit highlighting
 ;;(add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
@@ -9,9 +21,6 @@
 
 ;; hide toolbar
 (tool-bar-mode -1)
-
-;; Increase the number of recent items saved.
-(setq recentf-max-menu-items 50)
 
 ;; always display column number
 (setq column-number-mode t)
@@ -73,7 +82,5 @@
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
-
-(setq recentf-max-menu-items 30)
 
 (setq vc-follow-symlinks t)

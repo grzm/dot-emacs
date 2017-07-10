@@ -1,77 +1,170 @@
-(prefer-coding-system 'utf-8) ; Use UTF-8
+(defconst emacs-start-time (current-time))
 
-;;; 2010-12-05
-;;; I should rewrite this command to install ELPA and my ELPA
-;;; dependencies if it's not already installed.
-;;; What would be involved with this?
+(unless noninteractive
+  (message "Loading %s..." load-file-name))
+
+(setq
+ package-enable-at-startup nil
+ package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (defvar use-package-verbose t)
+  (require 'use-package))
 
 (require 'cl) ;; besides being Lisp, provides labels and defvar, used below
 
-(defvar emacs-root (expand-file-name "~/.emacs.d/")
-  "Libraries kept in ~/.emacs.d, my home emacs directory.")
+(eval-and-compile
+  (mapc #'(lambda (path)
+            (add-to-list 'load-path
+                         (expand-file-name path user-emacs-directory)))
+        '("elisp" "misc" "packages" "elpa")))
 
-(require 'package)
-;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(prefer-coding-system 'utf-8)
 
-;;(setq package-enable-at-startup nil)
-;;(setq package-load-list '(magit))
-(package-initialize)
-
-(labels ((add-path (p)
-           (add-to-list 'load-path
-                        (concat emacs-root p))))
-	(add-path "elisp") ;; personal elisp code and config
-	(add-path "misc") ;; directory for single-file elisp
-        (add-path "packages")
-        (add-path "elpa")
-        (add-path "org/lisp")
-        (add-path "org/contrib/lisp"))
-
-(defvar elisp-root (concat emacs-root "elisp/")
-  "Directory which contains my Emacs customizations")
+(defsubst hook-into-modes (func &rest modes)
+  (dolist (mode-hook modes) (add-hook mode-hook func)))
 
 (load-library "grzm-config") ; personal keybindings and functions
 
-(load-library "autopair-config")
-(load-library "cider-config")
-(load-library "clojure-config")
+(use-package autopair :defer t)
+
+(use-package cider
+  :defer t
+  :config
+  (setq cider-prompt-save-file-on-load nil
+        cider-eval-result-prefix ";; => "
+        cider-font-lock-dynamically '(macro core function var)
+        cider-boot-parameters "cider repl -s wait"
+        cider-repl-pop-to-buffer-on-connect 'display-only
+        cider-cljs-repl "(do (require 'cljs.repl.node) (cemerick.piggieback/cljs-repl (cljs.repl.node/repl-env)))"))
+
+;;(load-library "clojure-config")
+(use-package clojure-mode
+  :defer t
+  :config
+  (setq clojure-indent-style :align-arguments
+        clojure-align-forms-automatically)
+  (defun my-clojure-mode-hook ()
+    (paredit-mode +1)
+    (put-clojure-indent 'defui '(1 nil nil (1)))
+    (rainbow-delimiters-mode))
+  (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
+
+(load-library "emacs-lisp-mode-config")
 (load-library "js-config")
-(load-library "magit-config")
-(load-library "markdown-config")
+
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
+(use-package markdown-mode
+  :mode (("\\`README\\.markdown\\'" . gfm-mode)
+         ("\\`README\\.md\\'" . gfm-mode)
+         ("\\`CHANGELOG\\.md\\'" . gfm-mode)
+         ("\\`CHANGELOG\\.markdown\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"))
+
 (load-library "org-config")
-(load-library "paredit-config")
-(load-library "php-config")
+
+(use-package paredit-mode
+  :defer t
+  :config
+  (defun check-region-parens ()
+    "Check if parentheses in the region are balanced. Signals a
+scan-error if not."
+    (interactive)
+    (save-restriction
+      (save-excursion
+        (let ((deactivate-mark nil))
+          (condition-case c
+              (progn
+                (narrow-to-region (region-beginning) (region-end))
+                (goto-char (point-min))
+                (while (/= 0 (- (point)
+                                (forward-list))))
+                t)
+            (scan-error (signal 'scan-error '("Region parentheses not balanced")))))))))
+
+;; (load-library "php-config")
+(use-package php-mode
+  :disabled t
+  :mode ("\\.inc\\'" . php-mode)
+  :bind (:map php-mode-map
+              ("M-S-<up>"  . flymake-goto-prev-error)
+              ("M-S-<down>" . flymake-goto-next-error)
+              ("<return>" . newline-and-indent))
+  :config
+  (add-hook 'php-mode-hook
+          '(lambda ()
+             (progn (c-set-style "bsd")
+                    (setq c-basic-offset 2)
+                    (c-set-offset 'case-label '+)
+                    (c-set-offset 'substatement-open 0)))))
+
+
 (load-library "pollen-config")
-(load-library "recentf-config")
-(load-library "ruby-config")
 (load-library "server-config")
 (load-library "show-paren-config")
-(load-library "solarized-config")
-(load-library "typo-config")
+
+
+(use-package recentf
+  :defer 10
+  :bind ("C-x C-r" . recentf-open-files)
+  :config
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 50))
+
+
+(use-package ruby-mode
+  :mode (("\\.rake\'" . ruby-mode)
+         ("Rakefile\'" . ruby-mode)
+         ("rakefile\'" . ruby-mode)
+         ("\\.gemspec'" . ruby-mode)))
+
+
+(use-package solarized
+  :defer t
+  :config
+  (setq solarized-distinct-fringe-background t
+        solarized-high-contrast-mode-line t))
+
+
+(use-package typo-mode
+  :config
+  (setq-default typo-language "English")
+  (defun enable-typo-mode ()
+    (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
+           (typo-mode 1))))
+  (add-hook 'markdown-mode-hook 'enable-typo-mode))
 (load-library "yasnippet-config")
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (solarized-light)))
- '(custom-safe-themes
-   (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
- '(js2-basic-offset 2)
- '(js2-bounce-indent-p 2)
- '(package-selected-packages
-   (quote
-    (column-marker cider magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;;; Customize
+
+(setq custom-file (expand-file-name "settings.el" user-emacs-directory))
+(load custom-file)
+
 (load-library "auto-save-config")
+
+;;; report initialization file loading
+
+(when window-system
+  (let ((elapsed (float-time (time-subtract (current-time)
+                                            emacs-start-time))))
+    (message "Loading %s...done (%.3fs)" load-file-name elapsed))
+
+  (add-hook 'after-init-hook
+            `(lambda ()
+               (let ((elapsed (float-time (time-subtract (current-time)
+                                                         emacs-start-time))))
+                 (message "Loading %s...done (%.3fs) [after-init]"
+                          ,load-file-name elapsed )))
+            t))
