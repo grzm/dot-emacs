@@ -120,7 +120,8 @@ scan-error if not."
   :bind ("C-x C-r" . recentf-open-files)
   :config
   (recentf-mode 1)
-  (setq recentf-max-menu-items 50))
+  (setq recentf-max-menu-items 50
+        recentf-max-saved-items 100))
 
 
 (use-package ruby-mode
