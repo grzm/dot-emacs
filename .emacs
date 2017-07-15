@@ -44,6 +44,9 @@
         cider-repl-pop-to-buffer-on-connect 'display-only
         cider-cljs-repl "(do (require 'cljs.repl.node) (cemerick.piggieback/cljs-repl (cljs.repl.node/repl-env)))"))
 
+(use-package clj-refactor
+  :defer t)
+
 ;;(load-library "clojure-config")
 (use-package clojure-mode
   :defer t
@@ -53,11 +56,20 @@
   (defun my-clojure-mode-hook ()
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
-    (rainbow-delimiters-mode))
+    (rainbow-delimiters-mode)
+    ;; (clj-refactor-mode 1)
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 
 (load-library "emacs-lisp-mode-config")
-(load-library "js-config")
+;;(load-library "js-config")
+
+(use-package ido
+  :demand t
+  :config
+  (setq ido-enable-flex-matching t
+        ido-create-new-buffer 'always)
+  (ido-mode 1))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
