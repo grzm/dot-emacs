@@ -82,9 +82,17 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :config
-  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"))
+  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"
+        markdown-css-paths '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
+        markdown-fontify-code-blocks-natively t))
 
-(load-library "org-config")
+(use-package markdown-preview-mode
+  :defer t
+  :config
+  (setq markdown-preview-stylesheets '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
+                                       "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
+
+;;(load-library "org-config")
 
 (use-package paredit-mode
   :defer t
