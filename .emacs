@@ -62,6 +62,10 @@
 
 (load-library "emacs-lisp-mode-config")
 
+(use-package inf-clojure
+  :defer t
+  :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
+
 (use-package ido
   :demand t
   :config
