@@ -47,7 +47,6 @@
 (use-package clj-refactor
   :defer t)
 
-;;(load-library "clojure-config")
 (use-package clojure-mode
   :defer t
   :config
@@ -62,7 +61,6 @@
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 
 (load-library "emacs-lisp-mode-config")
-;;(load-library "js-config")
 
 (use-package ido
   :demand t
