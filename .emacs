@@ -149,6 +149,9 @@ scan-error if not."
          ("\\.gemspec'" . ruby-mode)))
 
 
+(use-package shell-script-mode
+  :interpreter ("bash" . shell-script-mode))
+
 (use-package solarized
   :defer t
   :config
