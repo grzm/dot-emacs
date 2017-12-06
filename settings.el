@@ -3,6 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes
    (quote
