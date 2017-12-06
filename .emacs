@@ -38,7 +38,7 @@
   :defer t
   :config
   (setq cider-prompt-save-file-on-load nil
-        cider-eval-result-prefix ";; => "
+        cider-eval-result-prefix " ;; => "
         cider-font-lock-dynamically '(macro core function var)
         cider-boot-parameters "cider repl -s wait"
         cider-repl-pop-to-buffer-on-connect 'display-only
