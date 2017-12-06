@@ -81,14 +81,18 @@
          ("\\.markdown\\'" . markdown-mode))
   :config
   (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"
-        markdown-css-paths '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
+
+        markdown-css-paths
+        '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
+
         markdown-fontify-code-blocks-natively t))
 
 (use-package markdown-preview-mode
   :defer t
   :config
-  (setq markdown-preview-stylesheets '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
-                                       "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
+  (setq markdown-preview-stylesheets
+        '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
+          "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
 
 ;;(load-library "org-config")
 
@@ -121,11 +125,11 @@ scan-error if not."
               ("<return>" . newline-and-indent))
   :config
   (add-hook 'php-mode-hook
-          '(lambda ()
-             (progn (c-set-style "bsd")
-                    (setq c-basic-offset 2)
-                    (c-set-offset 'case-label '+)
-                    (c-set-offset 'substatement-open 0)))))
+            '(lambda ()
+               (progn (c-set-style "bsd")
+                      (setq c-basic-offset 2)
+                      (c-set-offset 'case-label '+)
+                      (c-set-offset 'substatement-open 0)))))
 
 
 (load-library "pollen-config")
