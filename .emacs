@@ -177,15 +177,24 @@ scan-error if not."
   (setq solarized-distinct-fringe-background t
         solarized-high-contrast-mode-line t))
 
-
-(use-package typo-mode
+(use-package typo
+  :defer t
   :config
-  (setq-default typo-language "English")
-  (defun enable-typo-mode ()
-    (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
-           (typo-mode 1))))
-  (add-hook 'markdown-mode-hook 'enable-typo-mode))
-(load-library "yasnippet-config")
+  (progn
+    (setq-default typo-language "English")
+    (defun enable-typo-mode ()
+      (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
+             (typo-mode 1))))
+    (add-hook 'markdown-mode-hook 'enable-typo-mode)))
+
+(use-package yasnippet
+  :defer t
+  :diminish yas-minor-mode
+  :config
+  (setq yasindent-line 'fixed))
+
+
+;; (load-library "yasnippet-config")
 
 
 ;;; Customize
