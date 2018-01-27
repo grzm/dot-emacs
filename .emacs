@@ -99,6 +99,7 @@
         markdown-fontify-code-blocks-natively t))
 
 (use-package markdown-preview-mode
+  :after solarized-theme
   :defer t
   :config
   (setq markdown-preview-stylesheets
@@ -167,8 +168,9 @@ scan-error if not."
 (use-package shell-script-mode
   :interpreter ("bash" . shell-script-mode))
 
-(use-package solarized
-  :defer t
+(use-package solarized-theme
+  :ensure t
+  :if window-system
   :config
   (setq solarized-distinct-fringe-background t
         solarized-high-contrast-mode-line t))
