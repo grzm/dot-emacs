@@ -108,8 +108,10 @@
 
 ;;(load-library "org-config")
 
-(use-package paredit-mode
-  :defer t
+(use-package paredit
+  :diminish
+  :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
+  :ensure t
   :config
   (defun check-region-parens ()
     "Check if parentheses in the region are balanced. Signals a
