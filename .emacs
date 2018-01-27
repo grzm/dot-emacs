@@ -5,7 +5,8 @@
 
 (setq
  package-enable-at-startup nil
- package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")))
+ package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+                    ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -60,6 +61,12 @@
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 
 (load-library "emacs-lisp-mode-config")
+
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package inf-clojure
   :defer t

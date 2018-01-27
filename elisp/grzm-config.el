@@ -16,8 +16,8 @@
 ;; column-marker (or, more likely, font-lock) interferes with magit highlighting
 ;;(add-hook 'font-lock-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
 
 ;; hide toolbar
 (tool-bar-mode -1)
