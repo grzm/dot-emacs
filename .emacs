@@ -40,12 +40,11 @@
   (setq cider-prompt-save-file-on-load nil
         cider-eval-result-prefix " ;; => "
         cider-font-lock-dynamically '(macro core function var)
-        cider-boot-parameters "cider repl -s wait"
-        cider-repl-pop-to-buffer-on-connect 'display-only
-        cider-cljs-repl "(do (require 'cljs.repl.node) (cemerick.piggieback/cljs-repl (cljs.repl.node/repl-env)))"))
+        cider-repl-pop-to-buffer-on-connect 'display-only))
 
 (use-package clj-refactor
-  :defer t)
+  :defer t
+  :bind ("/" . cljr-slash))
 
 (use-package clojure-mode
   :defer t
