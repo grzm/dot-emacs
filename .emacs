@@ -84,6 +84,7 @@
   :bind ("C-x g" . magit-status))
 
 (use-package markdown-mode
+  :ensure t
   :mode (("\\`README\\.markdown\\'" . gfm-mode)
          ("\\`README\\.md\\'" . gfm-mode)
          ("\\`CHANGELOG\\.md\\'" . gfm-mode)
