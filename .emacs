@@ -109,7 +109,6 @@
 ;;(load-library "org-config")
 
 (use-package paredit
-  :diminish
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
   :ensure t
   :config
@@ -189,7 +188,6 @@ scan-error if not."
 
 (use-package yasnippet
   :defer t
-  :diminish yas-minor-mode
   :config
   (setq yasindent-line 'fixed))
 
