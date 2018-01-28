@@ -45,9 +45,12 @@
 
 (use-package clj-refactor
   :defer t
-  :bind ("/" . cljr-slash))
+  :ensure t
+  ;; :bind ("/" . cljr-slash)
+  )
 
 (use-package clojure-mode
+  :ensure t
   :defer t
   :config
   (setq clojure-indent-style :align-arguments
@@ -56,7 +59,7 @@
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
     (rainbow-delimiters-mode)
-    ;; (clj-refactor-mode 1)
+    (clj-refactor-mode 1)
     (cljr-add-keybindings-with-prefix "C-c C-m"))
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 
@@ -150,6 +153,10 @@ scan-error if not."
 (load-library "server-config")
 (load-library "show-paren-config")
 
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package recentf
   :defer 10
