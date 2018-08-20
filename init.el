@@ -120,6 +120,12 @@
 
 ;;(load-library "org-config")
 
+(use-package org-clubhouse
+  :quelpa (org-clubhouse
+           :fetcher github
+           :repo "urbint/org-clubhouse")
+  :defer t)
+
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
   :ensure t
@@ -156,6 +162,12 @@ scan-error if not."
                       (c-set-offset 'case-label '+)
                       (c-set-offset 'substatement-open 0)))))
 
+
+(use-package quelpa
+  :ensure t)
+
+(use-package quelpa-use-package
+  :ensure t)
 
 (load-library "pollen-config")
 (load-library "server-config")
