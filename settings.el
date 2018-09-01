@@ -14,7 +14,7 @@
  '(magit-diff-refine-hunk (quote all))
  '(package-selected-packages
    (quote
-    (org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
+    (dash-functional cider dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
  '(safe-local-variable-values
    (quote
     ((cider-boot-parameters . "deps -A:test repl -s -H :: wait")))))
@@ -23,4 +23,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-level-1 ((t (:inherit variable-pitch :foreground "#cb4b16"))))
+ '(org-level-2 ((t (:inherit variable-pitch :foreground "#859900"))))
+ '(org-level-3 ((t (:inherit variable-pitch :foreground "#268bd2"))))
+ '(org-level-4 ((t (:inherit variable-pitch :foreground "#b58900")))))

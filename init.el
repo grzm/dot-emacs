@@ -41,7 +41,8 @@
   (setq cider-prompt-save-file-on-load nil
         cider-eval-result-prefix " ;; => "
         cider-font-lock-dynamically '(macro core function var)
-        cider-repl-pop-to-buffer-on-connect 'display-only))
+        cider-repl-pop-to-buffer-on-connect 'display-only
+        cider-boot-parameters "cider repl -w wait"))
 
 (use-package clj-refactor
   :defer t
@@ -118,13 +119,16 @@
         '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
           "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
 
-;;(load-library "org-config")
+(load-library "org-config")
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (use-package org-clubhouse
-  :quelpa (org-clubhouse
-           :fetcher github
-           :repo "urbint/org-clubhouse")
-  :defer t)
+  :after quelpa-use-package
+  :ensure t)
 
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
@@ -162,14 +166,12 @@ scan-error if not."
                       (c-set-offset 'case-label '+)
                       (c-set-offset 'substatement-open 0)))))
 
-
-(use-package quelpa
-  :ensure t)
-
 (use-package quelpa-use-package
+  :after quelpa
   :ensure t)
 
 (load-library "pollen-config")
+(load-library "postgres-dev")
 (load-library "server-config")
 (load-library "show-paren-config")
 
