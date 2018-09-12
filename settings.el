@@ -3,6 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auth-sources
+   (quote
+    ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc" macos-keychain-internet macos-keychain-internet)))
  '(cljr-assume-language-context (quote clj))
  '(cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
  '(custom-enabled-themes (quote (solarized-light)))
