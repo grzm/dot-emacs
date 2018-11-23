@@ -166,6 +166,12 @@ scan-error if not."
                       (c-set-offset 'case-label '+)
                       (c-set-offset 'substatement-open 0)))))
 
+(use-package projectile
+  :ensure t
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map))
+  :config (projectile-mode +1))
+
 (use-package quelpa-use-package
   :after quelpa
   :ensure t)
