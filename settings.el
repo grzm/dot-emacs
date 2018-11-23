@@ -15,12 +15,48 @@
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p 2)
  '(magit-diff-refine-hunk (quote all))
+ '(org-agenda-custom-commands
+   (quote
+    (("n" "Agenda and all TODOs"
+      ((agenda "" nil)
+       (alltodo "" nil))
+      nil)
+     ("" "questions for marcel" tags-todo "@marcel" nil))))
+ '(org-agenda-files
+   (quote
+    ("~/Documents/gtd/gtd.org" "~/Documents/gtd/inbox.org" "~/client-work/hims/todo.org")))
+ '(org-capture-templates
+   (quote
+    (("t" "Todo [inbox]" entry
+      (file+headline "~/Documents/gtd/inbox.org" "Inbox")
+      "* TODO %i%?")
+     ("d" "Todo [dept24c]" entry
+      (file "~/Documents/dept24c/todo.org")
+      "* TODO %i%?")
+     ("h" "Todo [hims]" entry
+      (file+headline "~/client-work/hims/todo.org" "Inbox")
+      "* TODO %i%?"))))
+ '(org-default-notes-file "~/Documents/gtd/inbox.org")
+ '(org-duration-format (quote h:mm))
+ '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(org-startup-indented t)
+ '(org-tag-alist
+   (quote
+    (("@marcel" . 109)
+     ("q" . 113)
+     ("automower" . 97)
+     ("postgresql" . 112)
+     ("emacs" . 101))))
+ '(org-todo-keywords
+   (quote
+    ((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "APPT(a)" "WAITING(w)" "SOMEDAY(p)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)"))))
  '(package-selected-packages
    (quote
-    (csv-mode dash-functional cider dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
+    (clojure-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional cider dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
  '(safe-local-variable-values
    (quote
-    ((cider-boot-parameters . "deps -A:test repl -s -H :: wait")))))
+    ((cider-clojure-cli-global-options . "-A:dev")
+     (cider-boot-parameters . "deps -A:test repl -s -H :: wait")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

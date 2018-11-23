@@ -33,3 +33,8 @@
                         :inherit nil)))
 
 (add-hook 'org-mode-hook 'grzm/org-mode-hook)
+
+(define-key global-map "\C-cc" 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(setq org-ellipsis "↩")
+(setq org-refile-use-outline-path t)
