@@ -38,3 +38,20 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (setq org-ellipsis "↩")
 (setq org-refile-use-outline-path t)
+
+
+(defun org-todo-checkbox (&optional pos)
+  (let ((todo (org-entry-get (or pos (point)) "TODO" t)))
+    (cond
+     ((string= todo "TODO") "[ ]")
+     ((string= todo "DONE")  "[X]")
+     (t "[/]"))))
+
+(defun org-d24c-category (&optional pos)
+  (let ((category (org-entry-get (or pos (point)) "CATEGORY" t)))
+    (if (and category (not (string= category "")))
+        (format "[%s]" category)
+      "")))
+
+(defun org-d24c-prefix (&optional pos)
+  (format "%s %s" (org-todo-checkbox pos) (org-d24c-category pos)))
