@@ -60,8 +60,10 @@
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
     (rainbow-delimiters-mode)
-    (clj-refactor-mode 1)
-    (cljr-add-keybindings-with-prefix "C-c C-m"))
+    (inf-clojure-minor-mode)
+    ;; (clj-refactor-mode 1)
+    ;; (cljr-add-keybindings-with-prefix "C-c C-m")
+    )
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 
 (load-library "emacs-lisp-mode-config")
