@@ -11,34 +11,51 @@
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
+    ("d91ef4e714f05fff2070da7ca452980999f5361209e679ee988e3c432df24347" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p 2)
  '(magit-diff-refine-hunk (quote all))
  '(org-agenda-custom-commands
    (quote
-    (("n" "Agenda and all TODOs"
+    (("d" "D24C Task view" agenda ""
+      ((org-agenda-overriding-header "")
+       (org-agenda-start-on-weekday nil)
+       (org-agenda-start-day "-3d")
+       (org-agenda-prefix-format "  - %(org-d24c-prefix)")
+       (org-agenda-span
+        (quote 10))
+       (org-agenda-sorting-strategy
+        (quote
+         (priority-down category-up tag-down)))
+       (org-agenda-show-all-dates nil)
+       (org-agenda-todo-keyword-format ""))
+      ("~/work/dept24c/work.txt"))
+     ("n" "Agenda and all TODOs"
       ((agenda "" nil)
        (alltodo "" nil))
-      nil)
-     ("" "questions for marcel" tags-todo "@marcel" nil))))
+      nil))))
  '(org-agenda-files
    (quote
-    ("~/Documents/gtd/gtd.org" "~/Documents/gtd/inbox.org" "~/client-work/hims/todo.org")))
+    ("~/Documents/gtd/inbox.org" "~/work/dept24c/work.org" "~/work/dept24c/bestcompany/work.org" "~/work/dept24c/vslr/work.org")))
+ '(org-agenda-show-all-dates t)
  '(org-capture-templates
    (quote
     (("t" "Todo [inbox]" entry
       (file+headline "~/Documents/gtd/inbox.org" "Inbox")
       "* TODO %i%?")
      ("d" "Todo [dept24c]" entry
-      (file "~/Documents/dept24c/todo.org")
+      (file "~/work/dept24c/work.org")
       "* TODO %i%?")
-     ("h" "Todo [hims]" entry
-      (file+headline "~/client-work/hims/todo.org" "Inbox")
-      "* TODO %i%?"))))
+     ("b" "TODO [D24C/BC]" entry
+      (file+headline "~/work/dept24c/bestcompany/work.org" "BC")
+      "* TODO %i%?" :prepend t)
+     ("v" "TODO [D24C/VSLR]" entry
+      (file+headline "~/work/dept24c/vslr/work.org" "VSLR")
+      "* TODO %i%?" :prepend t))))
  '(org-default-notes-file "~/Documents/gtd/inbox.org")
  '(org-duration-format (quote h:mm))
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(org-startup-folded nil)
  '(org-startup-indented t)
  '(org-tag-alist
    (quote
@@ -50,9 +67,10 @@
  '(org-todo-keywords
    (quote
     ((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "APPT(a)" "WAITING(w)" "SOMEDAY(p)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)"))))
+ '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (clojure-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional cider dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
+    (cider org-trello polymode go-mode ox-reveal magit org-projectile org-re-reveal transient dockerfile-mode docker-compose-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode column-marker autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
  '(safe-local-variable-values
    (quote
     ((cider-clojure-cli-global-options . "-A:dev -J-Dlogback.configurationFile=logback-dev.xml")
