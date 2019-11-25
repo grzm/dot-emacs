@@ -73,11 +73,11 @@
   (exec-path-from-shell-initialize))
 
 
-(use-package harvest
-  :ensure t
-  :config
-  (add-hook 'org-clock-in-hook 'harvest)
-  (add-hook 'org-clock-out-hook 'harvest-clock-out))
+;; (use-package harvest
+;;   :ensure t
+;;   :config
+;;   (add-hook 'org-clock-in-hook 'harvest)
+;;   (add-hook 'org-clock-out-hook 'harvest-clock-out))
 
 
 (use-package inf-clojure
