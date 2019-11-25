@@ -55,7 +55,19 @@
     (clojure-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional cider dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode clj-refactor column-marker magit autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
  '(safe-local-variable-values
    (quote
-    ((cider-clojure-cli-global-options . "-A:dev")
+    ((cider-clojure-cli-global-options . "-A:dev -J-Dlogback.configurationFile=logback-dev.xml")
+     (cider-clojure-cli-global-options . "-A:dev:backfiller:nucleate:deploy -J-Dlogback.configurationFile=logback-dev.xml")
+     (eval define-clojure-indent
+           (metrics/log-time
+            (quote defun)))
+     (eval define-clojure-indent
+           (perseverance/retriable
+            (quote defun)))
+     (cider-clojure-cli-global-options . "-A:dev:nucleate:deploy")
+     (cider-boot-parameters . "deps -A test -A bench -A repl javac repl -s -H :: wait")
+     (cider-boot-parameters . "deps -A listener -A repl local repl -s -H :: wait")
+     (cider-clojure-cli-global-options . "-A:dev:rebl")
+     (cider-clojure-cli-global-options . "-A:dev")
      (cider-boot-parameters . "deps -A:test repl -s -H :: wait")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
