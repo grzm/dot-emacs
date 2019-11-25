@@ -63,12 +63,12 @@
 
 ;;; documentation files
 
-(add-hook 'sgml-mode-hook
-          (defun postgresql-sgml-mode-hook ()
-             (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-               (setq fill-column 78)
-               (setq indent-tabs-mode nil)
-               (setq sgml-basic-offset 1))))
+;; (add-hook 'sgml-mode-hook
+;;           (defun postgresql-sgml-mode-hook ()
+;;              (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+;;                (setq fill-column 78)
+;;                (setq indent-tabs-mode nil)
+;;                (setq sgml-basic-offset 1))))
 
 
 ;;; Makefiles
