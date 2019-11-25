@@ -126,9 +126,10 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package org-clubhouse
-  :after quelpa-use-package
-  :ensure t)
+;; (use-package org-clubhouse
+;;   :after quelpa-use-package
+;;   :ensure t)
+
 
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
