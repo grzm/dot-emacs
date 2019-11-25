@@ -130,6 +130,10 @@
 ;;   :after quelpa-use-package
 ;;   :ensure t)
 
+(use-package org-re-reveal
+  :defer t
+  :config
+  (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
 
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
