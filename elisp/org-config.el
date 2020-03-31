@@ -55,3 +55,5 @@
 
 (defun org-d24c-prefix (&optional pos)
   (format "%s %s" (org-todo-checkbox pos) (org-d24c-category pos)))
+
+(setq org-support-shift-select t)
