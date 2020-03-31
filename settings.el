@@ -34,27 +34,9 @@
       ((agenda "" nil)
        (alltodo "" nil))
       nil))))
- '(org-agenda-files
-   (quote
-    ("~/Documents/gtd/inbox.org" "~/work/dept24c/work.org" "~/work/dept24c/bestcompany/work.org" "~/work/dept24c/vslr/work.org")))
  '(org-agenda-show-all-dates t)
- '(org-capture-templates
-   (quote
-    (("t" "Todo [inbox]" entry
-      (file+headline "~/Documents/gtd/inbox.org" "Inbox")
-      "* TODO %i%?")
-     ("d" "Todo [dept24c]" entry
-      (file "~/work/dept24c/work.org")
-      "* TODO %i%?")
-     ("b" "TODO [D24C/BC]" entry
-      (file+headline "~/work/dept24c/bestcompany/work.org" "BC")
-      "* TODO %i%?" :prepend t)
-     ("v" "TODO [D24C/VSLR]" entry
-      (file+headline "~/work/dept24c/vslr/work.org" "VSLR")
-      "* TODO %i%?" :prepend t))))
  '(org-default-notes-file "~/Documents/gtd/inbox.org")
  '(org-duration-format (quote h:mm))
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(org-startup-folded nil)
  '(org-startup-indented t)
  '(org-tag-alist
@@ -70,7 +52,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (org cider org-trello polymode go-mode ox-reveal magit org-projectile org-re-reveal transient dockerfile-mode docker-compose-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode column-marker autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
+    (org excorporate f cider org-trello polymode go-mode ox-reveal magit org-projectile org-re-reveal transient dockerfile-mode docker-compose-mode sesman yaml-mode ripgrep projectile-ripgrep goto-last-change csv-mode dash-functional dot-mode org-bullets org-clubhouse quelpa-use-package projectile harvest timesheet let-alist inf-clojure markdown-mode markdown-preview-mode column-marker autopair solarized-theme which-key use-package typopunct typo sass-mode rainbow-delimiters php-mode graphviz-dot-mode gh-md clojure-mode-extra-font-locking)))
  '(safe-local-variable-values
    (quote
     ((cider-clojure-cli-global-options . "-A:dev -J-Dlogback.configurationFile=logback-dev.xml")

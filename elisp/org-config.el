@@ -1,3 +1,16 @@
+;; when using Emacs installed via elpa, need to install it without loading init.el
+;; to prevent a messed up installation. See
+;; https://orgmode.org/manual/Installation.html
+;; Important: You need to do this in a session where no ‘.org’ file has been visited, i.e., where no Org built-in function have been loaded. Otherwise autoload Org functions will mess up the installation.
+;; For emacsformacosx:
+;; ~/Applications/Emacs.app/Contents/MacOS/Emacs --no-init-file
+;; Then do the normal installation via package
+
+;; All of this is motivated to resolve the following error which appears when runnign org-refile:
+;; org-copy-subtree: Invalid function: org-preserve-local-variables
+
+;; Caused by org-preserve-local-variables not being defined
+
 (defun grzm/org-mode-hook ()
   "Stop the org-level headers from increasing in height relative to the other text."
   (dolist (face '(org-level-1
