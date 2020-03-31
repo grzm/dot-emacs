@@ -19,6 +19,7 @@
 
 (setq org-refile-use-outline-path t)
 
+(setq org-log-done 'time)
 
 (defun org-todo-checkbox (&optional pos)
   (let ((todo (org-entry-get (or pos (point)) "TODO" t)))
