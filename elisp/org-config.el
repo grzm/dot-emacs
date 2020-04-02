@@ -31,6 +31,7 @@
 (setq org-ellipsis "↩")
 
 (setq org-refile-use-outline-path t)
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (setq org-log-done 'time)
 
