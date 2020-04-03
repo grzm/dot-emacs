@@ -1,3 +1,7 @@
+* Personal-machine-specific configuration
+
+** Org mode
+
 #+begin_src emacs-lisp
   (setq org-agenda-files
         (quote ("~/Documents/gtd/inbox.org"
