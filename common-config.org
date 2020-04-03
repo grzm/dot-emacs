@@ -197,13 +197,6 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
   (load-library "emacs-lisp-mode-config")
 #+end_src
 
-
-#+begin_src emacs-lisp
-(use-package excorporate
-  :ensure t)
-#+end_src
-
-
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
     :if (memq window-system '(mac ns))
