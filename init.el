@@ -11,9 +11,9 @@
 
 (setq viasat-emacs-directory "~/.emacs.viasat.d/")
 
-(let ((grzm-org (expand-file-name "grzm.org" user-emacs-directory))
-      (viasat-org (expand-file-name "viasat.org" viasat-emacs-directory)))
-  (org-babel-load-file (if (file-exists-p viasat-org) viasat-org grzm-org)))
+(let ((grzm-dot-org (expand-file-name "grzm.org" user-emacs-directory))
+      (viasat-dot-org (expand-file-name "README.org" viasat-emacs-directory)))
+  (org-babel-load-file (if (file-exists-p viasat-dot-org) viasat-dot-org grzm-dot-org)))
 
 (when window-system
   (let ((elapsed (float-time (time-subtract (current-time)
