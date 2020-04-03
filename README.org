@@ -1,12 +1,30 @@
-#+TITLE: Michael Glaesemann's Emacs configuration
+#+TITLE: grzm's Emacs configuration
 #+OPTIONS: toc:4 h:4
+
+This is my dot-emacs. There are many like it, but this one
+is mine. My dot-emacs is my best friend. It is my life. I must master
+it as I master my life. My dot-emacs, without me, is useless. Without
+my dot-emacs, I am useless.
+
+* Requirements
+
+The configuration requires =use-package=.
+
+I generally use this configuration with [[https://emacsformacosx.com][Emacs for Mac OS X]].
+
+
+* Initialization
+
+=init.el= is loaded first, which, among other things, tangles and loads this file, which contains the majority of my Emacs configuration.
+
+* The configuration
 
 Besides being Lisp, =cl= provides =labels= and =defvar=, used
 below. Wrapped gently in =eval-when-compile= to silence
 
-#+begin_example
+#+begin_quote
 Warning (bytecomp): cl package required at runtime
-#+end_example
+#+end_quote
 
 #+begin_src emacs-lisp
 (eval-when-compile
@@ -163,7 +181,9 @@ Always display the column number
 #+end_src
 
 
+#+begin_quote
 Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
+#+end_quote
 #+begin_src emacs-lisp
 (defvar cider-prompt-save-file-on-load)
 #+end_src

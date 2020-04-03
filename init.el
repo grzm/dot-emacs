@@ -22,7 +22,7 @@
 ;; load the meat of it
 (require 'org)
 
-(org-babel-load-file (expand-file-name "common-config.org" user-emacs-directory))
+(org-babel-load-file (expand-file-name "README.org" user-emacs-directory))
 
 (setq viasat-emacs-directory "~/.emacs.viasat.d/")
 
