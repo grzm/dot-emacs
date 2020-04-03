@@ -33,6 +33,16 @@
 (setq org-refile-use-outline-path t)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 
+(setq org-agenda-show-all-dates t
+      org-duration-format (quote h:mm)
+      org-startup-folded nil
+      org-startup-indented t)
+
+(setq org-todo-keywords
+   (quote
+    ((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "APPT(a)" "WAITING(w)" "SOMEDAY(p)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)"))))
+
+
 (setq org-log-done 'time)
 
 (defun org-todo-checkbox (&optional pos)

@@ -25,4 +25,31 @@
            "* TODO %i%?" :prepend t))))
 
   (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+
+  (setq org-tag-alist
+        (quote
+         (("q" . 113)
+          ("automower" . 97)
+          ("postgresql" . 112)
+          ("emacs" . 101))))
+
+  (setq org-agenda-custom-commands
+     (quote
+      (("d" "D24C Task view" agenda ""
+        ((org-agenda-overriding-header "")
+         (org-agenda-start-on-weekday nil)
+         (org-agenda-start-day "-3d")
+         (org-agenda-prefix-format "  - %(org-d24c-prefix)")
+         (org-agenda-span
+          (quote 10))
+         (org-agenda-sorting-strategy
+          (quote
+           (priority-down category-up tag-down)))
+         (org-agenda-show-all-dates nil)
+         (org-agenda-todo-keyword-format ""))
+        ("~/work/dept24c/work.txt"))
+       ("n" "Agenda and all TODOs"
+        ((agenda "" nil)
+         (alltodo "" nil))
+        nil))))
 #+end_src

@@ -36,13 +36,19 @@ Warning (bytecomp): cl package required at runtime
 
 Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 
-#+begin_src
+#+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
 
 #+begin_src emacs-lisp
 (require 'clean-up-buffer)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq auth-sources
+   (quote
+    ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc" macos-keychain-internet macos-keychain-internet)))
 #+end_src
 
 ** UI settings
@@ -85,6 +91,10 @@ Always display the column number
 
 #+begin_src emacs-lisp
  (setq-default indent-tabs-mode nil) ;; insert multiple spaces instead of tabs
+#+end_src
+
+#+begin_src emacs-lisp
+(show-paren-mode t)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -170,11 +180,14 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package clj-refactor
-    :defer t
-    :ensure t
-    ;; :bind ("/" . cljr-slash)
-    )
+    (use-package clj-refactor
+      :defer t
+      :ensure t
+      :config
+      (setq cljr-assume-language-context (quote clj)
+            cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
+      ;; :bind ("/" . cljr-slash)
+      )
 #+end_src
 
 #+begin_src emacs-lisp
@@ -222,9 +235,11 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package magit
-    :ensure t
-    :bind ("C-x g" . magit-status))
+    (use-package magit
+      :ensure t
+      :config
+      (setq magit-diff-refine-hunk (quote all))
+      :bind ("C-x g" . magit-status))
 #+end_src
 
 #+begin_src emacs-lisp
