@@ -17,6 +17,7 @@ I generally use this configuration with [[https://emacsformacosx.com][Emacs for 
 
 * Initialization
 
+My brain works better in lexical scope.
 
 #+begin_src emacs-lisp
 ;;; -*- lexical-binding: t -*-
