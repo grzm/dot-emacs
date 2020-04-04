@@ -58,6 +58,9 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
+#+begin_src emacs-lisp
+(setq custom-file (make-temp-file ""))
+#+end_src
 
 #+begin_src emacs-lisp
 (require 'clean-up-buffer)
@@ -89,6 +92,10 @@ When in a windowing system, set the default window size.
            (height . 60)
            (width . 100)))
    (setq default-frame-alist (copy-alist initial-frame-alist)))
+#+end_src
+
+#+begin_src emacs-lisp
+(load-theme 'solarized-light t)
 #+end_src
 
 Hide the toolbar.
@@ -200,6 +207,11 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 #+end_src
 
 #+begin_src emacs-lisp
+  (put 'cider-clojure-cli-global-options 'safe-local-variable #'stringp)
+  (put 'cider-boot-parameters 'safe-local-variable #'stringp)
+#+end_src
+
+#+begin_src emacs-lisp
     (use-package clj-refactor
       :defer t
       :ensure t
@@ -288,6 +300,15 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
     (setq markdown-preview-stylesheets
           '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
             "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package org
+    :custom-face
+    (org-level-1 ((t (:inherit variable-pitch :foreground "#cb4b16"))))
+    (org-level-2 ((t (:inherit variable-pitch :foreground "#859900"))))
+    (org-level-3 ((t (:inherit variable-pitch :foreground "#268bd2"))))
+    (org-level-4 ((t (:inherit variable-pitch :foreground "#b58900")))))
 #+end_src
 
 #+begin_src emacs-lisp
