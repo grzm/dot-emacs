@@ -17,11 +17,20 @@ I generally use this configuration with [[https://emacsformacosx.com][Emacs for 
 
 * Initialization
 
-=init.el= is loaded first, which, among other things, tangles and loads this file, which contains the majority of my Emacs configuration.
 
 #+begin_src emacs-lisp
 ;;; -*- lexical-binding: t -*-
 #+end_src
+
+** Initialization timing
+
+I'm interested in how long Emacs initialization takes. This isn't
+something I monitor closely, but I can't measure it if I don't add
+code to do so. This is lifted from [[https://github.com/jwiegley/dot-emacs][John Wiegley's config]], the
+gentleman who brought us (among other things), =use-package=. Not
+surprisingly, he's /very/ interested in initialization
+performance. His is another Emacs config that's worth reviewing for
+ideas.
 
 #+begin_src emacs-lisp
 (defconst emacs-start-time (current-time))
@@ -29,6 +38,10 @@ I generally use this configuration with [[https://emacsformacosx.com][Emacs for 
 (unless noninteractive
   (message "Loading %s..." load-file-name))
 #+end_src
+
+=init.el= is loaded first, which, among other things, tangles and
+loads this file, which contains the majority of my Emacs
+configuration.
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -58,20 +71,6 @@ I generally use this configuration with [[https://emacsformacosx.com][Emacs for 
     (add-hook 'after-save-hook 'tangle-init)
 #+END_SRC
 
-#+begin_src emacs-lisp
-(when window-system
-  (let ((elapsed (float-time (time-subtract (current-time)
-                                            emacs-start-time))))
-    (message "Loading %s...done (%.3fs)" load-file-name elapsed))
-
-  (add-hook 'after-init-hook
-            `(lambda ()
-               (let ((elapsed (float-time (time-subtract (current-time)
-                                                         emacs-start-time))))
-                 (message "Loading %s...done (%.3fs) [after-init]"
-                          ,load-file-name elapsed )))
-            t))
-#+end_src
 
 
 * The configuration
@@ -651,4 +650,21 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
+#+end_src
+
+* Report initialization timing
+
+#+begin_src emacs-lisp
+(when window-system
+  (let ((elapsed (float-time (time-subtract (current-time)
+                                            emacs-start-time))))
+    (message "Loading %s...done (%.3fs)" load-file-name elapsed))
+
+  (add-hook 'after-init-hook
+            `(lambda ()
+               (let ((elapsed (float-time (time-subtract (current-time)
+                                                         emacs-start-time))))
+                 (message "Loading %s...done (%.3fs) [after-init]"
+                          ,load-file-name elapsed )))
+            t))
 #+end_src
