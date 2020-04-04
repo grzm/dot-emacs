@@ -73,8 +73,7 @@ configuration.
 #+END_SRC
 
 
-
-* The configuration
+* Configuration
 
 Besides being Lisp, =cl= provides =labels= and =defvar=, used
 below. Wrapped gently in =eval-when-compile= to silence
