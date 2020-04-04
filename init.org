@@ -40,9 +40,65 @@ ideas.
   (message "Loading %s..." load-file-name))
 #+end_src
 
+** Tangling
+
 =init.el= is loaded first, which, among other things, tangles and
 loads this file, which contains the majority of my Emacs
-configuration.
+configuration. The tangled output actually replaces the =init.el= in
+the repo. After initial checkout, I don't want to track this generated
+replacement, so I can tell git to ignore it:
+
+#+begin_src shell :tangle no
+git update-index --assume-unchanged init.el
+#+end_src
+
+And if there /are/ modifications I want to make, I can tell git to
+track changes again.
+
+#+begin_src shell :tangle no
+git update-index --no-assume-unchanged init.el
+#+end_src
+
+If for some reason you want to start from the committed init.el again,
+just check it out. Git will pull it from the index, but still not track it.
+
+#+begin_src shell :tangle no
+git checkout init.el
+#+end_src
+
+And let's have this file automatically re-tangled on save to keep
+=init.el= up-to-date.
+
+#+begin_src emacs-lisp
+    (defun tangle-init ()
+      "If the current buffer is 'init.org' the code-blocks are
+    tangled, and the tangled file is compiled."
+      (when (equal (buffer-file-name)
+                   (expand-file-name (concat user-emacs-directory "init.org")))
+        ;; Avoid running hooks when tangling.
+        (let ((prog-mode-hook nil))
+          (org-babel-tangle))))
+
+    (add-hook 'after-save-hook 'tangle-init)
+#+end_src
+
+
+This method of is largely based on [[https://github.com/larstvei/dot-emacs][Lars Tveito's =init.el=]]. He also
+byte-compiles the output. I haven't seen any performance advantage
+of byte-compiling my setup, so I've removed that as it brings along
+another layer of complexity. There's a lot of other great stuff his
+config; it's well worth a look.
+
+** =use-package=
+
+I use =use-package= to organize my config. I've found it's much more
+concise than what I was doing before, and also encourages a more
+organized config. But, to use it, I need to make sure it's available,
+so let's ensure that. This is really just an issue when configuring
+emacs on a new machine: after that, =use-package= is already
+available. But it's worth having init.el ensuring it's there that very
+first time.
+
 
 #+begin_src emacs-lisp
 (require 'package)
@@ -58,19 +114,6 @@ configuration.
 (eval-when-compile
   (require 'use-package))
 #+end_src
-
-#+BEGIN_SRC emacs-lisp
-    (defun tangle-init ()
-      "If the current buffer is 'init.org' the code-blocks are
-    tangled, and the tangled file is compiled."
-      (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
-        ;; Avoid running hooks when tangling.
-        (let ((prog-mode-hook nil))
-          (org-babel-tangle))))
-
-    (add-hook 'after-save-hook 'tangle-init)
-#+END_SRC
 
 
 * Configuration
