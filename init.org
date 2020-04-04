@@ -173,12 +173,17 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 
 ** UI settings
 
-Don't display the startup splash screen.
+Quiet startup: Don't display the splash screen, start with a clear
+scratch buffer, and don't display /"For information about GNU Emacs
+and the GNU system, type C-h C-a."/.  This last is surprisingly
+difficult to do, and requires both the =put= call and setting the
+value to your user name. From https://emacs.stackexchange.com/a/36303.
 
 #+begin_src emacs-lisp
+(put 'inhibit-startup-echo-area-message 'saved-value t)
 (setq inhibit-startup-screen t
       initial-scratch-message ""
-      inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message user-login-name)
 #+end_src
 
 When in a windowing system, set the default window size.
