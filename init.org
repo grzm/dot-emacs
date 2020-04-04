@@ -10,27 +10,27 @@ my dot-emacs, I am useless.
 
 * Requirements
 
-  The configuration requires =use-package=.
+The configuration requires =use-package=.
 
-  I generally use this configuration with [[https://emacsformacosx.com][Emacs for Mac OS X]].
+I generally use this configuration with [[https://emacsformacosx.com][Emacs for Mac OS X]].
 
 
 * Initialization
 
-  =init.el= is loaded first, which, among other things, tangles and loads this file, which contains the majority of my Emacs configuration.
+=init.el= is loaded first, which, among other things, tangles and loads this file, which contains the majority of my Emacs configuration.
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 ;;; -*- lexical-binding: t -*-
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (defconst emacs-start-time (current-time))
 
 (unless noninteractive
   (message "Loading %s..." load-file-name))
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
@@ -43,9 +43,9 @@ my dot-emacs, I am useless.
 
 (eval-when-compile
   (require 'use-package))
-  #+end_src
+#+end_src
 
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
     (defun tangle-init ()
       "If the current buffer is 'init.org' the code-blocks are
     tangled, and the tangled file is compiled."
@@ -56,9 +56,9 @@ my dot-emacs, I am useless.
           (org-babel-tangle))))
 
     (add-hook 'after-save-hook 'tangle-init)
-  #+END_SRC
+#+END_SRC
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (when window-system
   (let ((elapsed (float-time (time-subtract (current-time)
                                             emacs-start-time))))
@@ -71,77 +71,77 @@ my dot-emacs, I am useless.
                  (message "Loading %s...done (%.3fs) [after-init]"
                           ,load-file-name elapsed )))
             t))
-  #+end_src
+#+end_src
 
 
 * The configuration
 
-  Besides being Lisp, =cl= provides =labels= and =defvar=, used
-  below. Wrapped gently in =eval-when-compile= to silence
+Besides being Lisp, =cl= provides =labels= and =defvar=, used
+below. Wrapped gently in =eval-when-compile= to silence
 
-  #+begin_quote
-  Warning (bytecomp): cl package required at runtime
-  #+end_quote
+#+begin_quote
+Warning (bytecomp): cl package required at runtime
+#+end_quote
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (eval-when-compile
   (require 'cl))
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (eval-and-compile
   (mapc #'(lambda (path)
             (add-to-list 'load-path
                          (expand-file-name path user-emacs-directory)))
         '("elisp" "misc" "packages" "elpa")))
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (defsubst hook-into-modes (func &rest modes)
   (dolist (mode-hook modes) (add-hook mode-hook func)))
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (require 'browse-kill-ring)
-  #+end_src
+#+end_src
 
-  Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
+Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq custom-file (make-temp-file ""))
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (require 'clean-up-buffer)
-  #+end_src
+#+end_src
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq auth-sources
    (quote
     ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc" macos-keychain-internet macos-keychain-internet)))
-  #+end_src
+#+end_src
 
 ** UI settings
 
-   Don't display the startup splash screen.
+Don't display the startup splash screen.
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq inhibit-startup-screen t
       initial-scratch-message ""
       inhibit-startup-echo-area-message t)
-   #+end_src
+#+end_src
 
-   When in a windowing system, set the default window size.
+When in a windowing system, set the default window size.
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (when (window-system)
    (setq initial-frame-alist
          `((top . 0)
@@ -149,37 +149,37 @@ my dot-emacs, I am useless.
            (height . 60)
            (width . 100)))
    (setq default-frame-alist (copy-alist initial-frame-alist)))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (load-theme 'solarized-light-high-contrast t)
-   #+end_src
+#+end_src
 
-   Hide the toolbar.
+Hide the toolbar.
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
      (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
      (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
      ;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-   #+end_src
+#+end_src
 
-   Always display the column number
+Always display the column number
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (setq column-number-mode t)
-   #+end_src
+#+end_src
 
 ** Editing
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (setq-default indent-tabs-mode nil) ;; insert multiple spaces instead of tabs
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (show-paren-mode t)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 
  ;; Use C-x C-m as a shortcut for M-x: Let's save our small fingers!
  ;; Hint from Steve Yegge: http://steve.yegge.googlepages.com/effective-emacs
@@ -238,21 +238,21 @@ my dot-emacs, I am useless.
  (put 'upcase-region 'disabled nil)
 
  (setq vc-follow-symlinks t)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package autopair :defer t)
-   #+end_src
+#+end_src
 
 
-   #+begin_quote
-   Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
-   #+end_quote
-   #+begin_src emacs-lisp
+#+begin_quote
+Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
+#+end_quote
+#+begin_src emacs-lisp
 (defvar cider-prompt-save-file-on-load)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package cider
     :defer t
     :config
@@ -261,14 +261,14 @@ my dot-emacs, I am useless.
           cider-font-lock-dynamically '(macro core function var)
           cider-repl-pop-to-buffer-on-connect 'display-only
           cider-boot-parameters "cider repl -w wait"))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (put 'cider-clojure-cli-global-options 'safe-local-variable #'stringp)
   (put 'cider-boot-parameters 'safe-local-variable #'stringp)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
     (use-package clj-refactor
       :defer t
       :ensure t
@@ -277,9 +277,9 @@ my dot-emacs, I am useless.
             cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
       ;; :bind ("/" . cljr-slash)
       )
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package clojure-mode
     :ensure t
     :defer t
@@ -293,49 +293,49 @@ my dot-emacs, I am useless.
       (inf-clojure-minor-mode)
       )
     (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
-   #+end_src
+#+end_src
 
 Structural editing rocks. Use it for =emacs-lisp=, too.
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
      (add-hook 'emacs-lisp-mode-hook
                (lambda () (paredit-mode +1)))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package exec-path-from-shell
     :if (memq window-system '(mac ns))
     :ensure t
     :config
     (exec-path-from-shell-initialize))
-   #+end_src
+#+end_src
 
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package inf-clojure
     :defer t
     :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package ido
     :demand t
     :config
     (setq ido-enable-flex-matching t
           ido-create-new-buffer 'always)
     (ido-mode 1))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
     (use-package magit
       :ensure t
 :defines personal-keybindings
       :config
       (setq magit-diff-refine-hunk (quote all))
       :bind ("C-x g" . magit-status))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package markdown-mode
     :ensure t
     :mode (("\\`README\\.markdown\\'" . gfm-mode)
@@ -351,9 +351,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
           '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
 
           markdown-fontify-code-blocks-natively t))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package markdown-preview-mode
     :after solarized-theme
     :defer t
@@ -361,18 +361,18 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
     (setq markdown-preview-stylesheets
           '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
             "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package org
     :custom-face
     (org-level-1 ((t (:inherit variable-pitch :foreground "#cb4b16"))))
     (org-level-2 ((t (:inherit variable-pitch :foreground "#859900"))))
     (org-level-3 ((t (:inherit variable-pitch :foreground "#268bd2"))))
     (org-level-4 ((t (:inherit variable-pitch :foreground "#b58900")))))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
      ;; when using Emacs installed via elpa, need to install it without loading init.el
      ;; to prevent a messed up installation. See
      ;; https://orgmode.org/manual/Installation.html
@@ -437,27 +437,27 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
        (format "%s %s" (org-todo-checkbox pos) (org-d24c-category pos)))
 
      (setq org-support-shift-select t)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package org-re-reveal
     :defer t
     :config
     (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq ring-bell-function 'ignore)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package paredit
     :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
     :ensure t
@@ -477,29 +477,29 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                                   (forward-list))))
                   t)
               (scan-error (signal 'scan-error '("Region parentheses not balanced")))))))))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package projectile
     :ensure t
     :bind (:map projectile-mode-map
                 ("C-c p" . projectile-command-map))
     :config (projectile-mode +1))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package quelpa-use-package
     :after quelpa
     :ensure t)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
      (define-minor-mode pollen-mode "edit pollen markup")
 
      (add-to-list 'auto-mode-alist '("\\.pp$" . pollen-mode))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
      ;; This file contains code to set up Emacs to edit PostgreSQL source
      ;; code.  Copy these snippets into your .emacs file or equivalent, or
      ;; use load-file to load this file directly.
@@ -576,24 +576,24 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
      ;; use GNU make mode instead of plain make mode
      (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*Makefile.*" . makefile-gmake-mode))
      (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (show-paren-mode 1)
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :ensure t
     :hook (prog-mode . rainbow-delimiters-mode))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package recentf
     :defer 10
     :defines personal-keybindings
@@ -602,31 +602,31 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
     (recentf-mode 1)
     (setq recentf-max-menu-items 50
           recentf-max-saved-items 100))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package ruby-mode
     :mode (("\\.rake\'" . ruby-mode)
            ("Rakefile\'" . ruby-mode)
            ("rakefile\'" . ruby-mode)
            ("\\.gemspec'" . ruby-mode)))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package shell-script-mode
     :interpreter ("bash" . shell-script-mode))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package solarized-theme
     :ensure t
     :if window-system
     :config
     (setq solarized-distinct-fringe-background t
           solarized-high-contrast-mode-line t))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package typo
     :defer t
     :config
@@ -636,19 +636,19 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
         (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
                (typo-mode 1))))
       (add-hook 'markdown-mode-hook 'enable-typo-mode)))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (use-package yasnippet
     :defer t
     :config
     (setq yasindent-line 'fixed))
-   #+end_src
+#+end_src
 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
-   #+end_src
+#+end_src
