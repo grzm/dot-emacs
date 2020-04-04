@@ -419,6 +419,10 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
+(setq org-edit-src-content-indentation 0)
+#+end_src
+
+#+begin_src emacs-lisp
      ;; when using Emacs installed via elpa, need to install it without loading init.el
      ;; to prevent a messed up installation. See
      ;; https://orgmode.org/manual/Installation.html
