@@ -371,7 +371,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
     (use-package magit
       :ensure t
-:defines personal-keybindings
       :config
       (setq magit-diff-refine-hunk (quote all))
       :bind ("C-x g" . magit-status))
@@ -638,7 +637,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
   (use-package recentf
     :defer 10
-    :defines personal-keybindings
     :bind ("C-x C-r" . recentf-open-files)
     :config
     (recentf-mode 1)
