@@ -153,7 +153,7 @@ my dot-emacs, I am useless.
    #+end_src
 
    #+begin_src emacs-lisp
-(load-theme 'solarized-light t)
+(load-theme 'solarized-light-high-contrast t)
    #+end_src
 
    Hide the toolbar.
