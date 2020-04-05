@@ -697,6 +697,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 
 #+begin_src emacs-lisp
 (use-package typo
+  :pin melpa-stable
   :defer t
   :config
   (progn
