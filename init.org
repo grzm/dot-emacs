@@ -687,9 +687,12 @@ scan-error if not."
          ("\\.gemspec'" . ruby-mode)))
 #+end_src
 
+** =shell-script-mode=
+Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
+=#!/bin/bash= and =#!/usr/bin/env bash=.
+
 #+begin_src emacs-lisp
-(use-package shell-script-mode
-  :interpreter ("bash" . shell-script-mode))
+(add-to-list 'interpreter-mode-alist '("bash" . shell-script-mode))
 #+end_src
 
 #+begin_src emacs-lisp
