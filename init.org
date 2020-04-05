@@ -169,6 +169,13 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+end_src
 
 #+begin_src emacs-lisp
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
+#+end_src
+
+
+#+begin_src emacs-lisp
 (require 'clean-up-buffer)
 #+end_src
 
