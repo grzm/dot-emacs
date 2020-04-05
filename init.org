@@ -305,12 +305,6 @@ Always display the column number
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
 
-(defvar gtd-file "~/Documents/lists/gtd.org")
-(defun gtd ()
-  "Visit gtd.org file"
-  (interactive)
-  (find-file gtd-file))
-
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
