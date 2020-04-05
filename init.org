@@ -728,6 +728,94 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 (setq create-lockfiles nil)
 #+end_src
 
+** Work/Personal separation
+
+I have some work-specific Emacs configuration that I like to keep
+in a separate repo from my personal setup. Let's see if it's there.
+
+#+begin_src emacs-lisp
+(setq work-emacs-directory "~/.emacs.work.d/"
+      work-p (file-exists-p work-emacs-directory))
+#+end_src
+
+If it's not, continue with my usual config.
+
+#+begin_src emacs-lisp
+(unless work-p
+  (setq grzm-org-directory "~/org/"
+        grzm-org-inbox-dot-org (expand-file-name "inbox.org" grzm-org-directory)
+        grzm-org-todo-dot-org (expand-file-name "todo.org" grzm-org-directory)
+        grzm-org-someday-maybe-dot-org (expand-file-name "someday-maybe.org" grzm-org-directory)
+
+        grzm-beorg-directory "/Users/grzm/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
+        grzm-beorg-inbox-dot-org (expand-file-name "inbox.org" grzm-beorg-directory)
+
+        grzm-org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
+
+        org-agenda-files
+        `("~/Documents/gtd/inbox.org"
+          ,grzm-org-inbox-dot-org
+          ,grzm-beorg-inbox-dot-org
+          ,grzm-org-todo-dot-org)
+
+        org-capture-templates
+        `(("t" "Task" entry
+           (file ,grzm-org-inbox-dot-org)
+           (file ,(expand-file-name "task.org" grzm-org-template-directory))
+           :prepend t)
+
+          ("p" "Project" entry
+           (file+headline ,grzm-org-todo-dot-org "Projects")
+           (file ,(expand-file-name "project.org" grzm-org-template-directory))))
+
+        org-refile-targets '((org-agenda-files :maxlevel . 3))
+
+        org-tag-alist
+        '(("q" . ?q)
+          ("automower" . ?a)
+          ("postgresql" . ?p)
+          ("emacs" . ?e))
+
+        org-agenda-custom-commands
+        '(("n" "Agenda and all TODOs"
+           ((agenda "" nil)
+            (alltodo "" nil))
+           nil)))
+
+  :end)
+#+end_src
+
+I've found Tasshin Michael Fogleman's work on using org-mode with GTD
+really helpful.  The templates and daily-review function are built on
+his work. See his [[https://github.com/mwfogleman/.emacs.d/blob/master/michael.org#capture-templates][Emacs config]] and his [[https://gist.github.com/mwfogleman/267b6bc7e512826a2c36cb57f0e3d854][Building a Second Brain
+templates]]. He also has posted a [[https://www.youtube.com/watch?v=LQwjSd3X9xE][video of how he uses them during his
+daily review]].
+
+#+begin_src emacs-lisp
+(setq grzm-review-dot-org "/tmp/reviews.org")
+(f-touch grzm-review-dot-org)
+
+;; This is buggy: first time after startup, calling C-c r, d raises the following error:
+;; (error "No capture template referred to by \"d\" keys")
+;; Subsequent calls seem fine, as does calling the function directly.
+(defun grzm-new-daily-review ()
+  (interactive)
+  (let ((org-capture-templates `(("d" "Review: Daily Review" entry
+                                  (file+olp+datetree ,grzm-review-dot-org)
+                                  (file ,(expand-file-name "daily-review.org"
+                                                           grzm-org-template-directory))))))
+    (progn
+      (org-capture nil "d")
+      (org-capture-finalize t)
+      (org-speed-move-safe 'outline-up-heading)
+      (org-narrow-to-subtree)
+      (org-clock-in))))
+
+(bind-keys :prefix-map review-map
+           :prefix "C-c r"
+           ("d" . grzm-new-daily-review))
+#+end_src
+
 * Report initialization timing
 
 #+begin_src emacs-lisp

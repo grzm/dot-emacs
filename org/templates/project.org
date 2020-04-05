@@ -1,0 +1,12 @@
+* %^{Project name}
+CREATED: %U
+DEADLINE: %^{Deadline}t
+:PROPERTIES:
+:STARTDATE: %u
+:END:
+%^{OUTCOME}p
+%^{AREA}p
+%?
+- [ ] Add project tags for context (e.g. work, personal)
+- [ ] List specific tasks
+- [ ] Schedule next actions from generated tasks

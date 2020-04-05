@@ -1,0 +1,23 @@
+* STARTED Daily Review %u
+CREATED: %U
+- [ ] Clear physical desktop
+- [ ] Clear physical inbox
+- [ ] Clear physical notebooks
+- [ ] Clear Downloads folder
+- [ ] Clear Desktop folder
+- [ ] Collect Calendar Open Loops (+/- 2  days)
+#+begin_src emacs-lisp
+  ;; (grzm-org-agenda-recent-open-loops)
+#+end_src
+- [ ] Clear email inboxes
+- [ ] Process Streams (Slack, [[https://twitter.com/][Twitter]]) as inboxes - record tasks, read it later, file notes
+- [ ] Process browser tabs
+- [ ] Capture any remaining open loops as tasks
+- [ ] Schedule + refile tasks in [[file:~/org/todo.org::*Inbox][Org Mode Inbox]], Beorg's [[file:~/org/refile-beorg.org][Refile Location]]
+- [ ] Schedule today's tasks (immersive -> process, deep -> shallow):
+  #+begin_src emacs-lisp
+    (progn
+      (org-agenda nil "a")
+      (org-agenda-day-view))
+  #+end_src
+- [ ] Clock out.
