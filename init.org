@@ -378,6 +378,10 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
     (exec-path-from-shell-initialize))
 #+end_src
 
+#+begin_src emacs-lisp
+(use-package f
+  :ensure t)
+#+end_src
 
 #+begin_src emacs-lisp
   (use-package inf-clojure
