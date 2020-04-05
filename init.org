@@ -165,6 +165,7 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+end_src
 
 #+begin_src emacs-lisp
+(setq confirm-nonexistent-file-or-buffer nil)
 #+end_src
 
 #+begin_src emacs-lisp
