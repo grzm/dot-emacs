@@ -191,10 +191,17 @@ Quiet startup: Don't display the splash screen, start with a clear
 scratch buffer, and don't display /"For information about GNU Emacs
 and the GNU system, type C-h C-a."/.  This last is surprisingly
 difficult to do, and requires both the =put= call and setting the
-value to your user name. From https://emacs.stackexchange.com/a/36303.
+value to your user name.
+
+From https://emacs.stackexchange.com/a/36303, with one change: use a
+non-empty list (e.g., =(t)=) instead of =t= for the ='saved-value= or
+you'll see errors like /(wrong-type-argument listp t)/ when Emacs
+first tries to write customizations, and errors like /'forward-sexp:
+Scan error: "Unbalanced parentheses"/ when it subsequently tries to
+read the malformed custom-file contents it attempted to write.
 
 #+begin_src emacs-lisp
-(put 'inhibit-startup-echo-area-message 'saved-value t)
+(put 'inhibit-startup-echo-area-message 'saved-value '(t))
 (setq inhibit-startup-screen t
       initial-scratch-message ""
       inhibit-startup-echo-area-message user-login-name)
