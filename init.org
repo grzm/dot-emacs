@@ -21,8 +21,14 @@ My brain works better in lexical scope.
 
 #+begin_src emacs-lisp
 ;;; -*- lexical-binding: t -*-
-(setq debug-on-error  t)
 #+end_src
+
+** Debugging (when I want it)
+
+#+begin_src emacs-lisp
+;; (setq debug-on-error  t)
+#+end_src
+
 
 ** Initialization timing
 
