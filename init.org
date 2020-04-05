@@ -116,6 +116,9 @@ first time.
 
 (eval-when-compile
   (require 'use-package))
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 #+end_src
 
 
@@ -339,7 +342,6 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 #+begin_src emacs-lisp
 (use-package clj-refactor
   :defer t
-  :ensure t
   :config
   (setq cljr-assume-language-context (quote clj)
         cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
@@ -349,7 +351,6 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 
 #+begin_src emacs-lisp
 (use-package clojure-mode
-  :ensure t
   :defer t
   :config
   (setq clojure-indent-style :align-arguments
@@ -373,14 +374,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
-  :ensure t
   :config
   (exec-path-from-shell-initialize))
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package f
-  :ensure t)
+(use-package f)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -400,7 +399,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+begin_src emacs-lisp
 (use-package magit
-  :ensure t
   :config
   (setq magit-diff-refine-hunk (quote all))
   :bind ("C-x g" . magit-status))
@@ -408,7 +406,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+begin_src emacs-lisp
 (use-package markdown-mode
-  :ensure t
   :mode (("\\`README\\.markdown\\'" . gfm-mode)
          ("\\`README\\.md\\'" . gfm-mode)
          ("\\`CHANGELOG\\.md\\'" . gfm-mode)
@@ -517,7 +514,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+begin_src emacs-lisp
 (use-package org-bullets
-  :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
@@ -536,7 +532,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
-  :ensure t
   :config
   (defun check-region-parens ()
     "Check if parentheses in the region are balanced. Signals a
@@ -557,7 +552,6 @@ scan-error if not."
 
 #+begin_src emacs-lisp
 (use-package projectile
-  :ensure t
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map))
   :config (projectile-mode +1))
@@ -565,8 +559,7 @@ scan-error if not."
 
 #+begin_src emacs-lisp
 (use-package quelpa-use-package
-  :after quelpa
-  :ensure t)
+  :after quelpa)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -665,7 +658,6 @@ scan-error if not."
 
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
-  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
@@ -697,7 +689,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 
 #+begin_src emacs-lisp
 (use-package solarized-theme
-  :ensure t
   :if window-system
   :config
   (setq solarized-distinct-fringe-background t
