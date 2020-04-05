@@ -71,16 +71,16 @@ And let's have this file automatically re-tangled on save to keep
 =init.el= up-to-date.
 
 #+begin_src emacs-lisp
-    (defun tangle-init ()
-      "If the current buffer is 'init.org' the code-blocks are
-    tangled, and the tangled file is compiled."
-      (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
-        ;; Avoid running hooks when tangling.
-        (let ((prog-mode-hook nil))
-          (org-babel-tangle))))
+(defun tangle-init ()
+  "If the current buffer is 'init.org' the code-blocks are
+tangled, and the tangled file is compiled."
+  (when (equal (buffer-file-name)
+               (expand-file-name (concat user-emacs-directory "init.org")))
+    ;; Avoid running hooks when tangling.
+    (let ((prog-mode-hook nil))
+      (org-babel-tangle))))
 
-    (add-hook 'after-save-hook 'tangle-init)
+(add-hook 'after-save-hook 'tangle-init)
 #+end_src
 
 
@@ -170,8 +170,8 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 
 #+begin_src emacs-lisp
 (setq kill-buffer-query-functions
-  (remq 'process-kill-buffer-query-function
-         kill-buffer-query-functions))
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
 #+end_src
 
 
@@ -181,8 +181,8 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 
 #+begin_src emacs-lisp
 (setq auth-sources
-   (quote
-    ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc" macos-keychain-internet macos-keychain-internet)))
+      (quote
+       ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc" macos-keychain-internet macos-keychain-internet)))
 #+end_src
 
 ** UI settings
@@ -210,13 +210,13 @@ read the malformed custom-file contents it attempted to write.
 When in a windowing system, set the default window size.
 
 #+begin_src emacs-lisp
- (when (window-system)
-   (setq initial-frame-alist
-         `((top . 0)
-           (left . 600)
-           (height . 60)
-           (width . 100)))
-   (setq default-frame-alist (copy-alist initial-frame-alist)))
+(when (window-system)
+  (setq initial-frame-alist
+        `((top . 0)
+          (left . 600)
+          (height . 60)
+          (width . 100)))
+  (setq default-frame-alist (copy-alist initial-frame-alist)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -226,21 +226,21 @@ When in a windowing system, set the default window size.
 Hide the toolbar.
 
 #+begin_src emacs-lisp
-     (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-     (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-     ;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+end_src
 
 Always display the column number
 
 #+begin_src emacs-lisp
- (setq column-number-mode t)
+(setq column-number-mode t)
 #+end_src
 
 ** Editing
 
 #+begin_src emacs-lisp
- (setq-default indent-tabs-mode nil) ;; insert multiple spaces instead of tabs
+(setq-default indent-tabs-mode nil) ;; insert multiple spaces instead of tabs
 #+end_src
 
 #+begin_src emacs-lisp
@@ -249,67 +249,67 @@ Always display the column number
 
 #+begin_src emacs-lisp
 
- ;; Use C-x C-m as a shortcut for M-x: Let's save our small fingers!
- ;; Hint from Steve Yegge: http://steve.yegge.googlepages.com/effective-emacs
- ;; Invoice M-x without the alt key
- (global-set-key "\C-x\C-m" 'execute-extended-command)
+;; Use C-x C-m as a shortcut for M-x: Let's save our small fingers!
+;; Hint from Steve Yegge: http://steve.yegge.googlepages.com/effective-emacs
+;; Invoice M-x without the alt key
+(global-set-key "\C-x\C-m" 'execute-extended-command)
 
- ;; Steve also recommends adding C-c C-m to allow for slop in hitting C-x
- ;; Don't know if I'll need that now, but it might be nice in the future
- ;;(global-set-key "\C-x\C-m" 'execute-extended-command)
- ;; However, I often mistype C-x m and I don't use mail, so
- (global-set-key "\C-xm" 'execute-extended-command)
+;; Steve also recommends adding C-c C-m to allow for slop in hitting C-x
+;; Don't know if I'll need that now, but it might be nice in the future
+;;(global-set-key "\C-x\C-m" 'execute-extended-command)
+;; However, I often mistype C-x m and I don't use mail, so
+(global-set-key "\C-xm" 'execute-extended-command)
 
- ;;; Unbind `C-x f', which, by default sets fill-text width, which is uncommon
- (global-unset-key "\C-xf")
+;;; Unbind `C-x f', which, by default sets fill-text width, which is uncommon
+(global-unset-key "\C-xf")
 
- ;;; Rebind `C-x C-b' for 'buffer-menu', rather than list-buffers
- (global-set-key "\C-x\C-b" 'buffer-menu)
+;;; Rebind `C-x C-b' for 'buffer-menu', rather than list-buffers
+(global-set-key "\C-x\C-b" 'buffer-menu)
 
- ;; Item 3: Prefer backward-kill-word over Backspace
- ;; Another of Steve Yegge's hints
- ;; For fast typists, it's faster to retype a word rather than backspace
- ;; to fix just the error, so map this to C-w. However, C-w is already
- ;; mapped for kill-region, so remap kill-region to C-x C-k
- (global-set-key "\C-w" 'backward-kill-word)
- (global-set-key "\C-x\C-k" 'kill-region)
- ;; Again, Steve maps C-c C-k as well
- ;; (global-set-key "\C-c\C-k" 'kill-region)
+;; Item 3: Prefer backward-kill-word over Backspace
+;; Another of Steve Yegge's hints
+;; For fast typists, it's faster to retype a word rather than backspace
+;; to fix just the error, so map this to C-w. However, C-w is already
+;; mapped for kill-region, so remap kill-region to C-x C-k
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+;; Again, Steve maps C-c C-k as well
+;; (global-set-key "\C-c\C-k" 'kill-region)
 
- ;; Item 9: Master Emacs's regular expressions
- ;; Bind M-r and M-s to isearch-forward-regexp and isearch-backward-regexp
- ;; Note that this stomps on the default binding for move-to-window-line (M-r)
- (global-set-key "\M-s" 'isearch-forward-regexp)
- (global-set-key "\M-r" 'search-backward-regexp)
+;; Item 9: Master Emacs's regular expressions
+;; Bind M-r and M-s to isearch-forward-regexp and isearch-backward-regexp
+;; Note that this stomps on the default binding for move-to-window-line (M-r)
+(global-set-key "\M-s" 'isearch-forward-regexp)
+(global-set-key "\M-r" 'search-backward-regexp)
 
- ;; Since query-replace-regexp and (replace-regexp) are so useful,
- ;; give them abbreviated aliases
- (defalias 'rr 'replace-regexp)
- (defalias 'qrr 'query-replace-regexp)
+;; Since query-replace-regexp and (replace-regexp) are so useful,
+;; give them abbreviated aliases
+(defalias 'rr 'replace-regexp)
+(defalias 'qrr 'query-replace-regexp)
 
- ;; from http://wiki.rubygarden.org/Ruby/page/show/InstallingEmacsExtensions
- ;; This is also of interrest, it automagically does a "chmod u+x" when you
- ;; save a script file (starting with "#!").
- (add-hook 'after-save-hook
-           'executable-make-buffer-file-executable-if-script-p)
+;; from http://wiki.rubygarden.org/Ruby/page/show/InstallingEmacsExtensions
+;; This is also of interrest, it automagically does a "chmod u+x" when you
+;; save a script file (starting with "#!").
+(add-hook 'after-save-hook
+          'executable-make-buffer-file-executable-if-script-p)
 
- (setq backup-directory-alist `(("." . "~/.saves")))
- (setq backup-by-copying t)
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
 
- (defvar gtd-file "~/Documents/lists/gtd.org")
- (defun gtd ()
-   "Visit gtd.org file"
-   (interactive)
-   (find-file gtd-file))
+(defvar gtd-file "~/Documents/lists/gtd.org")
+(defun gtd ()
+  "Visit gtd.org file"
+  (interactive)
+  (find-file gtd-file))
 
- (put 'downcase-region 'disabled nil)
- (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
- (setq vc-follow-symlinks t)
+(setq vc-follow-symlinks t)
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package autopair :defer t)
+(use-package autopair :defer t)
 #+end_src
 
 
@@ -321,61 +321,61 @@ Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-loa
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package cider
-    :defer t
-    :config
-    (setq cider-prompt-save-file-on-load nil
-          cider-eval-result-prefix " ;; => "
-          cider-font-lock-dynamically '(macro core function var)
-          cider-repl-pop-to-buffer-on-connect 'display-only
-          cider-boot-parameters "cider repl -w wait"))
+(use-package cider
+  :defer t
+  :config
+  (setq cider-prompt-save-file-on-load nil
+        cider-eval-result-prefix " ;; => "
+        cider-font-lock-dynamically '(macro core function var)
+        cider-repl-pop-to-buffer-on-connect 'display-only
+        cider-boot-parameters "cider repl -w wait"))
 #+end_src
 
 #+begin_src emacs-lisp
-  (put 'cider-clojure-cli-global-options 'safe-local-variable #'stringp)
-  (put 'cider-boot-parameters 'safe-local-variable #'stringp)
+(put 'cider-clojure-cli-global-options 'safe-local-variable #'stringp)
+(put 'cider-boot-parameters 'safe-local-variable #'stringp)
 #+end_src
 
 #+begin_src emacs-lisp
-    (use-package clj-refactor
-      :defer t
-      :ensure t
-      :config
-      (setq cljr-assume-language-context (quote clj)
-            cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
-      ;; :bind ("/" . cljr-slash)
-      )
+(use-package clj-refactor
+  :defer t
+  :ensure t
+  :config
+  (setq cljr-assume-language-context (quote clj)
+        cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
+  ;; :bind ("/" . cljr-slash)
+  )
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package clojure-mode
-    :ensure t
-    :defer t
-    :config
-    (setq clojure-indent-style :align-arguments
-          clojure-align-forms-automatically t)
-    (defun my-clojure-mode-hook ()
-      (paredit-mode +1)
-      (put-clojure-indent 'defui '(1 nil nil (1)))
-      (rainbow-delimiters-mode)
-      (inf-clojure-minor-mode)
-      )
-    (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
+(use-package clojure-mode
+  :ensure t
+  :defer t
+  :config
+  (setq clojure-indent-style :align-arguments
+        clojure-align-forms-automatically t)
+  (defun my-clojure-mode-hook ()
+    (paredit-mode +1)
+    (put-clojure-indent 'defui '(1 nil nil (1)))
+    (rainbow-delimiters-mode)
+    (inf-clojure-minor-mode)
+    )
+  (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
 
 Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+begin_src emacs-lisp
-     (add-hook 'emacs-lisp-mode-hook
-               (lambda () (paredit-mode +1)))
+(add-hook 'emacs-lisp-mode-hook
+          (lambda () (paredit-mode +1)))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :if (memq window-system '(mac ns))
-    :ensure t
-    :config
-    (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -384,63 +384,63 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package inf-clojure
-    :defer t
-    :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
+(use-package inf-clojure
+  :defer t
+  :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package ido
-    :demand t
-    :config
-    (setq ido-enable-flex-matching t
-          ido-create-new-buffer 'always)
-    (ido-mode 1))
+(use-package ido
+  :demand t
+  :config
+  (setq ido-enable-flex-matching t
+        ido-create-new-buffer 'always)
+  (ido-mode 1))
 #+end_src
 
 #+begin_src emacs-lisp
-    (use-package magit
-      :ensure t
-      :config
-      (setq magit-diff-refine-hunk (quote all))
-      :bind ("C-x g" . magit-status))
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-diff-refine-hunk (quote all))
+  :bind ("C-x g" . magit-status))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package markdown-mode
-    :ensure t
-    :mode (("\\`README\\.markdown\\'" . gfm-mode)
-           ("\\`README\\.md\\'" . gfm-mode)
-           ("\\`CHANGELOG\\.md\\'" . gfm-mode)
-           ("\\`CHANGELOG\\.markdown\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :config
-    (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\`README\\.markdown\\'" . gfm-mode)
+         ("\\`README\\.md\\'" . gfm-mode)
+         ("\\`CHANGELOG\\.md\\'" . gfm-mode)
+         ("\\`CHANGELOG\\.markdown\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"
 
-          markdown-css-paths
-          '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
+        markdown-css-paths
+        '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
 
-          markdown-fontify-code-blocks-natively t))
+        markdown-fontify-code-blocks-natively t))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package markdown-preview-mode
-    :after solarized-theme
-    :defer t
-    :config
-    (setq markdown-preview-stylesheets
-          '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
-            "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
+(use-package markdown-preview-mode
+  :after solarized-theme
+  :defer t
+  :config
+  (setq markdown-preview-stylesheets
+        '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
+          "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package org
-    :custom-face
-    (org-level-1 ((t (:inherit variable-pitch :foreground "#cb4b16"))))
-    (org-level-2 ((t (:inherit variable-pitch :foreground "#859900"))))
-    (org-level-3 ((t (:inherit variable-pitch :foreground "#268bd2"))))
-    (org-level-4 ((t (:inherit variable-pitch :foreground "#b58900")))))
+(use-package org
+  :custom-face
+  (org-level-1 ((t (:inherit variable-pitch :foreground "#cb4b16"))))
+  (org-level-2 ((t (:inherit variable-pitch :foreground "#859900"))))
+  (org-level-3 ((t (:inherit variable-pitch :foreground "#268bd2"))))
+  (org-level-4 ((t (:inherit variable-pitch :foreground "#b58900")))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -449,84 +449,84 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-     ;; when using Emacs installed via elpa, need to install it without loading init.el
-     ;; to prevent a messed up installation. See
-     ;; https://orgmode.org/manual/Installation.html
-     ;; Important: You need to do this in a session where no ‘.org’ file has been visited, i.e., where no Org built-in function have been loaded. Otherwise autoload Org functions will mess up the installation.
-     ;; For emacsformacosx:
-     ;; ~/Applications/Emacs.app/Contents/MacOS/Emacs --no-init-file
-     ;; Then do the normal installation via package
+;; when using Emacs installed via elpa, need to install it without loading init.el
+;; to prevent a messed up installation. See
+;; https://orgmode.org/manual/Installation.html
+;; Important: You need to do this in a session where no ‘.org’ file has been visited, i.e., where no Org built-in function have been loaded. Otherwise autoload Org functions will mess up the installation.
+;; For emacsformacosx:
+;; ~/Applications/Emacs.app/Contents/MacOS/Emacs --no-init-file
+;; Then do the normal installation via package
 
-     ;; All of this is motivated to resolve the following error which appears when runnign org-refile:
-     ;; org-copy-subtree: Invalid function: org-preserve-local-variables
+;; All of this is motivated to resolve the following error which appears when runnign org-refile:
+;; org-copy-subtree: Invalid function: org-preserve-local-variables
 
-     ;; Caused by org-preserve-local-variables not being defined
+;; Caused by org-preserve-local-variables not being defined
 
-     (defun grzm/org-mode-hook ()
-       "Stop the org-level headers from increasing in height relative to the other text."
-       (dolist (face '(org-level-1
-                       org-level-2
-                       org-level-3
-                       org-level-4
-                       org-level-5))
-         (set-face-attribute face nil
-                             :weight 'normal
-                             :height 1.0
-                             :inherit nil)))
+(defun grzm/org-mode-hook ()
+  "Stop the org-level headers from increasing in height relative to the other text."
+  (dolist (face '(org-level-1
+                  org-level-2
+                  org-level-3
+                  org-level-4
+                  org-level-5))
+    (set-face-attribute face nil
+                        :weight 'normal
+                        :height 1.0
+                        :inherit nil)))
 
-     (add-hook 'org-mode-hook 'grzm/org-mode-hook)
+(add-hook 'org-mode-hook 'grzm/org-mode-hook)
 
-     (define-key global-map "\C-cc" 'org-capture)
-     (global-set-key (kbd "C-c a") 'org-agenda)
+(define-key global-map "\C-cc" 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
-     (setq org-ellipsis "↩")
+(setq org-ellipsis "↩")
 
-     (setq org-refile-use-outline-path t)
-     (setq org-refile-allow-creating-parent-nodes 'confirm)
+(setq org-refile-use-outline-path t)
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
-     (setq org-agenda-show-all-dates t
-           org-duration-format (quote h:mm)
-           org-startup-folded nil
-           org-startup-indented t)
+(setq org-agenda-show-all-dates t
+      org-duration-format (quote h:mm)
+      org-startup-folded nil
+      org-startup-indented t)
 
-     (setq org-todo-keywords
-        (quote
-         ((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "APPT(a)" "WAITING(w)" "SOMEDAY(p)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)"))))
+(setq org-todo-keywords
+      (quote
+       ((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "APPT(a)" "WAITING(w)" "SOMEDAY(p)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(f)"))))
 
 
-     (setq org-log-done 'time)
+(setq org-log-done 'time)
 
-     (defun org-todo-checkbox (&optional pos)
-       (let ((todo (org-entry-get (or pos (point)) "TODO" t)))
-         (cond
-          ((string= todo "TODO") "[ ]")
-          ((string= todo "DONE")  "[X]")
-          (t "[/]"))))
+(defun org-todo-checkbox (&optional pos)
+  (let ((todo (org-entry-get (or pos (point)) "TODO" t)))
+    (cond
+     ((string= todo "TODO") "[ ]")
+     ((string= todo "DONE")  "[X]")
+     (t "[/]"))))
 
-     (defun org-d24c-category (&optional pos)
-       (let ((category (org-entry-get (or pos (point)) "CATEGORY" t)))
-         (if (and category (not (string= category "")))
-             (format "[%s]" category)
-           "")))
+(defun org-d24c-category (&optional pos)
+  (let ((category (org-entry-get (or pos (point)) "CATEGORY" t)))
+    (if (and category (not (string= category "")))
+        (format "[%s]" category)
+      "")))
 
-     (defun org-d24c-prefix (&optional pos)
-       (format "%s %s" (org-todo-checkbox pos) (org-d24c-category pos)))
+(defun org-d24c-prefix (&optional pos)
+  (format "%s %s" (org-todo-checkbox pos) (org-d24c-category pos)))
 
-     (setq org-support-shift-select t)
+(setq org-support-shift-select t)
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package org-re-reveal
-    :defer t
-    :config
-    (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
+(use-package org-re-reveal
+  :defer t
+  :config
+  (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -534,124 +534,124 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package paredit
-    :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
-    :ensure t
-    :config
-    (defun check-region-parens ()
-      "Check if parentheses in the region are balanced. Signals a
-  scan-error if not."
-      (interactive)
-      (save-restriction
-        (save-excursion
-          (let ((deactivate-mark nil))
-            (condition-case c
-                (progn
-                  (narrow-to-region (region-beginning) (region-end))
-                  (goto-char (point-min))
-                  (while (/= 0 (- (point)
-                                  (forward-list))))
-                  t)
-              (scan-error (signal 'scan-error '("Region parentheses not balanced")))))))))
+(use-package paredit
+  :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
+  :ensure t
+  :config
+  (defun check-region-parens ()
+    "Check if parentheses in the region are balanced. Signals a
+scan-error if not."
+    (interactive)
+    (save-restriction
+      (save-excursion
+        (let ((deactivate-mark nil))
+          (condition-case c
+              (progn
+                (narrow-to-region (region-beginning) (region-end))
+                (goto-char (point-min))
+                (while (/= 0 (- (point)
+                                (forward-list))))
+                t)
+            (scan-error (signal 'scan-error '("Region parentheses not balanced")))))))))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package projectile
-    :ensure t
-    :bind (:map projectile-mode-map
-                ("C-c p" . projectile-command-map))
-    :config (projectile-mode +1))
+(use-package projectile
+  :ensure t
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map))
+  :config (projectile-mode +1))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package quelpa-use-package
-    :after quelpa
-    :ensure t)
+(use-package quelpa-use-package
+  :after quelpa
+  :ensure t)
 #+end_src
 
 #+begin_src emacs-lisp
-     (define-minor-mode pollen-mode "edit pollen markup")
+(define-minor-mode pollen-mode "edit pollen markup")
 
-     (add-to-list 'auto-mode-alist '("\\.pp$" . pollen-mode))
+(add-to-list 'auto-mode-alist '("\\.pp$" . pollen-mode))
 #+end_src
 
 #+begin_src emacs-lisp
-     ;; This file contains code to set up Emacs to edit PostgreSQL source
-     ;; code.  Copy these snippets into your .emacs file or equivalent, or
-     ;; use load-file to load this file directly.
-     ;;
-     ;; Note also that there is a .dir-locals.el file at the top of the
-     ;; PostgreSQL source tree, which contains many of the settings shown
-     ;; here (but not all, mainly because not all settings are allowed as
-     ;; local variables).  So for light editing, you might not need any
-     ;; additional Emacs configuration.
+;; This file contains code to set up Emacs to edit PostgreSQL source
+;; code.  Copy these snippets into your .emacs file or equivalent, or
+;; use load-file to load this file directly.
+;;
+;; Note also that there is a .dir-locals.el file at the top of the
+;; PostgreSQL source tree, which contains many of the settings shown
+;; here (but not all, mainly because not all settings are allowed as
+;; local variables).  So for light editing, you might not need any
+;; additional Emacs configuration.
 
 
-     ;;; C files
+;;; C files
 
-     ;; Style that matches the formatting used by
-     ;; src/tools/pgindent/pgindent.  Many extension projects also use this
-     ;; style.
-     (c-add-style "postgresql"
-                  '("bsd"
-                    (c-auto-align-backslashes . nil)
-                    (c-basic-offset . 4)
-                    (c-offsets-alist . ((case-label . +)
-                                        (label . -)
-                                        (statement-case-open . +)))
-                    (fill-column . 78)
-                    (indent-tabs-mode . t)
-                    (tab-width . 4)))
+;; Style that matches the formatting used by
+;; src/tools/pgindent/pgindent.  Many extension projects also use this
+;; style.
+(c-add-style "postgresql"
+             '("bsd"
+               (c-auto-align-backslashes . nil)
+               (c-basic-offset . 4)
+               (c-offsets-alist . ((case-label . +)
+                                   (label . -)
+                                   (statement-case-open . +)))
+               (fill-column . 78)
+               (indent-tabs-mode . t)
+               (tab-width . 4)))
 
-     (defun postgresql-c-mode-hook ()
-       (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-         (c-set-style "postgresql")
-         ;; Don't override the style we just set with the style in
-         ;; `dir-locals-file'.  Emacs 23.4.1 needs this; it is obsolete,
-         ;; albeit harmless, by Emacs 24.3.1.
-         (set (make-local-variable 'ignored-local-variables)
-              (append '(c-file-style) ignored-local-variables))))
+(defun postgresql-c-mode-hook ()
+  (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+    (c-set-style "postgresql")
+    ;; Don't override the style we just set with the style in
+    ;; `dir-locals-file'.  Emacs 23.4.1 needs this; it is obsolete,
+    ;; albeit harmless, by Emacs 24.3.1.
+    (set (make-local-variable 'ignored-local-variables)
+         (append '(c-file-style) ignored-local-variables))))
 
-     (add-hook 'c-mode-hook 'postgresql-c-mode-hook)
-
-
-     ;;; Perl files
-
-     ;; Style that matches the formatting used by
-     ;; src/tools/pgindent/perltidyrc.
-     (defun pgsql-perl-style ()
-       "Perl style adjusted for PostgreSQL project"
-       (interactive)
-       (setq perl-brace-imaginary-offset 0)
-       (setq perl-brace-offset 0)
-       (setq perl-continued-brace-offset 4)
-       (setq perl-continued-statement-offset 4)
-       (setq perl-indent-level 4)
-       (setq perl-label-offset -2)
-       (setq indent-tabs-mode t)
-       (setq tab-width 4))
-
-     (add-hook 'perl-mode-hook
-               (defun postgresql-perl-mode-hook ()
-                 (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-                   (pgsql-perl-style))))
+(add-hook 'c-mode-hook 'postgresql-c-mode-hook)
 
 
-     ;;; documentation files
+;;; Perl files
 
-     ;; (add-hook 'sgml-mode-hook
-     ;;           (defun postgresql-sgml-mode-hook ()
-     ;;              (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-     ;;                (setq fill-column 78)
-     ;;                (setq indent-tabs-mode nil)
-     ;;                (setq sgml-basic-offset 1))))
+;; Style that matches the formatting used by
+;; src/tools/pgindent/perltidyrc.
+(defun pgsql-perl-style ()
+  "Perl style adjusted for PostgreSQL project"
+  (interactive)
+  (setq perl-brace-imaginary-offset 0)
+  (setq perl-brace-offset 0)
+  (setq perl-continued-brace-offset 4)
+  (setq perl-continued-statement-offset 4)
+  (setq perl-indent-level 4)
+  (setq perl-label-offset -2)
+  (setq indent-tabs-mode t)
+  (setq tab-width 4))
+
+(add-hook 'perl-mode-hook
+          (defun postgresql-perl-mode-hook ()
+            (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+              (pgsql-perl-style))))
 
 
-     ;;; Makefiles
+;;; documentation files
 
-     ;; use GNU make mode instead of plain make mode
-     (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*Makefile.*" . makefile-gmake-mode))
-     (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
+;; (add-hook 'sgml-mode-hook
+;;           (defun postgresql-sgml-mode-hook ()
+;;              (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+;;                (setq fill-column 78)
+;;                (setq indent-tabs-mode nil)
+;;                (setq sgml-basic-offset 1))))
+
+
+;;; Makefiles
+
+;; use GNU make mode instead of plain make mode
+(add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*Makefile.*" . makefile-gmake-mode))
+(add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -664,60 +664,60 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t
-    :hook (prog-mode . rainbow-delimiters-mode))
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package recentf
-    :defer 10
-    :bind ("C-x C-r" . recentf-open-files)
-    :config
-    (recentf-mode 1)
-    (setq recentf-max-menu-items 50
-          recentf-max-saved-items 100))
+(use-package recentf
+  :defer 10
+  :bind ("C-x C-r" . recentf-open-files)
+  :config
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 50
+        recentf-max-saved-items 100))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package ruby-mode
-    :mode (("\\.rake\'" . ruby-mode)
-           ("Rakefile\'" . ruby-mode)
-           ("rakefile\'" . ruby-mode)
-           ("\\.gemspec'" . ruby-mode)))
+(use-package ruby-mode
+  :mode (("\\.rake\'" . ruby-mode)
+         ("Rakefile\'" . ruby-mode)
+         ("rakefile\'" . ruby-mode)
+         ("\\.gemspec'" . ruby-mode)))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package shell-script-mode
-    :interpreter ("bash" . shell-script-mode))
+(use-package shell-script-mode
+  :interpreter ("bash" . shell-script-mode))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package solarized-theme
-    :ensure t
-    :if window-system
-    :config
-    (setq solarized-distinct-fringe-background t
-          solarized-high-contrast-mode-line t))
+(use-package solarized-theme
+  :ensure t
+  :if window-system
+  :config
+  (setq solarized-distinct-fringe-background t
+        solarized-high-contrast-mode-line t))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package typo
-    :defer t
-    :config
-    (progn
-      (setq-default typo-language "English")
-      (defun enable-typo-mode ()
-        (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
-               (typo-mode 1))))
-      (add-hook 'markdown-mode-hook 'enable-typo-mode)))
+(use-package typo
+  :defer t
+  :config
+  (progn
+    (setq-default typo-language "English")
+    (defun enable-typo-mode ()
+      (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
+             (typo-mode 1))))
+    (add-hook 'markdown-mode-hook 'enable-typo-mode)))
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package yasnippet
-    :defer t
-    :config
-    (setq yasindent-line 'fixed))
+(use-package yasnippet
+  :defer t
+  :config
+  (setq yasindent-line 'fixed))
 #+end_src
 
 #+begin_src emacs-lisp
