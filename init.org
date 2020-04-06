@@ -29,7 +29,6 @@ My brain works better in lexical scope.
 ;; (setq debug-on-error  t)
 #+end_src
 
-
 ** Initialization timing
 
 I'm interested in how long Emacs initialization takes. This isn't
