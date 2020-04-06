@@ -383,6 +383,26 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
+(use-package helm
+  :pin melpa-stable
+  :bind (:map helm-map
+              ("<tab>" . helm-execute-persistent-action)
+              ("C-z" . helm-select-action)
+              ("A-v" . helm-previous-page))
+  :config
+  (helm-mode 1)
+  (helm-autoresize-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package helm-org-rifle
+  :pin melpa-stable
+  :config
+  (helm-mode 1)
+  (helm-autoresize-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp
 (use-package inf-clojure
   :defer t
   :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
