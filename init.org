@@ -652,16 +652,6 @@ scan-error if not."
               (pgsql-perl-style))))
 
 
-;;; documentation files
-
-;; (add-hook 'sgml-mode-hook
-;;           (defun postgresql-sgml-mode-hook ()
-;;              (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-;;                (setq fill-column 78)
-;;                (setq indent-tabs-mode nil)
-;;                (setq sgml-basic-offset 1))))
-
-
 ;;; Makefiles
 
 ;; use GNU make mode instead of plain make mode
