@@ -780,7 +780,9 @@ If it's not, continue with my usual config.
            (file+headline ,grzm-org-todo-dot-org "Projects")
            (file ,(expand-file-name "project.org" grzm-org-template-directory))))
 
-        org-refile-targets '((org-agenda-files :maxlevel . 3))
+        org-refile-targets `(((,grzm-org-todo-dot-org
+                               ,grzm-org-someday-maybe-dot-org)
+                              :maxlevel . 3))
 
         org-tag-alist
         '(("q" . ?q)
@@ -793,7 +795,6 @@ If it's not, continue with my usual config.
            ((agenda "" nil)
             (alltodo "" nil))
            nil)))
-
   :end)
 #+end_src
 
