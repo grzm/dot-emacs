@@ -453,17 +453,31 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
 (use-package org
   :custom-face
-  (org-level-1 ((t (:height 1.0 :inherit nil))))
-  (org-level-2 ((t (:height 1.0 :inherit nil))))
-  (org-level-3 ((t (:height 1.0 :inherit nil))))
-  (org-level-4 ((t (:height 1.0 :inherit nil))))
-  (org-level-5 ((t (:height 1.0 :inherit nil))))
+  (variable-pitch ((t (:family "Optima" :height 1.2))))
+  (fixed-pitch ((t (:family "Menlo"))))
+  (org-table ((t (:inherit 'fixed-pitch))))
+  (org-agenda-date ((t (:inherit 'fixed-pitch))))
+  (org-date ((t (:inherit 'fixed-pitch))))
+  (org-block ((t (:inherit 'fixed-pitch))))
+  (org-verbatim ((t (:inherit 'fixed-pitch :height 0.9))))
+  (org-block-begin-line ((t (:inherit 'fixed-pitch))))
+  (org-block-end-line ((t (:inherit 'fixed-pitch))))
+  (org-level-8 ((t (:inherit default :weight bold :height 1.0))))
+  (org-level-7 ((t (:inherit default :weight bold :height 1.0))))
+  (org-level-6 ((t (:inherit default :weight bold :height 1.125))))
+  (org-level-5 ((t (:inherit default :weight bold :height 1.125))))
+  (org-level-4 ((t (:inherit default :weight bold :height 1.25))))
+  (org-level-3 ((t (:inherit default :weight bold :height 1.25))))
+  (org-level-2 ((t (:inherit default :weight bold :height 1.5))))
+  (org-level-1 ((t (:inherit default :weight bold :height 1.5))))
+
   :config
   (setq
    org-startup-folded nil
    org-startup-indented t
 
    org-ellipsis " ↩"
+   org-hide-emphasis-markers t
 
    org-support-shift-select t
 
@@ -488,8 +502,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                                        "CANCELLED(c)"
                                        "DEFERRED(f)")))
 
-   org-log-done 'time
-   ))
+   org-log-done 'time)
+  (font-lock-add-keywords 'org-mode
+                          '(("^ +\\([+-*]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
+  )
 #+end_src
 
 #+begin_src emacs-lisp
@@ -717,6 +735,13 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
       (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
              (typo-mode 1))))
     (add-hook 'markdown-mode-hook 'enable-typo-mode)))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package visual-fill-column
+  :config
+  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+  (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust))
 #+end_src
 
 #+begin_src emacs-lisp
