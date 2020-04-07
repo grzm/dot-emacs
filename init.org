@@ -829,28 +829,29 @@ templates]]. He also has posted a [[https://www.youtube.com/watch?v=LQwjSd3X9xE]
 daily review]].
 
 #+begin_src emacs-lisp
-(setq grzm-review-dot-org "/tmp/reviews.org")
-(f-touch grzm-review-dot-org)
+(unless work-p
+  (setq grzm-review-dot-org "/tmp/reviews.org")
+  (f-touch grzm-review-dot-org)
 
-;; This is buggy: first time after startup, calling C-c r, d raises the following error:
-;; (error "No capture template referred to by \"d\" keys")
-;; Subsequent calls seem fine, as does calling the function directly.
-(defun grzm-new-daily-review ()
-  (interactive)
-  (let ((org-capture-templates `(("d" "Review: Daily Review" entry
-                                  (file+olp+datetree ,grzm-review-dot-org)
-                                  (file ,(expand-file-name "daily-review.org"
-                                                           grzm-org-template-directory))))))
-    (progn
-      (org-capture nil "d")
-      (org-capture-finalize t)
-      (org-speed-move-safe 'outline-up-heading)
-      (org-narrow-to-subtree)
-      (org-clock-in))))
+  ;; This is buggy: first time after startup, calling C-c r, d raises the following error:
+  ;; (error "No capture template referred to by \"d\" keys")
+  ;; Subsequent calls seem fine, as does calling the function directly.
+  (defun grzm-new-daily-review ()
+    (interactive)
+    (let ((org-capture-templates `(("d" "Review: Daily Review" entry
+                                    (file+olp+datetree ,grzm-review-dot-org)
+                                    (file ,(expand-file-name "daily-review.org"
+                                                             grzm-org-template-directory))))))
+      (progn
+        (org-capture nil "d")
+        (org-capture-finalize t)
+        (org-speed-move-safe 'outline-up-heading)
+        (org-narrow-to-subtree)
+        (org-clock-in))))
 
-(bind-keys :prefix-map review-map
-           :prefix "C-c r"
-           ("d" . grzm-new-daily-review))
+  (bind-keys :prefix-map review-map
+             :prefix "C-c r"
+             ("d" . grzm-new-daily-review)))
 #+end_src
 
 * Report initialization timing
