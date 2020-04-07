@@ -507,7 +507,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                           '(("^ +\\([+-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
-  )
+  (org-reload))
 #+end_src
 
 #+begin_src emacs-lisp
