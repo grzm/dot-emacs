@@ -312,9 +312,8 @@ Always display the column number
 #+end_src
 
 
-#+begin_quote
+#+begin_src
 Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
-#+end_quote
 #+end_src
 
 #+begin_src emacs-lisp
