@@ -311,7 +311,6 @@ Always display the column number
 (use-package autopair :defer t)
 #+end_src
 
-
 #+begin_src
 Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
 #+end_src
