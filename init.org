@@ -3,10 +3,10 @@
 #+PROPERTY: header-args :tangle yes
 #+BABEL :cache yes
 
-This is my dot-emacs. There are many like it, but this one
-is mine. My dot-emacs is my best friend. It is my life. I must master
-it as I master my life. My dot-emacs, without me, is useless. Without
-my dot-emacs, I am useless.
+This is my dot-emacs. There are many like it, but this one is mine. My
+dot-emacs is my best friend. It is my life. I must master it as I
+master my life. My dot-emacs, without me, is useless. Without my
+dot-emacs, I am useless.
 
 * Requirements
 
@@ -35,9 +35,8 @@ I'm interested in how long Emacs initialization takes. This isn't
 something I monitor closely, but I can't measure it if I don't add
 code to do so. This is lifted from [[https://github.com/jwiegley/dot-emacs][John Wiegley's config]], the
 gentleman who brought us (among other things), =use-package=. Not
-surprisingly, he's /very/ interested in initialization
-performance. His is another Emacs config that's worth reviewing for
-ideas.
+surprisingly, he's /very/ interested in initialization performance. His
+is another Emacs config that's worth reviewing for ideas.
 
 #+begin_src emacs-lisp
 (defconst emacs-start-time (current-time))
@@ -48,24 +47,24 @@ ideas.
 
 ** Tangling
 
-=init.el= is loaded first, which, among other things, tangles and
-loads this file, which contains the majority of my Emacs
-configuration. The tangled output actually replaces the =init.el= in
-the repo. After initial checkout, I don't want to track this generated
-replacement, so I can tell git to ignore it:
+=init.el= is loaded first, which, among other things, tangles and loads
+this file, which contains the majority of my Emacs configuration. The
+tangled output actually replaces the =init.el= in the repo. After
+initial checkout, I don't want to track this generated replacement, so
+I can tell git to ignore it:
 
 #+begin_src shell :tangle no
 git update-index --assume-unchanged init.el
 #+end_src
 
-And if there /are/ modifications I want to make, I can tell git to
-track changes again.
+And if there /are/ modifications I want to make, I can tell git to track
+changes again.
 
 #+begin_src shell :tangle no
 git update-index --no-assume-unchanged init.el
 #+end_src
 
-If for some reason you want to start from the committed init.el again,
+If for some reason you want to start from the committed =init.el= again,
 just check it out. Git will pull it from the index, but still not track it.
 
 #+begin_src shell :tangle no
@@ -88,10 +87,9 @@ tangled, and the tangled file is compiled."
 (add-hook 'after-save-hook 'tangle-init)
 #+end_src
 
-
 This method of is largely based on [[https://github.com/larstvei/dot-emacs][Lars Tveito's =init.el=]]. He also
-byte-compiles the output. I haven't seen any performance advantage
-of byte-compiling my setup, so I've removed that as it brings along
+byte-compiles the output. I haven't seen any performance advantage of
+byte-compiling my setup, so I've removed that as it brings along
 another layer of complexity. There's a lot of other great stuff his
 config; it's well worth a look.
 
@@ -104,7 +102,6 @@ so let's ensure that. This is really just an issue when configuring
 emacs on a new machine: after that, =use-package= is already
 available. But it's worth having init.el ensuring it's there that very
 first time.
-
 
 #+begin_src emacs-lisp
 (require 'package)
