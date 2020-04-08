@@ -315,13 +315,12 @@ Always display the column number
 #+begin_quote
 Warning (bytecomp): assignment to free variable ‘cider-prompt-save-file-on-load’
 #+end_quote
-#+begin_src emacs-lisp
-(defvar cider-prompt-save-file-on-load)
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package cider
   :defer t
+  :defines cider-prompt-save-file-on-load
   :config
   (setq cider-prompt-save-file-on-load nil
         cider-eval-result-prefix " ;; => "
