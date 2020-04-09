@@ -87,7 +87,7 @@ tangled, and the tangled file is compiled."
 (add-hook 'after-save-hook 'tangle-init)
 #+end_src
 
-This method of is largely based on [[https://github.com/larstvei/dot-emacs][Lars Tveito's =init.el=]]. He also
+This method of is largely based on [[https://github.com/larstvei/dot-emacs][Lars Tveito's config]]. He also
 byte-compiles the output. I haven't seen any performance advantage of
 byte-compiling my setup, so I've removed that as it brings along
 another layer of complexity. There's a lot of other great stuff his
@@ -134,7 +134,7 @@ Besides being Lisp, =cl= provides =labels= and =defvar=, used
 below. Wrapped gently in =eval-when-compile= to silence
 
 #+begin_quote
-Warning (bytecomp): cl package required at runtime
+=Warning (bytecomp): cl package required at runtime
 #+end_quote
 
 #+begin_src emacs-lisp
