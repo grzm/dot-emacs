@@ -432,6 +432,17 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
+(defun grzm/iso-8601 (&optional t-val)
+  (interactive)
+  (let ((t-val (or t-val (current-time))))
+    (format-time-string "%FT%T.%3NZ"  t-val t)))
+
+(defun grzm/random-uuid ()
+  (interactive)
+  (s-trim (s-downcase (shell-command-to-string "uuidgen"))))
+#+end_src
+
+#+begin_src emacs-lisp
 (use-package markdown-preview-mode
   :after solarized-theme
   :defer t
