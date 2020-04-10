@@ -728,6 +728,9 @@ scan-error if not."
 #+end_src
 
 ** =shell-script-mode=
+#+begin_src emacs-lisp
+(use-package s)
+#+end_src
 Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 =#!/bin/bash= and =#!/usr/bin/env bash=.
 
