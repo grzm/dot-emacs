@@ -226,7 +226,7 @@ When in a windowing system, set the default window size.
 
 #+begin_src emacs-lisp
 (when window-system
-  (load-theme 'solarized-light-high-contrast))
+  (load-theme 'solarized-light-high-contrast t))
 #+end_src
 
 Hide the toolbar.
