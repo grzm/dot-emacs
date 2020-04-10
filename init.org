@@ -243,6 +243,12 @@ Always display the column number
 (setq column-number-mode t)
 #+end_src
 
+Who likes to be interrupted by a bell? I certainly don't.
+
+#+begin_src emacs-lisp
+(setq ring-bell-function 'ignore)
+#+end_src
+
 ** Editing
 
 #+begin_src emacs-lisp
@@ -579,10 +585,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                ("C-c n g" . org-roam-graph-show))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))))
-#+end_src
-
-#+begin_src emacs-lisp
-(setq ring-bell-function 'ignore)
 #+end_src
 
 #+begin_src emacs-lisp
