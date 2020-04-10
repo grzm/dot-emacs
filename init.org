@@ -93,7 +93,7 @@ byte-compiling my setup, so I've removed that as it brings along
 another layer of complexity. There's a lot of other great stuff his
 config; it's well worth a look.
 
-** =use-package=
+** use-package
 
 I use =use-package= to organize my config. I've found it's much more
 concise than what I was doing before, and also encourages a more
@@ -314,10 +314,14 @@ Who likes to be interrupted by a bell? I certainly don't.
 (setq vc-follow-symlinks t)
 #+end_src
 
+** packages
+
+*** autopair
 #+begin_src emacs-lisp
 (use-package autopair :defer t)
 #+end_src
 
+*** cider
 #+begin_src emacs-lisp
 (use-package cider
   :defer t
@@ -335,6 +339,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 (put 'cider-boot-parameters 'safe-local-variable #'stringp)
 #+end_src
 
+*** clj-refactor
 #+begin_src emacs-lisp
 (use-package clj-refactor
   :defer t
@@ -345,6 +350,7 @@ Who likes to be interrupted by a bell? I certainly don't.
   )
 #+end_src
 
+*** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
   :defer t
@@ -360,6 +366,7 @@ Who likes to be interrupted by a bell? I certainly don't.
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
 
+*** emacs-lisp-mode
 Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+begin_src emacs-lisp
@@ -367,6 +374,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
           (lambda () (paredit-mode +1)))
 #+end_src
 
+*** exec-path-from-shell
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
@@ -374,10 +382,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (exec-path-from-shell-initialize))
 #+end_src
 
+*** f
 #+begin_src emacs-lisp
 (use-package f)
 #+end_src
 
+*** helm
 #+begin_src emacs-lisp
 (use-package helm
   :pin melpa-stable
@@ -390,6 +400,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (helm-autoresize-mode 1))
 #+end_src
 
+*** helm-org-rifle
 #+begin_src emacs-lisp
 (use-package helm-org-rifle
   :pin melpa-stable
@@ -398,12 +409,14 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (helm-autoresize-mode 1))
 #+end_src
 
+*** inf-clojure
 #+begin_src emacs-lisp
 (use-package inf-clojure
   :defer t
   :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
 #+end_src
 
+*** ido
 #+begin_src emacs-lisp
 (use-package ido
   :demand t
@@ -413,6 +426,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (ido-mode 1))
 #+end_src
 
+*** magit
 #+begin_src emacs-lisp
 (use-package magit
   :config
@@ -420,6 +434,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   :bind ("C-x g" . magit-status))
 #+end_src
 
+*** markdown-mode
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :mode (("\\`README\\.markdown\\'" . gfm-mode)
@@ -437,6 +452,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
         markdown-fontify-code-blocks-natively t))
 #+end_src
 
+*** custom functions
 #+begin_src emacs-lisp
 (defun grzm/iso-8601 (&optional t-val)
   (interactive)
@@ -448,6 +464,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (s-trim (s-downcase (shell-command-to-string "uuidgen"))))
 #+end_src
 
+*** markdown-preview-mode
 #+begin_src emacs-lisp
 (use-package markdown-preview-mode
   :after solarized-theme
@@ -458,6 +475,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
           "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
 #+end_src
 
+*** org
 #+begin_src emacs-lisp
 (use-package org
   :custom-face
@@ -537,6 +555,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+end_src
 
+*** org-bullets
 #+begin_src emacs-lisp
 (use-package org-bullets
   :config
@@ -550,6 +569,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 ;;   (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
 #+end_src
 
+*** org-roam
 #+begin_src emacs-lisp
 (use-package org-roam
   :pin melpa
@@ -587,6 +607,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
               (("C-c n i" . org-roam-insert))))
 #+end_src
 
+*** paredit
 #+begin_src emacs-lisp
 (use-package paredit
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
@@ -608,6 +629,7 @@ scan-error if not."
             (scan-error (signal 'scan-error '("Region parentheses not balanced")))))))))
 #+end_src
 
+*** projectile
 #+begin_src emacs-lisp
 (use-package projectile
   :bind (:map projectile-mode-map
@@ -615,17 +637,20 @@ scan-error if not."
   :config (projectile-mode +1))
 #+end_src
 
+*** quelpa-use-package
 #+begin_src emacs-lisp
 (use-package quelpa-use-package
   :after quelpa)
 #+end_src
 
+*** pollen
 #+begin_src emacs-lisp
 (define-minor-mode pollen-mode "edit pollen markup")
 
 (add-to-list 'auto-mode-alist '("\\.pp$" . pollen-mode))
 #+end_src
 
+*** PostgreSQL hacking config
 #+begin_src emacs-lisp
 ;; This file contains code to set up Emacs to edit PostgreSQL source
 ;; code.  Copy these snippets into your .emacs file or equivalent, or
@@ -695,20 +720,24 @@ scan-error if not."
 (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
 #+end_src
 
+*** Emacs server
 #+begin_src emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
 #+end_src
 
+*** show-paren-mode
 #+begin_src emacs-lisp
 (show-paren-mode 1)
 #+end_src
 
+*** rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
+*** recentf
 #+begin_src emacs-lisp
 (use-package recentf
   :defer 10
@@ -719,6 +748,7 @@ scan-error if not."
         recentf-max-saved-items 100))
 #+end_src
 
+*** ruby-mode
 #+begin_src emacs-lisp
 (use-package ruby-mode
   :mode (("\\.rake\'" . ruby-mode)
@@ -727,10 +757,11 @@ scan-error if not."
          ("\\.gemspec'" . ruby-mode)))
 #+end_src
 
-** =shell-script-mode=
+*** s
 #+begin_src emacs-lisp
 (use-package s)
 #+end_src
+*** shell-script-mode
 Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 =#!/bin/bash= and =#!/usr/bin/env bash=.
 
@@ -738,6 +769,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 (add-to-list 'interpreter-mode-alist '("bash" . shell-script-mode))
 #+end_src
 
+*** solarized-theme
 #+begin_src emacs-lisp
 (use-package solarized-theme
   :if window-system
@@ -746,6 +778,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
         solarized-high-contrast-mode-line t))
 #+end_src
 
+*** typo
 #+begin_src emacs-lisp
 (use-package typo
   :pin melpa-stable
@@ -759,6 +792,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
     (add-hook 'markdown-mode-hook 'enable-typo-mode)))
 #+end_src
 
+*** visual-fill-column
 #+begin_src emacs-lisp
 (use-package visual-fill-column
   :config
@@ -766,6 +800,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust))
 #+end_src
 
+*** yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
   :defer t
