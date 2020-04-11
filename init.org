@@ -218,8 +218,8 @@ When in a windowing system, set the default window size.
 (when (window-system)
   (setq initial-frame-alist
         `((top . 0)
-          (left . 600)
-          (height . 60)
+          (left . 0.5)
+          (height . 1.0)
           (width . 100)))
   (setq default-frame-alist (copy-alist initial-frame-alist)))
 #+end_src
