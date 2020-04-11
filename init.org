@@ -563,10 +563,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-;; (use-package org-re-reveal
-;;   :defer t
-;;   :config
-;;   (add-hook 'org-mode-hook (lambda () (load-library "org-re-reveal"))))
+(use-package ox-reveal
+  :config
+  (add-hook 'org-mode-hook #'(lambda () (load-library "ox-reveal"))))
 #+end_src
 
 *** org-roam
