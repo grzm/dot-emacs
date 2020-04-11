@@ -578,10 +578,15 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (setq org-roam-completion-system 'helm
         org-roam-graph-executable "/path/to/neato"
         org-roam-graph-viewer "open"
-        org-roam-capture-templates '(("z" "zettelkästen" plain #'org-roam--capture-get-point "%?"
-                                      :file-name "%<%Y-%m-%d--%H-%M-%SZ>--${slug}"
-                                      :head "#+TITLE: ${title}\n"
-                                      :unnarrowed t)))
+
+        org-roam-capture-templates
+        '(("z" "zettelkästen" plain #'org-roam--capture-get-point
+           "%?"
+           ;; UTC timestamp in file name courtesy of https://github.com/jethrokuan/org-roam/issues/416
+           :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+           :head "#+TITLE: ${title}\n"
+           :unnarrowed t)))
+  ;; Overriding org-roam--title-to-slug via https://github.com/jethrokuan/org-roam/issues/287
   (defun org-roam--title-to-slug (title)
     "Convert TITLE to a filename-suitable slug. Uses hyphens rather than underscores."
     (cl-flet* ((nonspacing-mark-p (char)
