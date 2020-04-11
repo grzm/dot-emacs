@@ -576,8 +576,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   :custom (org-roam-directory "~/org/org-roam/")
   :config
   (setq org-roam-completion-system 'helm
-        org-roam-graph-executable "/path/to/neato"
-        org-roam-graph-viewer "open"
+        org-roam-graph-executable "/opt/local/bin/neato"
+        org-roam-graph-extra-config '(("overlap" . "false"))
+        org-roam-graph-viewer  "~/bin/open-in-safari" ;; simple wrapper around "open -a Safari $1"
 
         org-roam-capture-templates
         '(("z" "zettelkästen" plain #'org-roam--capture-get-point
