@@ -805,6 +805,12 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust))
 #+end_src
 
+*** yaml-mode
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :mode "\\.ya?ml\\")
+#+end_src
+
 *** yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
