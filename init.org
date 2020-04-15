@@ -366,6 +366,12 @@ Who likes to be interrupted by a bell? I certainly don't.
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
 
+*** dockerfile-mode
+#+begin_src emacs-lisp
+(use-package dockerfile-mode
+  :mode "Dockerfile[a-zA-Z.-]*\\'")
+#+end_src
+
 *** emacs-lisp-mode
 Structural editing rocks. Use it for =emacs-lisp=, too.
 
