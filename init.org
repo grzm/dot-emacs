@@ -561,13 +561,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+end_src
 
-*** org-bullets
-#+begin_src emacs-lisp
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1))))
-#+end_src
-
 #+begin_src emacs-lisp
 (use-package ox-reveal
   :config
@@ -616,6 +609,14 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                ("C-c n g" . org-roam-graph-show))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))))
+#+end_src
+
+*** org-superstar
+#+begin_src emacs-lisp
+(use-package org-superstar
+  :pin melpa
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
 
 *** paredit
