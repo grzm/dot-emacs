@@ -561,6 +561,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 
 #+end_src
 
+*** ox-reveal
 #+begin_src emacs-lisp
 (use-package ox-reveal
   :config
