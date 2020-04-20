@@ -534,6 +534,18 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                                        "CANCELLED(c)"
                                        "DEFERRED(f)")))
 
+   ;; From Sacha Chua: use l for src emacs-lisp instead of rarely-used export LaTeX
+   org-structure-template-alist  '(("a" . "export ascii")
+                                   ("c" . "center")
+                                   ("C" . "comment")
+                                   ("e" . "example")
+                                   ("E" . "export")
+                                   ("h" . "export html")
+                                   ("l" . "src emacs-lisp")
+                                   ("q" . "quote")
+                                   ("s" . "src")
+                                   ("v" . "verse"))
+
    org-log-done 'time)
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([+-*]\\) "
