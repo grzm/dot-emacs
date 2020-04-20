@@ -828,7 +828,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 *** yaml-mode
 #+begin_src emacs-lisp
 (use-package yaml-mode
-  :mode "\\.ya?ml\\")
+  :mode "\\.ya?ml\\'")
 #+end_src
 
 *** yasnippet
