@@ -423,6 +423,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (helm-autoresize-mode 1))
 #+end_src
 
+*** helm-projectile
+#+begin_src emacs-lisp
+(use-package helm-projectile
+  :pin melpa-stable)
+#+end_src
+
 *** inf-clojure
 #+begin_src emacs-lisp
 (use-package inf-clojure
@@ -665,8 +671,10 @@ scan-error if not."
 *** projectile
 #+begin_src emacs-lisp
 (use-package projectile
+  :after helm
   :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map))
+              ("C-c p" . projectile-command-map)
+              ("s-p" . projectile-command-map))
   :config (projectile-mode +1))
 #+end_src
 
