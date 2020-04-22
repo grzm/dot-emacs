@@ -446,6 +446,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (ido-mode 1))
 #+end_src
 
+*** lua
+#+begin_src emacs-lisp
+(use-package lua
+  :mode "\\.lua\\'"
+  :interpreter "lua")
+#+end_src
 *** magit
 #+begin_src emacs-lisp
 (use-package magit
