@@ -321,6 +321,14 @@ Who likes to be interrupted by a bell? I certainly don't.
 (use-package autopair :defer t)
 #+end_src
 
+*** avy
+#+begin_src emacs-lisp
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+         ("M-g g" . avy-goto-line)))
+#+end_src
+
 *** cider
 #+begin_src emacs-lisp
 (use-package cider
