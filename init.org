@@ -606,19 +606,39 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   :pin melpa
   :hook (after-init . org-roam-mode)
   :custom (org-roam-directory "~/org/org-roam/")
+  :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n b" . org-roam-switch-to-buffer)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert)))
   :config
   (setq org-roam-completion-system 'helm
-        org-roam-graph-executable "/opt/local/bin/neato"
+        org-roam-graph-executable "/opt/local/bin/dot"
         org-roam-graph-extra-config '(("overlap" . "false"))
         org-roam-graph-viewer  "~/bin/open-in-safari" ;; simple wrapper around "open -a Safari $1"
 
         org-roam-capture-templates
-        '(("z" "zettelkästen" plain #'org-roam--capture-get-point
+        '(("z" "zettelkästen" plain #'org-roam-capture--get-point
            "%?"
            ;; UTC timestamp in file name courtesy of https://github.com/jethrokuan/org-roam/issues/416
            :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
            :head "#+TITLE: ${title}\n"
+           :unnarrowed t))
+
+        org-roam-capture-ref-templates
+        '(("r" "ref" plain #'org-roam-capture--get-point
+           "%?"
+           :file-name "refs/%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+           :head "#+TITLE: ${title}
+#+ROAM_KEY: ${ref}
+:PROPERTIES:
+:created-at: %(grzm/iso-8601 (current-time))
+:END:
+- source :: ${ref}"
            :unnarrowed t)))
+  (require 'org-roam-protocol)
   ;; Overriding org-roam--title-to-slug via https://github.com/jethrokuan/org-roam/issues/287
   (defun org-roam--title-to-slug (title)
     "Convert TITLE to a filename-suitable slug. Uses hyphens rather than underscores."
@@ -634,14 +654,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
                       ("^-" . "")  ;; remove starting underscore
                       ("-$" . "")))  ;; remove ending underscore
              (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
-        (s-downcase slug))))
-  :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n b" . org-roam-switch-to-buffer)
-               ("C-c n g" . org-roam-graph-show))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))))
+        (s-downcase slug)))))
 #+end_src
 
 *** org-superstar
