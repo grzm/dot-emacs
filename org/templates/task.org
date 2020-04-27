@@ -1,4 +1,7 @@
 * TODO %^{Task}
-CREATED: %U
+:PROPERTIES:
+:CREATED: %U
+:created-at: %(grzm/iso-8601 (current-time))
+:END:
 
 %?
