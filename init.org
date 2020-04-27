@@ -909,7 +909,8 @@ If it's not, continue with my usual config.
         `(("t" "Task" entry
            (file ,grzm-org-inbox-dot-org)
            (file ,(expand-file-name "task.org" grzm-org-template-directory))
-           :prepend t)
+           :prepend t
+           :empty-lines 1)
 
           ("p" "Project" entry
            (file+headline ,grzm-org-todo-dot-org "Projects")
