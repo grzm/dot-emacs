@@ -14,7 +14,6 @@ The configuration requires =use-package=.
 
 I generally use this configuration with [[https://emacsformacosx.com][Emacs for Mac OS X]].
 
-
 * Initialization
 
 My brain works better in lexical scope.
@@ -122,7 +121,6 @@ first time.
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 #+end_src
-
 
 * Configuration
 
@@ -311,7 +309,6 @@ Who likes to be interrupted by a bell? I certainly don't.
 #+end_src
 
 ** packages
-
 *** autopair
 #+begin_src emacs-lisp
 (use-package autopair :defer t)
