@@ -623,7 +623,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
            "%?"
            :file-name "refs/%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
            :head "#+TITLE: ${title}
-#+ROAM_KEY: ${ref}
+,#+ROAM_KEY: ${ref}
 :PROPERTIES:
 :created-at: %(grzm/iso-8601 (current-time))
 :END:
