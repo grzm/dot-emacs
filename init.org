@@ -884,8 +884,8 @@ in a separate repo from my personal setup. Let's see if it's there.
 #+end_src
 
 #+begin_src emacs-lisp
-  (when work-p
-    (org-babel-load-file (expand-file-name "init.org" work-emacs-directory)))
+(when work-p
+  (org-babel-load-file (expand-file-name "init.org" work-emacs-directory)))
 #+end_src
 
 If it's not, continue with my usual config.
