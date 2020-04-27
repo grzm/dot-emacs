@@ -1,0 +1,11 @@
+* %:description
+:PROPERTIES:
+:CREATED: %U
+:created-at: %(grzm/iso-8601 (current-time))
+:END:
+
+| link        | %:link        |
+| description | %:description |
+| initial     | %:initial     |
+
+%?

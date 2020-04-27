@@ -579,18 +579,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 #+begin_src emacs-lisp
-;; when using Emacs installed via elpa, need to install it without loading init.el
-;; to prevent a messed up installation. See
-;; https://orgmode.org/manual/Installation.html
-;; Important: You need to do this in a session where no ‘.org’ file has been visited, i.e., where no Org built-in function have been loaded. Otherwise autoload Org functions will mess up the installation.
-;; For emacsformacosx:
-;; ~/Applications/Emacs.app/Contents/MacOS/Emacs --no-init-file
-;; Then do the normal installation via package
-
-;; All of this is motivated to resolve the following error which appears when runnign org-refile:
-;; org-copy-subtree: Invalid function: org-preserve-local-variables
-
-;; Caused by org-preserve-local-variables not being defined
+(use-package org-protocol)
 #+end_src
 
 *** ox-reveal
@@ -926,7 +915,14 @@ If it's not, continue with my usual config.
 
           ("p" "Project" entry
            (file+headline ,grzm-org-todo-dot-org "Projects")
-           (file ,(expand-file-name "project.org" grzm-org-template-directory))))
+           (file ,(expand-file-name "project.org" grzm-org-template-directory))
+           :empty-lines 1)
+
+          ("w" "web reference" entry
+           (file ,grzm-org-inbox-dot-org)
+           (file ,(expand-file-name "web-ref.org" grzm-org-template-directory))
+           :prepend t
+           :empty-lines 1))
 
         org-refile-targets `(((,grzm-org-todo-dot-org
                                ,grzm-org-someday-maybe-dot-org)
