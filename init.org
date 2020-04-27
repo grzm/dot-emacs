@@ -151,16 +151,12 @@ below. Wrapped gently in =eval-when-compile= to silence
   (mapc #'(lambda (path)
             (add-to-list 'load-path
                          (expand-file-name path user-emacs-directory)))
-        '("elisp" "misc" "packages" "elpa")))
+        '("elisp" "elpa")))
 #+end_src
 
 #+begin_src emacs-lisp
 (defsubst hook-into-modes (func &rest modes)
   (dolist (mode-hook modes) (add-hook mode-hook func)))
-#+end_src
-
-#+begin_src emacs-lisp
-(require 'browse-kill-ring)
 #+end_src
 
 Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
@@ -327,6 +323,11 @@ Who likes to be interrupted by a bell? I certainly don't.
   :bind (("C-:" . avy-goto-char)
          ("C-'" . avy-goto-char-2)
          ("M-g g" . avy-goto-line)))
+#+end_src
+
+*** browse-kill-ring
+#+begin_src emacs-lisp
+(use-package browse-kill-ring)
 #+end_src
 
 *** cider
