@@ -505,6 +505,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 *** org
 #+begin_src emacs-lisp
 (use-package org
+  :bind (("C-c l" . org-store-link)
+         ("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
   :custom-face
   (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
   (fixed-pitch ((t (:family "Menlo" :height 140))))
@@ -588,10 +591,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 ;; org-copy-subtree: Invalid function: org-preserve-local-variables
 
 ;; Caused by org-preserve-local-variables not being defined
-
-(define-key global-map "\C-cc" 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
-
 #+end_src
 
 *** ox-reveal
