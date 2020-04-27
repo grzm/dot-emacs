@@ -576,12 +576,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([+-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-  (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
-  (org-reload))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package org-protocol)
+  (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t))))
 #+end_src
 
 *** ox-reveal
@@ -775,6 +770,8 @@ scan-error if not."
 #+begin_src emacs-lisp
 (load "server")
 (unless (server-running-p) (server-start))
+(require 'org-protocol)
+(require 'org-roam-protocol)
 #+end_src
 
 *** show-paren-mode
