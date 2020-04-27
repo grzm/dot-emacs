@@ -484,7 +484,7 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 (defun grzm/iso-8601 (&optional t-val)
   (interactive)
   (let ((t-val (or t-val (current-time))))
-    (format-time-string "%FT%T.%3NZ"  t-val t)))
+    (format-time-string "%FT%T.%3N%z"  t-val)))
 
 (defun grzm/random-uuid ()
   (interactive)
