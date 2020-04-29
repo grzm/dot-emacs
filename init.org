@@ -132,7 +132,7 @@ Besides being Lisp, =cl= provides =labels= and =defvar=, used
 below. Wrapped gently in =eval-when-compile= to silence
 
 #+begin_quote
-=Warning (bytecomp): cl package required at runtime
+Warning (bytecomp): cl package required at runtime
 #+end_quote
 
 #+begin_src emacs-lisp
