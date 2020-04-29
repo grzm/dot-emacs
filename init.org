@@ -322,6 +322,13 @@ Who likes to be interrupted by a bell? I certainly don't.
          ("M-g g" . avy-goto-line)))
 #+end_src
 
+*** beacon
+#+begin_src emacs-lisp
+(use-package beacon
+  :config
+  (beacon-mode 1))
+#+end_src
+
 *** browse-kill-ring
 #+begin_src emacs-lisp
 (use-package browse-kill-ring)
