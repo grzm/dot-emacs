@@ -407,6 +407,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+end_src
 
 *** helm
+
+Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014/12/emacs-m-y-helm-show-kill-ring/][Sacha Chua]].
+
 #+begin_src emacs-lisp
 (use-package helm
   :pin melpa-stable
