@@ -410,10 +410,11 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
 (use-package helm
   :pin melpa-stable
-  :bind (:map helm-map
-              ("<tab>" . helm-execute-persistent-action)
-              ("C-z" . helm-select-action)
-              ("A-v" . helm-previous-page))
+  :bind (("M-y" . helm-show-kill-ring)
+         :map helm-map
+         ("<tab>" . helm-execute-persistent-action)
+         ("C-z" . helm-select-action)
+         ("A-v" . helm-previous-page))
   :config
   (helm-mode 1)
   (helm-autoresize-mode 1))
