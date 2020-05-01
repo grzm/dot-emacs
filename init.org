@@ -176,8 +176,8 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
                     :family "Source Code Pro"
-                    :weight 'extra-light
-                    :height 150)
+                    :weight 'normal
+                    :height 140)
 
 (setq-default line-spacing 0.4)
 #+end_src
@@ -558,9 +558,10 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
          ("C-c a" . org-agenda))
   :custom-face
   (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
-  (fixed-pitch ((t (:family "Source Code Pro" :height 140))))
+  (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
   :config
   (setq
+   underline-minimum-offset 5
    org-startup-folded t
    org-startup-indented t
 
