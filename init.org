@@ -231,7 +231,7 @@ When in a windowing system, set the default window size.
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory
                 (expand-file-name "themes" user-emacs-directory)))
-    (load-theme 'grzm-ivory t))
+  (load-theme 'grzm-ivory t))
 #+end_src
 
 Hide the toolbar.
