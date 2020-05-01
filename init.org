@@ -696,7 +696,10 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 #+begin_src emacs-lisp
 (use-package org-superstar
   :pin melpa
+  :custom-face
+  (org-superstar-header-bullet ((t (:family "Hiragino Sans"))))
   :config
+  (setq org-superstar-headline-bullets-list '("◉" "○" "◎" "●"))
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
 
