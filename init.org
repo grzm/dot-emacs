@@ -389,6 +389,10 @@ Who likes to be interrupted by a bell? I certainly don't.
     )
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
+*** delight
+#+begin_src emacs-lisp
+(use-package delight)
+#+end_src
 
 *** dockerfile-mode
 #+begin_src emacs-lisp
@@ -424,6 +428,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 #+begin_src emacs-lisp
 (use-package helm
   :pin melpa-stable
+  :delight " Ⓗ"
   :bind (("M-y" . helm-show-kill-ring)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
@@ -618,6 +623,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 #+begin_src emacs-lisp
 (use-package org-roam
   :pin melpa
+  :delight " 🅡"
   :hook (after-init . org-roam-mode)
   :custom (org-roam-directory "~/org/org-roam/")
   :bind (:map org-roam-mode-map
@@ -682,6 +688,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 *** paredit
 #+begin_src emacs-lisp
 (use-package paredit
+  :delight " (p)"
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
   :config
   (defun check-region-parens ()
@@ -705,6 +712,7 @@ scan-error if not."
 #+begin_src emacs-lisp
 (use-package projectile
   :after helm
+  :delight '(:eval (concat " [🅟 " (projectile-project-name) "]"))
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)
               ("s-p" . projectile-command-map))
