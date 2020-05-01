@@ -350,7 +350,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 *** cider
 #+begin_src emacs-lisp
 (use-package cider
-  :defer t
+  :pin melpa-stable
   :defines cider-prompt-save-file-on-load
   :config
   (setq cider-prompt-save-file-on-load nil
@@ -368,7 +368,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 *** clj-refactor
 #+begin_src emacs-lisp
 (use-package clj-refactor
-  :defer t
+  :pin melpa-stable
   :config
   (setq cljr-assume-language-context (quote clj)
         cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
@@ -379,7 +379,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 *** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
-  :defer t
+  :pin melpa-stable
   :config
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically t)
