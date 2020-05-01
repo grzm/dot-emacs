@@ -122,6 +122,16 @@ first time.
 (setq use-package-always-ensure t)
 #+end_src
 
+** Detection
+#+begin_src emacs-lisp
+(defun is-mac-p ()
+   (eq system-type 'darwin))
+
+(defun is-linux-p ()
+  (eq system-type 'gnu/linux))
+#+end_src
+
+
 * Configuration
 
 #+begin_src emacs-lisp
@@ -618,6 +628,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 *** ox-reveal
 #+begin_src emacs-lisp
 (use-package ox-reveal
+  :if (is-mac-p)
   :config
   (add-hook 'org-mode-hook #'(lambda () (load-library "ox-reveal"))))
 #+end_src
@@ -625,6 +636,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 *** org-roam
 #+begin_src emacs-lisp
 (use-package org-roam
+  :if (is-mac-p)
   :pin melpa
   :delight " 🅡"
   :hook (after-init . org-roam-mode)
@@ -927,7 +939,7 @@ in a separate repo from my personal setup. Let's see if it's there.
 If it's not, continue with my usual config.
 
 #+begin_src emacs-lisp
-(unless work-p
+(unless (or work-p (is-linux-p))
   (setq grzm-org-directory "~/org/"
         grzm-org-inbox-dot-org (expand-file-name "inbox.org" grzm-org-directory)
         grzm-org-todo-dot-org (expand-file-name "todo.org" grzm-org-directory)
