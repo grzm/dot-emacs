@@ -242,7 +242,7 @@ Hide the toolbar.
 ;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+end_src
 
-Always display the column number
+Always display the column number.
 
 #+begin_src emacs-lisp
 (setq column-number-mode t)
