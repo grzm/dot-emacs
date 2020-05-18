@@ -393,6 +393,7 @@ Who likes to be interrupted by a bell? I certainly don't.
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
     (rainbow-delimiters-mode))
+  (add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
 *** delight
