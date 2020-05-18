@@ -347,7 +347,9 @@ Who likes to be interrupted by a bell? I certainly don't.
 (use-package beacon
   :config
   (setq beacon-size 80
-        beacon-color "#bbb")
+        beacon-color "#bbb"
+        beacon-blink-duration 0.1
+        beacon-blink-delay 0.1)
   (beacon-mode 1))
 #+end_src
 
