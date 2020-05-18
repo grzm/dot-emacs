@@ -131,7 +131,6 @@ first time.
   (eq system-type 'gnu/linux))
 #+end_src
 
-
 * Configuration
 
 #+begin_src emacs-lisp
