@@ -2,6 +2,10 @@
   "A light Emacs theme.")
 
 (setq ivory-background "#fefefe")
+(setq ivory-white-smoke "#f5f5f5")
+(setq ivory-ghost-white "#f8f8ff")
+(setq ivory-anti-flash-white "#f2f3f4")
+(setq ivory-background ivory-anti-flash-white)
 (setq ivory-base "black")
 (setq ivory-gray "gray")
 
