@@ -655,7 +655,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
         '(("z" "zettelkästen" plain #'org-roam-capture--get-point
            "%?"
            ;; UTC timestamp in file name courtesy of https://github.com/jethrokuan/org-roam/issues/416
-           :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+           :file-name "%(format-time-string \"%Y%m%dT%H%M%SZ--${slug}\" (current-time) t)"
            :head "#+TITLE: ${title}\n"
            :unnarrowed t))
 
