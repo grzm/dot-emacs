@@ -637,7 +637,6 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
   :pin melpa
   :delight " 🅡"
   :hook (after-init . org-roam-mode)
-  :custom (org-roam-directory "~/org/org-roam/")
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
@@ -1013,7 +1012,9 @@ If it's not, continue with my usual config.
         '(("n" "Agenda and all TODOs"
            ((agenda "" nil)
             (alltodo "" nil))
-           nil)))
+           nil))
+
+        org-roam-directory "~/org/org-roam")
   :end)
 #+end_src
 
