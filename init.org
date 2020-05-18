@@ -877,6 +877,31 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
         solarized-high-contrast-mode-line t))
 #+end_src
 
+*** tide
+#+begin_src emacs-lisp
+(use-package tide
+  :ensure t
+  :preface
+  (defun grzm/set-up-tide-mode ()
+    (tide-setup)
+    (tide-hl-identifier-mode 1)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    (company-mode +1))
+  :hook ((typescript-mode . grzm/set-up-tide-mode)
+         (before-save . tide-format-before-save))
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+#+end_src
+
+***  typescript
+#+begin_src emacs-lisp
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :init (setq typescript-indent-level 2))
+#+end_src
+
 *** typo
 #+begin_src emacs-lisp
 (use-package typo
