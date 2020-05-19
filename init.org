@@ -263,6 +263,14 @@ Who likes to be interrupted by a bell? I certainly don't.
 (setq ring-bell-function 'ignore)
 #+end_src
 
+#+begin_src elisp
+(use-package gotham-theme
+  :ensure t
+  :if (not window-system)
+  :config
+  (load-theme 'gotham t))
+#+end_src
+
 ** Editing
 
 #+begin_src emacs-lisp
