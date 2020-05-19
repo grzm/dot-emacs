@@ -345,6 +345,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 *** beacon
 #+begin_src emacs-lisp
 (use-package beacon
+  :if window-system
   :config
   (setq beacon-size 80
         beacon-color "#bbb"
