@@ -419,6 +419,12 @@ Who likes to be interrupted by a bell? I certainly don't.
   :mode "Dockerfile[a-zA-Z.-]*\\'")
 #+end_src
 
+*** el-patch
+#+begin_src emacs-lisp
+(use-package el-patch
+  :pin melpa-stable)
+#+end_src
+
 *** emacs-lisp-mode
 Structural editing rocks. Use it for =emacs-lisp=, too.
 
@@ -643,6 +649,47 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
                           '(("^ +\\([+-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t))))
+#+end_src
+
+https://emacs.stackexchange.com/questions/7429/how-to-customize-org-mode-indentation
+https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-indent alignment when using variable-pitch-mode
+
+#+begin_src emacs-lisp  :tangle no
+(el-patch-feature org-indent--compute-prefixes)
+(with-eval-after-load 'org-indent--compute-prefixes
+  (el-patch-defun org-indent--compute-prefixes ()
+                  "Compute prefix strings for regular text and headlines."
+                  (setq org-indent--heading-line-prefixes
+                        (make-vector org-indent--deepest-level nil))
+                  (setq org-indent--inlinetask-line-prefixes
+                        (make-vector org-indent--deepest-level nil))
+                  (setq org-indent--text-line-prefixes
+                        (make-vector org-indent--deepest-level nil))
+                  (dotimes (n org-indent--deepest-level)
+                    (let ((indentation (if (<= n 1) 0
+                                         (* (1- org-indent-indentation-per-level)
+                                            (1- n)))))
+                      ;; Headlines line prefixes.
+                      (let ((heading-prefix (make-string indentation ?*)))
+                        (aset org-indent--heading-line-prefixes
+                              n
+                              (org-add-props heading-prefix nil 'face 'org-indent))
+                        ;; Inline tasks line prefixes
+                        (aset org-indent--inlinetask-line-prefixes
+                              n
+                              (cond ((<= n 1) "")
+                                    ((bound-and-true-p org-inlinetask-show-first-star)
+                                     (concat org-indent-inlinetask-first-star
+                                             (substring heading-prefix 1)))
+                                    (t (org-add-props heading-prefix nil 'face 'org-indent)))))
+                      ;; Text line prefixes.
+                      (aset org-indent--text-line-prefixes
+                            n
+                            (org-add-props
+                                (concat (make-string (+ n indentation) (el-patch-swap  ?\s ?*))
+                                        (and (> n 0)
+                                             (char-to-string org-indent-boundary-char)))
+                                nil 'face 'org-indent))))))
 #+end_src
 
 *** ox-reveal
