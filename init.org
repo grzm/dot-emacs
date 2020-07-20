@@ -398,6 +398,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 #+begin_src emacs-lisp
 (use-package clojure-mode
   :config
+  (require 'flycheck-clj-kondo)
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically nil)
   (defun my-clojure-mode-hook ()
@@ -437,6 +438,19 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 *** f
 #+begin_src emacs-lisp
 (use-package f)
+#+end_src
+
+*** flycheck
+#+begin_src emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+#+end_src
+
+*** flycheck-clj-kondo
+#+begin_src emacs-lisp
+(use-package flycheck-clj-kondo
+  :ensure t)
 #+end_src
 
 *** helm
