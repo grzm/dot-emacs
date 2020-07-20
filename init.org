@@ -593,7 +593,8 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
   :custom-face
-  (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
+  ; (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
+  (variable-pitch ((t (:family "OfficinaSansITCStd" :height 200))))
   (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
   :config
   (setq
