@@ -101,7 +101,7 @@
  '(org-level-8 ((t (:inherit outline-8 :box nil))))
  `(org-meta-line ((t (:inherit org-document-info-keyword :foreground ,ivory-gray :height 0.9))))
  `(org-special-keyword ((t (:inherit org-drawer))))
- `(org-todo ((t (:inherit fixed-pitch :foreground ,imperial-red :weight semi-bold))))
+ `(org-todo ((t (:inherit variable-pitch :family "OfficinaSansITCStd" :foreground ,imperial-red :weight extra-bold))))
  `(org-verbatim ((t (:inherit fixed-pitch :foreground ,ivory-base :weight normal))))
  `(org-table ((t (:inherit fixed-pitch))))
  '(org-tag ((t (:weight bold))))

@@ -399,7 +399,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 (use-package clojure-mode
   :config
   (setq clojure-indent-style :align-arguments
-        clojure-align-forms-automatically t)
+        clojure-align-forms-automatically nil)
   (defun my-clojure-mode-hook ()
     (paredit-mode +1)
     (put-clojure-indent 'defui '(1 nil nil (1)))
