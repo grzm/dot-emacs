@@ -978,7 +978,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
   (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 #+end_src
 
-***  typescript
+*** typescript
 #+begin_src emacs-lisp
 (use-package typescript-mode
   :mode "\\.ts\\'"
