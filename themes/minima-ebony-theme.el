@@ -237,7 +237,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(font-lock-comment-delimiter-face ((,class :foreground ,fg-alt :background ,bg-alt)))
    `(font-lock-comment-face ((,class :foreground ,fg-alt :background ,bg-alt)))
    `(font-lock-constant-face ((,class :foreground ,fg-main)))
-   `(font-lock-doc-face ((,class :foreground ,fg-main)))
+   `(font-lock-doc-face ((,class :foreground ,fg-alt)))
    `(font-lock-function-name-face ((,class :foreground ,fg-main)))
    `(font-lock-keyword-face ((,class :foreground ,fg-main)))
    `(font-lock-negation-char-face ((,class :foreground ,fg-main :weight bold)))

@@ -247,11 +247,11 @@ When in a windowing system, set the default window size.
 #+end_src
 
 #+begin_src emacs-lisp
-(when window-system
-  (add-to-list 'custom-theme-load-path
+(add-to-list 'custom-theme-load-path
                (file-name-as-directory
                 (expand-file-name "themes" user-emacs-directory)))
-  (load-theme 'grzm-ivory t))
+(let* ((theme (if (window-system) 'grzm-ivory 'minima-ebony)))
+  (load-theme theme t))
 #+end_src
 
 Hide the toolbar.
@@ -276,6 +276,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 
 #+begin_src elisp
 (use-package gotham-theme
+  :disabled
   :ensure t
   :if (not window-system)
   :config
