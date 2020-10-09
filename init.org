@@ -162,6 +162,12 @@ Warning (bytecomp): cl package required at runtime
 #+end_src
 
 #+begin_src emacs-lisp
+(let* ((local-org-mode-lisp "~/dev/org-mode/lisp"))
+  (when (file-exists-p local-org-mode-lisp)
+    (add-to-list 'load-path (expand-file-name "~/dev/org-mode/lisp"))))
+#+end_src
+
+#+begin_src emacs-lisp
 (defsubst hook-into-modes (func &rest modes)
   (dolist (mode-hook modes) (add-hook mode-hook func)))
 #+end_src
