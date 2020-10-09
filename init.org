@@ -518,7 +518,8 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
   :config
   (setq ido-enable-flex-matching t
         ido-create-new-buffer 'always)
-  (ido-mode 1))
+  (ido-mode 1)
+  :bind ("C-w" . ido-delete-backward-word-updir))
 #+end_src
 
 *** lua
