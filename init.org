@@ -189,10 +189,15 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+end_src
 
 #+begin_src emacs-lisp
+(defconst sans-font-family "Source Code Pro")
+(defconst variable-font-family "OfficinaSansITCStd")
+;;(defconst variable-font-family "Mercury Text G4")
 (set-face-attribute 'default nil
-                    :family "Source Code Pro"
+                    :family sans-font-family
                     :weight 'normal
                     :height 140)
+(set-face-attribute 'fixed-pitch nil :family sans-font-family :height 1.0)
+(set-face-attribute 'variable-pitch nil :family variable-font-family :height 1.2)
 
 (setq-default line-spacing 0.4)
 #+end_src
@@ -598,10 +603,10 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
   :bind (("C-c l" . org-store-link)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
-  :custom-face
+  ;; :custom-face
   ; (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
-  (variable-pitch ((t (:family "OfficinaSansITCStd" :height 200))))
-  (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
+  ;; (variable-pitch ((t (:family "OfficinaSansITCStd" :height 200))))
+  ;; (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
   :config
   (setq
    underline-minimum-offset 5
