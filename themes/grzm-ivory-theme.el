@@ -12,6 +12,7 @@
 ;; https://coolors.co/e63946-f1faee-a8dadc-457b9d-1d3557
 (setq deep-red "#720026")
 (setq deep-red-2 "#96031a")
+(setq tufte-red "#a00000")
 (setq imperial-red "#e63946")
 (setq light-red "#ec9a9a")
 (setq honeydew "#f1faee")
@@ -113,7 +114,7 @@
  '(outline-5 ((t (:inherit font-lock-type-face :weight bold))))
  '(outline-6 ((t (:inherit font-lock-constant-face :weight bold))))
  '(outline-7 ((t (:inherit font-lock-builtin-face :weight bold))))
- '(outline-8 ((t (:inherit font-lock-string-face :weight bold))))
+ '(outline-8 ((t (:inherit font-lock-builtin-face :weight bold))))
 
  '(rcirc-my-nick ((t (:foreground "LightSkyBlue" :weight bold))))
  '(realgud-overlay-arrow1  ((t (:foreground "dark green"))))
