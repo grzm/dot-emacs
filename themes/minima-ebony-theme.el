@@ -251,6 +251,28 @@ Also bind `class' to ((class color) (min-colors 89))."
    ;; `(diff-removed ((,class :inherit default)))
 
 
+   ;;;;; flycheck
+   ;; `(flycheck-delimited-error ((,class :inherit default)))
+   ;; `(flycheck-error ((,class :inherit default)))
+   ;; `(flycheck-error-delimiter ((,class :inherit default)))
+   ;; `(flycheck-error-list-checker-name ((,class :inherit default)))
+   ;; `(flycheck-error-list-column-number ((,class :inherit default)))
+   ;; `(flycheck-error-list-error ((,class :inherit default)))
+   ;; `(flycheck-error-list-error-message ((,class :inherit default)))
+   ;; `(flycheck-error-list-filename ((,class :inherit default)))
+   ;; `(flycheck-error-list-highlight ((,class :inherit default)))
+   ;; `(flycheck-error-list-id ((,class :inherit default)))
+   ;; `(flycheck-error-list-id-with-explainer ((,class :inherit default)))
+   ;; `(flycheck-error-list-info ((,class :inherit default)))
+   ;; `(flycheck-error-list-line-number ((,class :inherit default)))
+   ;; `(flycheck-error-list-warning ((,class :inherit default)))
+   ;; `(flycheck-fringe-error ((,class :inherit default)))
+   ;; `(flycheck-fringe-info ((,class :inherit default)))
+   ;; `(flycheck-fringe-warning ((,class :inherit default)))
+   ;; `(flycheck-info ((,class :inherit default)))
+   ;; `(flycheck-verify-select-checker ((,class :inherit default)))
+   ;; `(flycheck-warning ((,class :inherit default)))
+
 
    ;;;;; font-lock
    `(font-lock-builtin-face ((,class :foreground ,fg-main :inherit 'bold)))
