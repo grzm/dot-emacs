@@ -153,8 +153,11 @@ Warning (bytecomp): cl package required at runtime
 #+end_quote
 
 #+begin_src emacs-lisp
-(eval-when-compile
-  (require 'cl))
+(setq grzm/cl-package-deprecated-p (<= 27 emacs-major-version))
+
+(when (not grzm/cl-package-deprecated-p)
+  (eval-when-compile
+    (require 'cl)))
 #+end_src
 
 #+begin_src emacs-lisp
