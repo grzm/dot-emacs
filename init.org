@@ -901,14 +901,14 @@ scan-error if not."
 (defun pgsql-perl-style ()
   "Perl style adjusted for PostgreSQL project"
   (interactive)
-  (setq perl-brace-imaginary-offset 0)
-  (setq perl-brace-offset 0)
-  (setq perl-continued-brace-offset 4)
-  (setq perl-continued-statement-offset 4)
-  (setq perl-indent-level 4)
-  (setq perl-label-offset -2)
-  (setq indent-tabs-mode t)
-  (setq tab-width 4))
+  (setq perl-brace-imaginary-offset 0
+        perl-brace-offset 0
+        perl-continued-brace-offset 4
+        perl-continued-statement-offset 4
+        perl-indent-level 4
+        perl-label-offset -2
+        indent-tabs-mode t
+        tab-width 4))
 
 (add-hook 'perl-mode-hook
           (defun postgresql-perl-mode-hook ()
