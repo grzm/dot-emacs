@@ -103,6 +103,13 @@ emacs on a new machine: after that, =use-package= is already
 available. But it's worth having init.el ensuring it's there that very
 first time.
 
+Note: I probably want to move to an immutable package manager like
+[[https://github.com/raxod502/straight.el][straight.el]]. I'm primarily waiting on three things:
+
+  * determining how I can easily detecxt if my packages are out of date and update them individually
+  * convince myself there aren't gotchas that will be too much work to work around
+  * convince myself that the project is going to be maintained for the foreseeable future.
+
 #+begin_src emacs-lisp
 (require 'package)
 (setq package-archives
