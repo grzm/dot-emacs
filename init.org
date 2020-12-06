@@ -103,20 +103,15 @@ emacs on a new machine: after that, =use-package= is already
 available. But it's worth having init.el ensuring it's there that very
 first time.
 
-Note: I probably want to move to an immutable package manager like
-[[https://github.com/raxod502/straight.el][straight.el]]. I'm primarily waiting on three things:
-
-  * determining how I can easily detecxt if my packages are out of date and update them individually
-  * convince myself there aren't gotchas that will be too much work to work around
-  * convince myself that the project is going to be maintained for the foreseeable future.
-
 #+begin_src emacs-lisp
 (require 'package)
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("melpa" . "https://melpa.org/packages/")))
+#+end_src
 
+#+begin_src emacs-lisp :tangle no
 (package-initialize nil)
 
 (unless (package-installed-p 'use-package)
@@ -128,6 +123,51 @@ Note: I probably want to move to an immutable package manager like
 
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+#+end_src
+
+
+** straight.el
+
+I want an immutable package manager. I'm primarily waiting on three
+things:
+
+  * determining how I can easily detect if my packages are out of date
+    and update them individually
+  * convince myself there aren't gotchas that will be too much work to
+    work around
+  * convince myself that the project is going to be maintained for the
+    foreseeable future.
+
+I was convinced that I could move to straight.el by a blog post by
+David Crook, [[https://github.crookster.org/switching-to-straight.el-from-emacs-26-builtin-package.el/]["Switching to straight.el from Emacs 26 builtin
+package.el"]]. The situation has improved quite a bit since the post was
+written (13 November 2018); the org-specific fixes are now part of
+straight itself.
+
+First, bootstrap straight.el.
+
+#+begin_src emacs-lisp
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
+
+And integrate with ~use-package~.
+
+#+begin_src emacs-lisp
+;;;;  Effectively replace use-package with straight-use-package
+;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 #+end_src
 
 ** Detection
@@ -294,7 +334,6 @@ Who likes to be interrupted by a bell? I certainly don't.
 #+begin_src elisp
 (use-package gotham-theme
   :disabled
-  :ensure t
   :if (not window-system)
   :config
   (load-theme 'gotham t))
@@ -450,8 +489,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 
 *** el-patch
 #+begin_src emacs-lisp
-(use-package el-patch
-  :pin melpa-stable)
+(use-package el-patch)
 #+end_src
 
 *** emacs-lisp-mode
@@ -478,14 +516,12 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 *** flycheck
 #+begin_src emacs-lisp
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode))
 #+end_src
 
 *** flycheck-clj-kondo
 #+begin_src emacs-lisp
-(use-package flycheck-clj-kondo
-  :ensure t)
+(use-package flycheck-clj-kondo)
 #+end_src
 
 *** helm
@@ -494,7 +530,6 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
 #+begin_src emacs-lisp
 (use-package helm
-  :pin melpa-stable
   :delight " Ⓗ"
   :bind (("M-y" . helm-show-kill-ring)
          :map helm-map
@@ -509,7 +544,6 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 *** helm-org-rifle
 #+begin_src emacs-lisp
 (use-package helm-org-rifle
-  :pin melpa-stable
   :config
   (helm-mode 1)
   (helm-autoresize-mode 1))
@@ -517,8 +551,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
 *** helm-projectile
 #+begin_src emacs-lisp
-(use-package helm-projectile
-  :pin melpa-stable)
+(use-package helm-projectile)
 #+end_src
 
 *** inf-clojure
@@ -735,7 +768,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 #+begin_src emacs-lisp
 (use-package org-bullets
   :disabled
-  :ensure t
   :init
   (add-hook 'org-mode-hook
             (lambda () (org-bullets-mode 1))))
@@ -745,7 +777,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 #+begin_src emacs-lisp
 (use-package org-roam
   :if (is-mac-p)
-  :pin melpa
   :delight " 🅡"
   :hook (after-init . org-roam-mode)
   :bind (("C-c n f" . org-roam-find-file)
@@ -803,7 +834,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 #+begin_src emacs-lisp
 (use-package org-roam-server
   :if window-system
-  :ensure t
   :config
   (setq org-roam-server-host "127.0.0.1"
         org-roam-server-port 8080
@@ -818,7 +848,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 *** org-superstar
 #+begin_src emacs-lisp
 (use-package org-superstar
-  :pin melpa
   :custom-face
   (org-superstar-header-bullet ((t (:family "Hiragino Sans"))))
   (org-superstar-leading ((t (:family "Hiragino Sans"))))
@@ -1009,7 +1038,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 *** tide
 #+begin_src emacs-lisp
 (use-package tide
-  :ensure t
   :preface
   (defun grzm/set-up-tide-mode ()
     (tide-setup)
@@ -1034,7 +1062,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 *** typo
 #+begin_src emacs-lisp
 (use-package typo
-  :pin melpa-stable
   :defer t
   :config
   (progn
