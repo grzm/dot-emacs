@@ -1,3 +1,4 @@
+#+STARTUP: showeverything
 #+TITLE: grzm's Emacs configuration
 #+AUTHOR: Michael Glaesemann
 #+PROPERTY: header-args :tangle yes
