@@ -1071,42 +1071,42 @@ If it's not, continue with my usual config.
 
 #+begin_src emacs-lisp
 (unless (or work-p (is-linux-p))
-  (setq grzm-org-directory "~/org/"
-        grzm-org-inbox-dot-org (expand-file-name "inbox.org" grzm-org-directory)
-        grzm-org-todo-dot-org (expand-file-name "todo.org" grzm-org-directory)
-        grzm-org-someday-maybe-dot-org (expand-file-name "someday-maybe.org" grzm-org-directory)
+  (setq grzm/org-directory "~/org/"
+        grzm/org-inbox-dot-org (expand-file-name "inbox.org" grzm/org-directory)
+        grzm/org-todo-dot-org (expand-file-name "todo.org" grzm/org-directory)
+        grzm/org-someday-maybe-dot-org (expand-file-name "someday-maybe.org" grzm/org-directory)
 
-        grzm-beorg-directory "/Users/grzm/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
-        grzm-beorg-inbox-dot-org (expand-file-name "inbox.org" grzm-beorg-directory)
+        grzm/beorg-directory "/Users/grzm/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
+        grzm/beorg-inbox-dot-org (expand-file-name "inbox.org" grzm/beorg-directory)
 
-        grzm-org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
+        grzm/org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
 
         org-agenda-files
         `("~/Documents/gtd/inbox.org"
-          ,grzm-org-inbox-dot-org
-          ,grzm-beorg-inbox-dot-org
-          ,grzm-org-todo-dot-org)
+          ,grzm/org-inbox-dot-org
+          ,grzm/beorg-inbox-dot-org
+          ,grzm/org-todo-dot-org)
 
         org-capture-templates
         `(("t" "Task" entry
-           (file ,grzm-org-inbox-dot-org)
-           (file ,(expand-file-name "task.org" grzm-org-template-directory))
+           (file ,grzm/org-inbox-dot-org)
+           (file ,(expand-file-name "task.org" grzm/org-template-directory))
            :prepend t
            :empty-lines 1)
 
           ("p" "Project" entry
-           (file+headline ,grzm-org-todo-dot-org "Projects")
-           (file ,(expand-file-name "project.org" grzm-org-template-directory))
+           (file+headline ,grzm/org-todo-dot-org "Projects")
+           (file ,(expand-file-name "project.org" grzm/org-template-directory))
            :empty-lines 1)
 
           ("w" "web reference" entry
-           (file ,grzm-org-inbox-dot-org)
-           (file ,(expand-file-name "web-ref.org" grzm-org-template-directory))
+           (file ,grzm/org-inbox-dot-org)
+           (file ,(expand-file-name "web-ref.org" grzm/org-template-directory))
            :prepend t
            :empty-lines 1))
 
-        org-refile-targets `(((,grzm-org-todo-dot-org
-                               ,grzm-org-someday-maybe-dot-org)
+        org-refile-targets `(((,grzm/org-todo-dot-org
+                               ,grzm/org-someday-maybe-dot-org)
                               :maxlevel . 3))
 
         org-tag-alist
@@ -1133,18 +1133,18 @@ daily review]].
 
 #+begin_src emacs-lisp
 (unless work-p
-  (setq grzm-review-dot-org "/tmp/reviews.org")
-  (f-touch grzm-review-dot-org)
+  (setq grzm/review-dot-org "/tmp/reviews.org")
+  (f-touch grzm/review-dot-org)
 
   ;; This is buggy: first time after startup, calling C-c r, d raises the following error:
   ;; (error "No capture template referred to by \"d\" keys")
   ;; Subsequent calls seem fine, as does calling the function directly.
-  (defun grzm-new-daily-review ()
+  (defun grzm/new-daily-review ()
     (interactive)
     (let ((org-capture-templates `(("d" "Review: Daily Review" entry
-                                    (file+olp+datetree ,grzm-review-dot-org)
+                                    (file+olp+datetree ,grzm/review-dot-org)
                                     (file ,(expand-file-name "daily-review.org"
-                                                             grzm-org-template-directory))))))
+                                                             grzm/org-template-directory))))))
       (progn
         (org-capture nil "d")
         (org-capture-finalize t)
@@ -1154,7 +1154,7 @@ daily review]].
 
   (bind-keys :prefix-map review-map
              :prefix "C-c r"
-             ("d" . grzm-new-daily-review)))
+             ("d" . grzm/new-daily-review)))
 #+end_src
 
 * Report initialization timing
