@@ -139,6 +139,11 @@ Note: I probably want to move to an immutable package manager like
   (eq system-type 'gnu/linux))
 #+end_src
 
+The built-in ~window-system~ function and variable are also useful (and
+used below) when modifying configuration for particular machines and
+environments. For example, I don't do work with org-roam or pdfs when
+not using gui Emacs, so I'm including them only ~:if window-system~.
+
 * Configuration
 
 #+begin_src emacs-lisp
@@ -794,6 +799,22 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
         (s-downcase slug)))))
 #+end_src
 
+*** org-roam-server
+#+begin_src emacs-lisp
+(use-package org-roam-server
+  :if window-system
+  :ensure t
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
+#+end_src
 *** org-superstar
 #+begin_src emacs-lisp
 (use-package org-superstar
