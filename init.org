@@ -949,6 +949,21 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 #+end_src
 
 *** org-superstar
+I'd like better typography in Emacs for a number of reasons. One of
+which is to set proper indents so I would have more options for
+differentiating headline levels, but using org-superstar to
+differentiate levels by character will have to do. (Color is another
+option-used option, but I prefer things a little less noisy.)
+
+One infelicity worth mentioning: I use a proportional font in org-mode
+and override the default asterisk using =org-superstar=. I also use
+=org-hide-leading-stars=. =org-superstar= does not override the characters
+used to represent hidden stars, which leads to text on lines following
+a headline being unaligned with the headline text. Perhaps there's a
+way to do this, but I haven't dug too deeply. I think the fault is in
+=org-indent--compute-prefixes= where heading-prefix hard-codes an
+asterisk when making a heading prefix.
+
 #+begin_src emacs-lisp
 (use-package org-superstar
   :demand t ;; If I don't demand it here, org-superstar doesn't load automatically
