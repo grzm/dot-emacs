@@ -456,7 +456,8 @@ If it's not, continue with my usual config.
             (alltodo "" nil))
            nil))
 
-        org-roam-directory "~/org/org-roam"))
+        org-roam-directory "~/org/org-roam"
+        org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory)))
 #+end_src
 
 I've found Tasshin Michael Fogleman's work on using org-mode with GTD
