@@ -1,2 +1,0 @@
-GRANT ALL ON SEQUENCE ${1:sequence_name} TO GROUP dba;
-GRANT SELECT, USAGE, UPDATE ON SEQUENCE $1 TO GROUP developer, maintenance, webserver;

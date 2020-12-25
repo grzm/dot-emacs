@@ -1,3 +1,0 @@
-GRANT ALL ON SCHEMA ${1:schema_name} TO GROUP dba;
-GRANT USAGE ON SCHEMA $1 TO GROUP developer, maintenance, webserver;
-

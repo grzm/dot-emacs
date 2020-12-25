@@ -29,6 +29,26 @@ My brain works better in lexical scope.
 ;; (setq debug-on-error  t)
 #+end_src
 
+And if I'm debugging, I'll likely want to start Emacs with
+~--debug-init -nw~. With Emacs for Mac OS X, that's
+
+#+begin_src shell :tangle no
+~/Applications/Emacs.app/Contents/MacOS/Emacs --debug-init -nw
+#+end_src
+
+Including this shell block results in some additional message during startup:
+#+begin_quote
+Setting up indent for shell type zsh
+Indentation variables are now local.
+Indentation setup for shell type zsh
+#+end_quote
+
+These messages are hard-coded when sh-mode is invoked. You can get rid
+of these messages using advice [[https://emacs.stackexchange.com/a/53009][this response]] in Stack
+Overflow. Another way would be to use el-patch to remove these
+hard-coded messages as Radon Rosborough does in the [[https://github.com/raxod502/radian/commit/4ae79d629c4360a5f281cfc330154c900720d4b1][radian
+package]]. But for now I'll just leave this note.
+
 ** Initialization timing
 
 I'm interested in how long Emacs initialization takes. This isn't
@@ -76,8 +96,7 @@ And let's have this file automatically re-tangled on save to keep
 
 #+begin_src emacs-lisp
 (defun tangle-init ()
-  "If the current buffer is 'init.org' the code-blocks are
-tangled, and the tangled file is compiled."
+  "If the current buffer is 'init.org' the code-blocks are tangled, and the tangled file is compiled."
   (when (equal (buffer-file-name)
                (expand-file-name (concat user-emacs-directory "init.org")))
     ;; Avoid running hooks when tangling.
@@ -93,41 +112,7 @@ byte-compiling my setup, so I've removed that as it brings along
 another layer of complexity. There's a lot of other great stuff his
 config; it's well worth a look.
 
-** use-package
-
-I use =use-package= to organize my config. I've found it's much more
-concise than what I was doing before, and also encourages a more
-organized config. But, to use it, I need to make sure it's available,
-so let's ensure that. This is really just an issue when configuring
-emacs on a new machine: after that, =use-package= is already
-available. But it's worth having init.el ensuring it's there that very
-first time.
-
-#+begin_src emacs-lisp
-(require 'package)
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")))
-#+end_src
-
-#+begin_src emacs-lisp :tangle no
-(package-initialize nil)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
-
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
-#+end_src
-
-
 ** straight.el
-
 I want an immutable package manager. I'm primarily waiting on three
 things:
 
@@ -144,6 +129,11 @@ package.el"]]. The situation has improved quite a bit since the post was
 written (13 November 2018); the org-specific fixes are now part of
 straight itself.
 
+I tried this first on 2020-12-06, but reverted because I couldn't
+figure out issues around org-ref (likely related to my ignorance
+around autoloading). However, the [[the melpa issues on [[the melpa issues on https://github.com/melpa/melpa/issues/7312#issuecomment-751142747][melpa packing issues on 2020-12-24]],
+um, scared me straight, so I'm giving it another go.
+
 First, bootstrap straight.el.
 
 #+begin_src emacs-lisp
@@ -159,15 +149,11 @@ First, bootstrap straight.el.
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-#+end_src
 
-And integrate with ~use-package~.
-
-#+begin_src emacs-lisp
-;;;;  Effectively replace use-package with straight-use-package
-;;; https://github.com/raxod502/straight.el/blob/develop/README.md#integration-with-use-package
 (straight-use-package 'use-package)
+
 (setq straight-use-package-by-default t)
+(setq-default use-package-always-defer t)
 #+end_src
 
 ** Detection
@@ -246,7 +232,6 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+begin_src emacs-lisp
 (defconst sans-font-family "Source Code Pro")
 (defconst variable-font-family "OfficinaSansITCStd")
-;;(defconst variable-font-family "Mercury Text G4")
 (set-face-attribute 'default nil
                     :family sans-font-family
                     :weight 'normal
@@ -258,7 +243,12 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
 #+end_src
 
 #+begin_src emacs-lisp
-(require 'clean-up-buffer)
+(defun clean-up-buffer ()
+  "Indent the entire buffer."
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -331,14 +321,6 @@ Who likes to be interrupted by a bell? I certainly don't.
 (setq ring-bell-function 'ignore)
 #+end_src
 
-#+begin_src elisp
-(use-package gotham-theme
-  :disabled
-  :if (not window-system)
-  :config
-  (load-theme 'gotham t))
-#+end_src
-
 ** Editing
 
 #+begin_src emacs-lisp
@@ -404,10 +386,115 @@ Who likes to be interrupted by a bell? I certainly don't.
 (setq vc-follow-symlinks t)
 #+end_src
 
+
+*** f
+#+begin_src emacs-lisp
+(use-package f
+ :commands (f-touch))
+#+end_src
+
+** Work/Personal separation
+
+I have some work-specific Emacs configuration that I like to keep
+in a separate repo from my personal setup. Let's see if it's there.
+
+#+begin_src emacs-lisp
+(defvar work-emacs-directory "~/.emacs.work.d/")
+(defvar work-p (file-exists-p work-emacs-directory))
+#+end_src
+
+#+begin_src emacs-lisp
+(when work-p
+  (org-babel-load-file (expand-file-name "init.org" work-emacs-directory)))
+#+end_src
+
+If it's not, continue with my usual config.
+
+#+begin_src emacs-lisp
+(unless (or work-p (is-linux-p))
+  (defvar grzm/org-directory "~/org/")
+  (defvar grzm/beorg-directory "/Users/grzm/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/")
+  (setq grzm/org-inbox-dot-org (expand-file-name "inbox.org" grzm/org-directory)
+        grzm/org-todo-dot-org (expand-file-name "todo.org" grzm/org-directory)
+        grzm/org-someday-maybe-dot-org (expand-file-name "someday-maybe.org" grzm/org-directory)
+
+        grzm/beorg-inbox-dot-org (expand-file-name "inbox.org" grzm/beorg-directory)
+
+        grzm/org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
+
+        org-capture-templates
+        `(("t" "Task" entry
+           (file ,grzm/org-inbox-dot-org)
+           (file ,(expand-file-name "task.org" grzm/org-template-directory))
+           :prepend t
+           :empty-lines 1)
+
+          ("p" "Project" entry
+           (file+headline ,grzm/org-todo-dot-org "Projects")
+           (file ,(expand-file-name "project.org" grzm/org-template-directory))
+           :empty-lines 1)
+
+          ("w" "web reference" entry
+           (file ,grzm/org-inbox-dot-org)
+           (file ,(expand-file-name "web-ref.org" grzm/org-template-directory))
+           :prepend t
+           :empty-lines 1))
+
+        org-refile-targets `(((,grzm/org-todo-dot-org
+                               ,grzm/org-someday-maybe-dot-org)
+                              :maxlevel . 3))
+
+        org-tag-alist
+        '(("q" . ?q)
+          ("automower" . ?a)
+          ("postgresql" . ?p)
+          ("emacs" . ?e))
+
+        org-agenda-custom-commands
+        '(("n" "Agenda and all TODOs"
+           ((agenda "" nil)
+            (alltodo "" nil))
+           nil))
+
+        org-roam-directory "~/org/org-roam"))
+#+end_src
+
+I've found Tasshin Michael Fogleman's work on using org-mode with GTD
+really helpful.  The templates and daily-review function are built on
+his work. See his [[https://github.com/mwfogleman/.emacs.d/blob/master/michael.org#capture-templates][Emacs config]] and his [[https://gist.github.com/mwfogleman/267b6bc7e512826a2c36cb57f0e3d854][Building a Second Brain
+templates]]. He also has posted a [[https://www.youtube.com/watch?v=LQwjSd3X9xE][video of how he uses them during his
+daily review]].
+
+#+begin_src emacs-lisp
+(unless work-p
+  (setq grzm/review-dot-org "/tmp/reviews.org")
+  (f-touch grzm/review-dot-org)
+
+  ;; This is buggy: first time after startup, calling C-c r, d raises the following error:
+  ;; (error "No capture template referred to by \"d\" keys")
+  ;; Subsequent calls seem fine, as does calling the function directly.
+  (defun grzm/new-daily-review ()
+    (interactive)
+    (let ((org-capture-templates `(("d" "Review: Daily Review" entry
+                                    (file+olp+datetree ,grzm/review-dot-org)
+                                    (file ,(expand-file-name "daily-review.org"
+                                                             grzm/org-template-directory))))))
+      (progn
+        (org-capture nil "d")
+        (org-capture-finalize t)
+        (org-speed-move-safe 'outline-up-heading)
+        (org-narrow-to-subtree)
+        (org-clock-in))))
+
+  (bind-keys :prefix-map review-map
+             :prefix "C-c r"
+             ("d" . grzm/new-daily-review)))
+#+end_src
+
 ** packages
 *** autopair
 #+begin_src emacs-lisp
-(use-package autopair :defer t)
+(use-package autopair)
 #+end_src
 
 *** avy
@@ -452,6 +539,7 @@ Who likes to be interrupted by a bell? I certainly don't.
 (put 'cider-boot-parameters 'safe-local-variable #'stringp)
 #+end_src
 
+
 *** clj-refactor
 #+begin_src emacs-lisp
 (use-package clj-refactor
@@ -476,6 +564,7 @@ Who likes to be interrupted by a bell? I certainly don't.
   (add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
+
 *** delight
 #+begin_src emacs-lisp
 (use-package delight)
@@ -506,11 +595,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   :if (memq window-system '(mac ns))
   :config
   (exec-path-from-shell-initialize))
-#+end_src
-
-*** f
-#+begin_src emacs-lisp
-(use-package f)
 #+end_src
 
 *** flycheck
@@ -556,20 +640,17 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
 *** inf-clojure
 #+begin_src emacs-lisp
-(use-package inf-clojure
-  :defer t
-  :config (setq inf-clojure-program "/Users/grzm/homebrew/bin/planck"))
+(use-package inf-clojure)
 #+end_src
 
-*** ido
+*** ivy
 #+begin_src emacs-lisp
-(use-package ido
-  :demand t
-  :config
-  (setq ido-enable-flex-matching t
-        ido-create-new-buffer 'always)
-  (ido-mode 1)
-  :bind ("C-w" . ido-delete-backward-word-updir))
+  (use-package ivy
+    :config
+    (setq ivy-use-virtual-buffers t
+          enable-recursive-minibuffers t)
+    (ivy-mode 1)
+    :bind ("C-w" . ivy-backward-kill-word))
 #+end_src
 
 *** lua
@@ -600,6 +681,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
   (advice-add #'lua-calculate-indentation-override
               :around #'rgc-lua-calculate-indentation-override))
 #+end_src
+
 *** magit
 #+begin_src emacs-lisp
 (use-package magit
@@ -642,7 +724,6 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 #+begin_src emacs-lisp
 (use-package markdown-preview-mode
   :after solarized-theme
-  :defer t
   :config
   (setq markdown-preview-stylesheets
         '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css"
@@ -657,8 +738,8 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
          ("C-c a" . org-agenda))
   ;; :custom-face
   ; (variable-pitch ((t (:family "Mercury Text G4" :height 200))))
-  ;; (variable-pitch ((t (:family "OfficinaSansITCStd" :height 200))))
-  ;; (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
+  ; (variable-pitch ((t (:family "OfficinaSansITCStd" :height 200))))
+  ; (fixed-pitch ((t (:family "Source Code Pro" :height 0.95))))
   :config
   (setq
    underline-minimum-offset 5
@@ -667,6 +748,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
    org-ellipsis " ↩ "
    org-hide-emphasis-markers t
+   org-hide-leading-stars t
 
    org-support-shift-select t
 
@@ -708,10 +790,13 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
                                    ("s" . "src")
                                    ("v" . "verse"))
 
-   org-log-done 'time)
+   org-log-done 'time
+   org-startup-with-inline-images t)
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([+-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((dot . t)))
   (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t))))
 #+end_src
 
@@ -773,6 +858,12 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
             (lambda () (org-bullets-mode 1))))
 #+end_src
 
+*** org-ref
+#+begin_src emacs-lisp
+(use-package org-ref)
+(require 'org-ref) ;; Requiring org-ref slows startup way way down
+#+end_src
+
 *** org-roam
 #+begin_src emacs-lisp
 (use-package org-roam
@@ -810,7 +901,17 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 :created-at: %(grzm/iso-8601 (current-time))
 :END:
 - source :: ${ref}"
-           :unnarrowed t)))
+           :unnarrowed t))
+
+        org-roam-dailies-directory "daily/"
+        
+        org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           #'org-roam-capture--get-point
+           "* %?"
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "#+title: %<%Y-%m-%d>\n\n"))
+        )
   (require 'org-roam-protocol)
   ;; Overriding org-roam--title-to-slug via https://github.com/jethrokuan/org-roam/issues/287
   (defun org-roam--title-to-slug (title)
@@ -845,9 +946,11 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
 #+end_src
+
 *** org-superstar
 #+begin_src emacs-lisp
 (use-package org-superstar
+  :demand t ;; If I don't demand it here, org-superstar doesn't load automatically
   :custom-face
   (org-superstar-header-bullet ((t (:family "Hiragino Sans"))))
   (org-superstar-leading ((t (:family "Hiragino Sans"))))
@@ -856,6 +959,7 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
         org-superstar-leading-bullet ?○
         org-superstar-prettify-leading-stars t)
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+
 #+end_src
 
 *** paredit
@@ -890,12 +994,6 @@ scan-error if not."
               ("C-c p" . projectile-command-map)
               ("s-p" . projectile-command-map))
   :config (projectile-mode +1))
-#+end_src
-
-*** quelpa-use-package
-#+begin_src emacs-lisp
-(use-package quelpa-use-package
-  :after quelpa)
 #+end_src
 
 *** pollen
@@ -951,7 +1049,7 @@ scan-error if not."
 ;; Style that matches the formatting used by
 ;; src/tools/pgindent/perltidyrc.
 (defun pgsql-perl-style ()
-  "Perl style adjusted for PostgreSQL project"
+  "Perl style adjusted for PostgreSQL project."
   (interactive)
   (setq perl-brace-imaginary-offset 0
         perl-brace-offset 0
@@ -1016,8 +1114,10 @@ scan-error if not."
 
 *** s
 #+begin_src emacs-lisp
-(use-package s)
+(use-package s
+  :commands (s-downcase s-trim))
 #+end_src
+
 *** shell-script-mode
 Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 =#!/bin/bash= and =#!/usr/bin/env bash=.
@@ -1062,7 +1162,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 *** typo
 #+begin_src emacs-lisp
 (use-package typo
-  :defer t
   :config
   (progn
     (setq-default typo-language "English")
@@ -1089,7 +1188,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 *** yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
-  :defer t
   :config
   (setq yasindent-line 'fixed))
 #+end_src
@@ -1100,111 +1198,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (setq create-lockfiles nil)
-#+end_src
-
-** Work/Personal separation
-
-I have some work-specific Emacs configuration that I like to keep
-in a separate repo from my personal setup. Let's see if it's there.
-
-#+begin_src emacs-lisp
-(setq work-emacs-directory "~/.emacs.work.d/"
-      work-p (file-exists-p work-emacs-directory))
-#+end_src
-
-#+begin_src emacs-lisp
-(when work-p
-  (org-babel-load-file (expand-file-name "init.org" work-emacs-directory)))
-#+end_src
-
-If it's not, continue with my usual config.
-
-#+begin_src emacs-lisp
-(unless (or work-p (is-linux-p))
-  (setq grzm/org-directory "~/org/"
-        grzm/org-inbox-dot-org (expand-file-name "inbox.org" grzm/org-directory)
-        grzm/org-todo-dot-org (expand-file-name "todo.org" grzm/org-directory)
-        grzm/org-someday-maybe-dot-org (expand-file-name "someday-maybe.org" grzm/org-directory)
-
-        grzm/beorg-directory "/Users/grzm/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
-        grzm/beorg-inbox-dot-org (expand-file-name "inbox.org" grzm/beorg-directory)
-
-        grzm/org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
-
-        org-agenda-files
-        `("~/Documents/gtd/inbox.org"
-          ,grzm/org-inbox-dot-org
-          ,grzm/beorg-inbox-dot-org
-          ,grzm/org-todo-dot-org)
-
-        org-capture-templates
-        `(("t" "Task" entry
-           (file ,grzm/org-inbox-dot-org)
-           (file ,(expand-file-name "task.org" grzm/org-template-directory))
-           :prepend t
-           :empty-lines 1)
-
-          ("p" "Project" entry
-           (file+headline ,grzm/org-todo-dot-org "Projects")
-           (file ,(expand-file-name "project.org" grzm/org-template-directory))
-           :empty-lines 1)
-
-          ("w" "web reference" entry
-           (file ,grzm/org-inbox-dot-org)
-           (file ,(expand-file-name "web-ref.org" grzm/org-template-directory))
-           :prepend t
-           :empty-lines 1))
-
-        org-refile-targets `(((,grzm/org-todo-dot-org
-                               ,grzm/org-someday-maybe-dot-org)
-                              :maxlevel . 3))
-
-        org-tag-alist
-        '(("q" . ?q)
-          ("automower" . ?a)
-          ("postgresql" . ?p)
-          ("emacs" . ?e))
-
-        org-agenda-custom-commands
-        '(("n" "Agenda and all TODOs"
-           ((agenda "" nil)
-            (alltodo "" nil))
-           nil))
-
-        org-roam-directory "~/org/org-roam")
-  :end)
-#+end_src
-
-I've found Tasshin Michael Fogleman's work on using org-mode with GTD
-really helpful.  The templates and daily-review function are built on
-his work. See his [[https://github.com/mwfogleman/.emacs.d/blob/master/michael.org#capture-templates][Emacs config]] and his [[https://gist.github.com/mwfogleman/267b6bc7e512826a2c36cb57f0e3d854][Building a Second Brain
-templates]]. He also has posted a [[https://www.youtube.com/watch?v=LQwjSd3X9xE][video of how he uses them during his
-daily review]].
-
-#+begin_src emacs-lisp
-(unless work-p
-  (setq grzm/review-dot-org "/tmp/reviews.org")
-  (f-touch grzm/review-dot-org)
-
-  ;; This is buggy: first time after startup, calling C-c r, d raises the following error:
-  ;; (error "No capture template referred to by \"d\" keys")
-  ;; Subsequent calls seem fine, as does calling the function directly.
-  (defun grzm/new-daily-review ()
-    (interactive)
-    (let ((org-capture-templates `(("d" "Review: Daily Review" entry
-                                    (file+olp+datetree ,grzm/review-dot-org)
-                                    (file ,(expand-file-name "daily-review.org"
-                                                             grzm/org-template-directory))))))
-      (progn
-        (org-capture nil "d")
-        (org-capture-finalize t)
-        (org-speed-move-safe 'outline-up-heading)
-        (org-narrow-to-subtree)
-        (org-clock-in))))
-
-  (bind-keys :prefix-map review-map
-             :prefix "C-c r"
-             ("d" . grzm/new-daily-review)))
 #+end_src
 
 * Report initialization timing

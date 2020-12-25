@@ -1,4 +1,0 @@
-ALTER FUNCTION ${1:function_name}(${2:parameter_list}) OWNER TO postgres;
-REVOKE EXECUTE ON FUNCTION $1($2) FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION $1($2) TO GROUP dba, developer, maintenance, webserver;
-

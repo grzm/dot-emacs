@@ -1,3 +1,0 @@
-CREATE UNIQUE INDEX ${1:index_name} ON ${2:schema_name}.${3:table_name} (${4:column_list});
-COMMENT ON INDEX $2.$1 IS 
-'$0';

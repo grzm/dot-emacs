@@ -1,5 +1,0 @@
-CREATE SCHEMA ${1:schema_name}
-AUTHORIZATION ${2:postgres};
-ALTER SCHEMA $1 OWNER TO $2;
-COMMENT ON SCHEMA $1 IS
-'$0';

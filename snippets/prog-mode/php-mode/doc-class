@@ -1,8 +1,0 @@
-# key: dc
-# --
-/**
- * $0
- *
- * @author Michael Glaesemann <michael.glaesemann@myyearbook.com>
- * @since `(format-time-string "%Y-%m-%d" (current-time))`
- */

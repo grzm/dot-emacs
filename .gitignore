@@ -9,3 +9,6 @@ ido.last
 elisp/clubhouse-config.el
 grzm.el*
 README.el*
+straight
+transient
+bookmarks
