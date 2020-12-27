@@ -983,16 +983,15 @@ asterisk when making a heading prefix.
 
 #+begin_src emacs-lisp
 (use-package org-superstar
-  :demand t ;; If I don't demand it here, org-superstar doesn't load automatically
+  ;; :demand t ;; If I don't demand it here, org-superstar doesn't load automatically
+  :hook (org-mode . org-superstar-mode)
   :custom-face
   (org-superstar-header-bullet ((t (:family "Hiragino Sans"))))
   (org-superstar-leading ((t (:family "Hiragino Sans"))))
   :config
   (setq org-superstar-headline-bullets-list '("◉" "○" "◎" "●")
         org-superstar-leading-bullet ?○
-        org-superstar-prettify-leading-stars t)
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-
+        org-superstar-prettify-leading-stars t))
 #+end_src
 
 *** paredit
