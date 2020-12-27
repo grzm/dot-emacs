@@ -859,14 +859,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
                                 nil 'face 'org-indent))))))
 #+end_src
 
-*** ox-reveal
-#+begin_src emacs-lisp
-(use-package ox-reveal
-  :if (is-mac-p)
-  :config
-  (add-hook 'org-mode-hook #'(lambda () (load-library "ox-reveal"))))
-#+end_src
-
 *** org-bullets
 #+begin_src emacs-lisp
 (use-package org-bullets
@@ -991,6 +983,14 @@ asterisk when making a heading prefix.
   (setq org-superstar-headline-bullets-list '("◉" "○" "◎" "●")
         org-superstar-leading-bullet ?○
         org-superstar-prettify-leading-stars t))
+#+end_src
+
+*** ox-reveal
+#+begin_src emacs-lisp
+(use-package ox-reveal
+  :if (is-mac-p)
+  :config
+  (add-hook 'org-mode-hook #'(lambda () (load-library "ox-reveal"))))
 #+end_src
 
 *** paredit
