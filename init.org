@@ -306,6 +306,7 @@ Hide the toolbar.
 #+begin_src emacs-lisp
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;; I generally want scrollbars, but as a reminder of the option:
 ;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+end_src
 
