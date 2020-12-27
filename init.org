@@ -621,6 +621,13 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 (use-package flycheck-clj-kondo)
 #+end_src
 
+*** graphviz-dot-mode
+#+begin_src emacs-lisp
+(use-package graphviz-dot-mode
+  :config
+  (setq graphviz-dot-ident-width 2))
+#+end_src
+
 *** helm
 
 Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014/12/emacs-m-y-helm-show-kill-ring/][Sacha Chua]].
@@ -806,7 +813,9 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (org-babel-do-load-languages
    'org-babel-load-languages '((dot . t)))
-  (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t))))
+  (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((dot . t))))
 #+end_src
 
 https://emacs.stackexchange.com/questions/7429/how-to-customize-org-mode-indentation
