@@ -757,7 +757,8 @@ then build pdf-tools. Subsequent loading should succeed.
 (use-package pdf-tools
   :if window-system
   :config
-  (pdf-tools-install :no-query))
+  (pdf-tools-install :no-query)
+  (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1))))
 #+end_src
 
 *** org
