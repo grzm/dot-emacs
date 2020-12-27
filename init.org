@@ -879,7 +879,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 *** org-ref
 #+begin_src emacs-lisp
 (use-package org-ref)
-(require 'org-ref) ;; Requiring org-ref slows startup way way down
 #+end_src
 
 *** org-roam
