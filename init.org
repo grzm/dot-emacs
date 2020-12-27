@@ -750,6 +750,16 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
           "https://cdn.rawgit.com/isagalaev/highlight.js/master/src/styles/solarized-light.css")))
 #+end_src
 
+*** pdf-tools
+The first time loading a fresh Emacs installation, this will fail, but
+then build pdf-tools. Subsequent loading should succeed.
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :if window-system
+  :config
+  (pdf-tools-install :no-query))
+#+end_src
+
 *** org
 #+begin_src emacs-lisp
 (use-package org
@@ -866,6 +876,13 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
   :init
   (add-hook 'org-mode-hook
             (lambda () (org-bullets-mode 1))))
+#+end_src
+
+*** org-pdftools
+#+begin_src emacs-lisp
+(use-package org-pdftools
+  :if window-system
+  :hook (org-mode . org-pdftools-setup-link))
 #+end_src
 
 *** org-ref
