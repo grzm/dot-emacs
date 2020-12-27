@@ -387,12 +387,22 @@ Who likes to be interrupted by a bell? I certainly don't.
 (setq vc-follow-symlinks t)
 #+end_src
 
+** f and s
+I use the =f= (file) and =s= (string) packages to configure subsequent
+packages, so load them first.
 
 *** f
 #+begin_src emacs-lisp
 (use-package f
  :commands (f-touch))
 #+end_src
+
+*** s
+#+begin_src emacs-lisp
+(use-package s
+  :commands (s-downcase s-join s-trim))
+#+end_src
+
 
 ** Work/Personal separation
 
@@ -1127,12 +1137,6 @@ scan-error if not."
          ("Rakefile\'" . ruby-mode)
          ("rakefile\'" . ruby-mode)
          ("\\.gemspec'" . ruby-mode)))
-#+end_src
-
-*** s
-#+begin_src emacs-lisp
-(use-package s
-  :commands (s-downcase s-trim))
 #+end_src
 
 *** shell-script-mode
