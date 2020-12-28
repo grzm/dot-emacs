@@ -432,6 +432,7 @@ If it's not, continue with my usual config.
         grzm/beorg-inbox-dot-org (expand-file-name "inbox.org" grzm/beorg-directory)
 
         grzm/org-template-directory (expand-file-name "org/templates/" user-emacs-directory)
+        grzm/zotero-bib "~/Documents/references/bibliography/zotero.bib"
 
         org-capture-templates
         `(("t" "Task" entry
@@ -468,7 +469,8 @@ If it's not, continue with my usual config.
            nil))
 
         org-roam-directory "~/org/org-roam"
-        org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory)))
+        org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory)
+        grzm/bibtex-notes-directory (expand-file-name "bibliography/notes/" org-roam-directory)))
 #+end_src
 
 I've found Tasshin Michael Fogleman's work on using org-mode with GTD
@@ -653,6 +655,21 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
   (helm-autoresize-mode 1))
 #+end_src
 
+*** helm-bibtex
+helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration is here.
+
+#+begin_src emacs-lisp
+(use-package helm-bibtex
+  :config
+  (setq bibtex-completion-bibliography grzm/zotero-bib
+        bibtex-completion-notes-path grzm/bibtex-notes-directory
+        bibtex-completion-pdf-field "file"
+
+        bibtex-completion-notes-template-multiple-files
+        (f-read-text (expand-file-name "bibtex-completion-notes-template-multiple-files"
+                                       grzm/org-template-directory))))
+#+end_src
+
 *** helm-projectile
 #+begin_src emacs-lisp
 (use-package helm-projectile)
@@ -825,6 +842,12 @@ then build pdf-tools. Subsequent loading should succeed.
   (org-babel-do-load-languages
    'org-babel-load-languages '((dot . t)))
   (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
+
+  ;; By default, org-file-apps has pdf mapped to 'default, which means
+  ;; org-open-file will open pdfs using the default for the system, which,
+  ;; on macOS is Preview. Which, if I want to open PDFs with pdf-tools,
+  ;; defeats the purpose.
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (org-babel-do-load-languages
    'org-babel-load-languages '((dot . t))))
 #+end_src
@@ -887,8 +910,17 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 #+end_src
 
 *** org-ref
+The =org-ref= package uses =helm-bibtex= as its default implementation, so
+I've included most of the configuration there.
+
 #+begin_src emacs-lisp
-(use-package org-ref)
+(use-package org-ref
+  :demand t ;; I'd really like to autoload org-ref, but I don't know how.
+  :config
+  (setq org-ref-default-bibliography (list grzm/zotero-bib)
+        ;; default completion library is org-ref-helm-bibtex
+        ;; org-ref-completion-library 'org-ref-helm-bibtex
+        org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex))
 #+end_src
 
 *** org-roam
