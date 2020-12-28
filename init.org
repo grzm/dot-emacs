@@ -131,7 +131,7 @@ straight itself.
 
 I tried this first on 2020-12-06, but reverted because I couldn't
 figure out issues around org-ref (likely related to my ignorance
-around autoloading). However, the [[the melpa issues on [[the melpa issues on https://github.com/melpa/melpa/issues/7312#issuecomment-751142747][melpa packing issues on 2020-12-24]],
+around autoloading). However, the melpa issues on [[https://github.com/melpa/melpa/issues/7312#issuecomment-751142747][melpa packaging issues on 2020-12-24]],
 um, scared me straight, so I'm giving it another go.
 
 First, bootstrap straight.el.
