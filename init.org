@@ -171,6 +171,12 @@ First, bootstrap straight.el.
 (defun grzm/is-m1-arm-p ()
   (grzm/is-koke-p))
 
+(defun grzm/use-selectrum-p ()
+  (grzm/is-koke-p))
+
+(defun grzm/use-prescient-p ()
+  (grzm/use-selectrum-p))
+
 #+end_src
 
 The built-in ~window-system~ function and variable are also useful (and
@@ -597,6 +603,13 @@ daily review]].
   :hook (after-init . global-company-mode))
 #+end_src
 
+*** company-prescient
+#+begin_src emacs-lisp
+(when (grzm/use-prescient-p)
+  (use-package company-prescient
+    :config
+    (company-prescient-mode +1)))
+#+end_src
 *** delight
 #+begin_src emacs-lisp
 (use-package delight)
@@ -1189,6 +1202,14 @@ scan-error if not."
 (add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
 #+end_src
 
+*** prescient
+#+begin_src emacs-lisp
+(when (grzm/use-selectrum-p)
+  (use-package prescient
+    :config
+    (prescient-persist-mode +1)))
+#+end_src
+
 *** Emacs server
 #+begin_src emacs-lisp
 (load "server")
@@ -1226,6 +1247,23 @@ scan-error if not."
          ("Rakefile\'" . ruby-mode)
          ("rakefile\'" . ruby-mode)
          ("\\.gemspec'" . ruby-mode)))
+#+end_src
+
+*** selectrum
+#+begin_src emacs-lisp
+(when (grzm/use-selectrum-p)
+  (use-package selectrum
+    :config
+    (selectrum-mode +1)))
+#+end_src
+
+*** selectrum-prescient
+
+#+begin_src emacs-lisp
+(when (grzm/use-selectrum-p)
+  (use-package selectrum-prescient
+    :config
+    (selectrum-prescient-mode +1)))
 #+end_src
 
 *** shell-script-mode
