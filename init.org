@@ -181,6 +181,9 @@ First, bootstrap straight.el.
 (defun grzm/use-prescient-p ()
   (grzm/use-selectrum-p))
 
+(defun grzm/prefer-helm-p ()
+  (not (grzm/use-selectrum-p)))
+
 (defun grzm/use-ivy-p ()
   (not (grzm/use-selectrum-p)))
 #+end_src
@@ -704,8 +707,9 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
          ("C-z" . helm-select-action)
          ("A-v" . helm-previous-page))
   :config
-  (helm-mode 1)
-  (helm-autoresize-mode 1))
+  (when (grzm/prefer-helm-p)
+    (helm-mode 1)
+    (helm-autoresize-mode 1)))
 #+end_src
 
 *** helm-org-rifle
