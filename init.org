@@ -587,6 +587,16 @@ daily review]].
   (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
 #+end_src
 
+*** company
+#+begin_src emacs-lisp
+(use-package company
+  :init
+  (setq company-idle-delay nil
+        company-async-timeout 15
+        company-tooltip-align-annotations t)
+  :hook (after-init . global-company-mode))
+#+end_src
+
 *** delight
 #+begin_src emacs-lisp
 (use-package delight)
