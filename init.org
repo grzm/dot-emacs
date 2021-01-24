@@ -710,10 +710,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
 *** helm-org-rifle
 #+begin_src emacs-lisp
-(use-package helm-org-rifle
-  :config
-  (helm-mode 1)
-  (helm-autoresize-mode 1))
+(use-package helm-org-rifle)
 #+end_src
 
 *** helm-bibtex
