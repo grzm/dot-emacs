@@ -5,7 +5,7 @@
 (defconst grzm-ivory-ghost-white "#f8f8ff")
 (defconst grzm-ivory-anti-flash-white "#f2f3f4")
 (defconst grzm-ivory-baby-powder "#fefefa")
-(defconst grzm-ivory-background ivory-anti-flash-white)
+(defconst grzm-ivory-background grzm-ivory-anti-flash-white)
 (defconst grzm-ivory-base "black")
 (defconst grzm-ivory-gray "gray")
 
