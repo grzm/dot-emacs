@@ -43,11 +43,12 @@ Indentation variables are now local.
 Indentation setup for shell type zsh
 #+end_quote
 
-These messages are hard-coded when sh-mode is invoked. You can get rid
+These messages are hard-coded when =sh-mode= is invoked. You can get rid
 of these messages using advice [[https://emacs.stackexchange.com/a/53009][this response]] in Stack
-Overflow. Another way would be to use el-patch to remove these
+Overflow. Another way would be to use [[https://github.com/raxod502/el-patch][el-patch]] to remove these
 hard-coded messages as Radon Rosborough does in the [[https://github.com/raxod502/radian/commit/4ae79d629c4360a5f281cfc330154c900720d4b1][radian
-package]]. But for now I'll just leave this note.
+package]]. But for now I'll just leave this note. (Wow. [[https://github.com/raxod502][Radon Rosborough]]
+is cranking out great Emacs packages!)
 
 ** Initialization timing
 
