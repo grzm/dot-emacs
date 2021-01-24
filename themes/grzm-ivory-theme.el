@@ -53,6 +53,12 @@
  `(font-lock-type-face ((t (:foreground ,ivory-base :weight bold))))
  `(font-lock-variable-name-face ((t (:foreground ,ivory-base))))
 
+ '(git-gutter:added ((t (:foreground "#aaaaaa" :inherit default))))
+ '(git-gutter:deleted ((t (:foreground "#aaaaaa" :inherit default))))
+ '(git-gutter:modified ((t (:foreground "#aaaaaa" :inherit default))))
+ '(git-gutter:separator ((t (:foreground "#aaaaaa" :inherit default))))
+ '(git-gutter:unchanged ((t (:background "#dddddd" :inherit default))))
+
  '(gnus-button ((t (:inherit button))))
  '(gnus-header-name ((t (:box (:line-width 1 :style released-button) :weight bold))))
  '(gnus-group-mail-1 ((t (:inherit gnus-group-mail-1-empty :weight bold))))
