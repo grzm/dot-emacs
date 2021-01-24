@@ -160,7 +160,7 @@ First, bootstrap straight.el.
 ** Detection
 #+begin_src emacs-lisp
 (defun is-mac-p ()
-   (eq system-type 'darwin))
+  (eq system-type 'darwin))
 
 (defun is-linux-p ()
   (eq system-type 'gnu/linux))
@@ -964,7 +964,7 @@ I've included most of the configuration there.
            :unnarrowed t))
 
         org-roam-dailies-directory "daily/"
-        
+
         org-roam-dailies-capture-templates
         '(("d" "default" entry
            #'org-roam-capture--get-point
