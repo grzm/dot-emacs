@@ -181,6 +181,8 @@ First, bootstrap straight.el.
 (defun grzm/use-prescient-p ()
   (grzm/use-selectrum-p))
 
+(defun grzm/use-ivy-p ()
+  (not (grzm/use-selectrum-p)))
 #+end_src
 
 The built-in ~window-system~ function and variable are also useful (and
@@ -741,12 +743,13 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
 
 *** ivy
 #+begin_src emacs-lisp
+(when (grzm/use-ivy-p)
   (use-package ivy
     :config
     (setq ivy-use-virtual-buffers t
           enable-recursive-minibuffers t)
     (ivy-mode 1)
-    :bind ("C-w" . ivy-backward-kill-word))
+    :bind ("C-w" . ivy-backward-kill-word)))
 #+end_src
 
 *** lua
