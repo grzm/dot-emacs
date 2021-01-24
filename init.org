@@ -610,6 +610,15 @@ daily review]].
     :config
     (company-prescient-mode +1)))
 #+end_src
+
+*** ctrlf
+isearch replacement
+#+begin_src emacs-lisp
+(use-package ctrlf
+  :config
+  (ctrlf-mode t))
+#+end_src
+
 *** delight
 #+begin_src emacs-lisp
 (use-package delight)
