@@ -164,6 +164,13 @@ First, bootstrap straight.el.
 
 (defun is-linux-p ()
   (eq system-type 'gnu/linux))
+
+(defun grzm/is-koke-p ()
+  (string-equal system-name "koke.local"))
+
+(defun grzm/is-m1-arm-p ()
+  (grzm/is-koke-p))
+
 #+end_src
 
 The built-in ~window-system~ function and variable are also useful (and
@@ -780,11 +787,12 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
 The first time loading a fresh Emacs installation, this will fail, but
 then build pdf-tools. Subsequent loading should succeed.
 #+begin_src emacs-lisp
-(use-package pdf-tools
-  :if window-system
-  :config
-  (pdf-tools-install :no-query)
-  (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1))))
+(when (not (grzm/is-m1-arm-p))
+  (use-package pdf-tools
+    :if window-system
+    :config
+    (pdf-tools-install :no-query)
+    (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1)))))
 #+end_src
 
 *** org
@@ -913,9 +921,10 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 
 *** org-pdftools
 #+begin_src emacs-lisp
-(use-package org-pdftools
-  :if window-system
-  :hook (org-mode . org-pdftools-setup-link))
+(when (not (grzm/is-m1-arm-p))
+  (use-package org-pdftools
+    :if window-system
+    :hook (org-mode . org-pdftools-setup-link)))
 #+end_src
 
 *** org-ref
