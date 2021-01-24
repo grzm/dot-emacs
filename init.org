@@ -170,7 +170,7 @@ First, bootstrap straight.el.
   (eq system-type 'gnu/linux))
 
 (defun grzm/is-koke-p ()
-  (string-equal system-name "koke.local"))
+  (string-equal (system-name) "koke.local"))
 
 (defun grzm/is-m1-arm-p ()
   (grzm/is-koke-p))
