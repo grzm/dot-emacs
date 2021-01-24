@@ -639,6 +639,13 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 (use-package flycheck-clj-kondo)
 #+end_src
 
+*** git-gutter and git-gutter-fringe
+#+begin_src emacs-lisp
+(let ((package-name (if (display-graphic-p) 'git-gutter-fringe 'git-gutter)))
+  (eval `(use-package ,package-name
+    :init (global-git-gutter-mode))))
+#+end_src
+
 *** graphviz-dot-mode
 #+begin_src emacs-lisp
 (use-package graphviz-dot-mode
