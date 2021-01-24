@@ -19,6 +19,10 @@ I generally use this configuration with [[https://emacsformacosx.com][Emacs for 
 
 My brain works better in lexical scope.
 
+=lexical-binding= is the default for =(version< emacs-version
+"27.1")=. That's what I'm using now, so I've commented this out. I'm
+leaving it for reference.
+
 #+begin_src emacs-lisp
 ;;; -*- lexical-binding: t -*-
 #+end_src
