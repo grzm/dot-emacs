@@ -815,6 +815,19 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
   (let ((t-val (or t-val (current-time))))
     (format-time-string "%FT%T.%3N%z"  t-val)))
 
+(defun grzm/crockford-encode (integer-or-string)
+  "Encode a base-10 INTEGER-OR-STRING using Crockford base32 encoding."
+  (let* ((i-arg (if (stringp integer-or-string)
+                    integer-or-string
+                  (number-to-string integer-or-string))))
+    (s-trim
+     (shell-command-to-string
+      (s-join " " (list "~/dev/crockford/bin/encode"
+                        (shell-quote-argument i-arg)))))))
+
+(defun grzm/crockford-encode-time (t-epoch)
+  (s-downcase (grzm/crockford-encode (format-time-string "%s" t-epoch))))
+
 (defun grzm/random-uuid ()
   (interactive)
   (s-trim (s-downcase (shell-command-to-string "uuidgen"))))
@@ -1012,7 +1025,12 @@ I've included most of the configuration there.
            "%?"
            ;; UTC timestamp in file name courtesy of https://github.com/jethrokuan/org-roam/issues/416
            :file-name "%(format-time-string \"%Y%m%dT%H%M%SZ--${slug}\" (current-time) t)"
-           :head "#+TITLE: ${title}\n"
+           :head "#+TITLE: ${title}
+:PROPERTIES:
+:created-at: %(grzm/iso-8601 (current-time))
+:zk-id: %(grzm/crockford-encode-time (current-time))
+:END:
+"
            :unnarrowed t))
 
         org-roam-capture-ref-templates
@@ -1023,6 +1041,7 @@ I've included most of the configuration there.
 ,#+ROAM_KEY: ${ref}
 :PROPERTIES:
 :created-at: %(grzm/iso-8601 (current-time))
+:zk-id: %(grzm/crockford-encode-time (current-time))
 :END:
 - source :: ${ref}"
            :unnarrowed t))
