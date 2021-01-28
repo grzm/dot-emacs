@@ -128,7 +128,7 @@ things:
   * convince myself that the project is going to be maintained for the
     foreseeable future.
 
-I was convinced that I could move to straight.el by a blog post by
+I was convinced that I could move to [[https://github.com/raxod502/straight.el][straight.el]] by a blog post by
 David Crook, [[https://github.crookster.org/switching-to-straight.el-from-emacs-26-builtin-package.el/]["Switching to straight.el from Emacs 26 builtin
 package.el"]]. The situation has improved quite a bit since the post was
 written (13 November 2018); the org-specific fixes are now part of
