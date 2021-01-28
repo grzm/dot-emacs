@@ -201,6 +201,9 @@ startup). It can default to =/= which is rarely what I want.
 (setq default-directory "~/")
 #+end_src
 
+All of my configuration should be declared here. I'm not going to use
+the custom settings interface, so use a temporary file for anyone that
+thinks they need to reference it.
 #+begin_src emacs-lisp
 (setq custom-file (make-temp-file "emacs--custom-file"))
 #+end_src
