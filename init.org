@@ -195,6 +195,12 @@ not using gui Emacs, so I'm including them only ~:if window-system~.
 
 * Configuration
 
+Set default directory to =$HOME= when it's not otherwise set (such as
+startup). It can default to =/= which is rarely what I want.
+#+begin_src emacs-lisp
+(setq default-directory "~/")
+#+end_src
+
 #+begin_src emacs-lisp
 (setq custom-file (make-temp-file "emacs--custom-file"))
 #+end_src
