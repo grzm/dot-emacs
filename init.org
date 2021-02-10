@@ -329,7 +329,9 @@ When in a windowing system, set the default window size.
 (add-to-list 'custom-theme-load-path
                (file-name-as-directory
                 (expand-file-name "themes" user-emacs-directory)))
-(let* ((theme (if (window-system) 'grzm-ivory 'minima-ebony)))
+(let* ((theme (cond ((window-system) 'grzm-ivory)
+                    ((is-linux-p) 'solarized-dark)
+                    (t 'minima-ebony))))
   (load-theme theme t))
 #+end_src
 
