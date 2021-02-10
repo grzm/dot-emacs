@@ -1342,7 +1342,8 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
     (eldoc-mode +1)
     (company-mode +1))
   :hook ((typescript-mode . grzm/set-up-tide-mode)
-         (before-save . tide-format-before-save))
+         (before-save . tide-format-before-save)
+         (after-save . tide-auto-compile-file))
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 #+end_src
