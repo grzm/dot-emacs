@@ -639,10 +639,8 @@ daily review]].
 
 *** company-prescient
 #+begin_src emacs-lisp
-(when (grzm/use-prescient-p)
-  (use-package company-prescient
-    :config
-    (company-prescient-mode +1)))
+(use-package company-prescient
+  :init (company-prescient-mode +1))
 #+end_src
 
 *** ctrlf
@@ -750,11 +748,6 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
         bibtex-completion-notes-template-multiple-files
         (f-read-text (expand-file-name "bibtex-completion-notes-template-multiple-files"
                                        grzm/org-template-directory))))
-#+end_src
-
-*** helm-projectile
-#+begin_src emacs-lisp
-(use-package helm-projectile)
 #+end_src
 
 *** inf-clojure
@@ -1191,12 +1184,14 @@ scan-error if not."
 *** projectile
 #+begin_src emacs-lisp
 (use-package projectile
-  :after helm
   :delight '(:eval (concat " [🅟 " (projectile-project-name) "]"))
+  :init (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)
               ("s-p" . projectile-command-map))
-  :config (projectile-mode +1))
+  :config
+  ;; use completing-read https://github.com/raxod502/selectrum/issues/112#issuecomment-644815356
+  (setq projectile-completion-system 'default))
 #+end_src
 
 *** pollen
@@ -1278,10 +1273,8 @@ scan-error if not."
 
 *** prescient
 #+begin_src emacs-lisp
-(when (grzm/use-selectrum-p)
-  (use-package prescient
-    :config
-    (prescient-persist-mode +1)))
+(use-package prescient
+  :init (prescient-persist-mode +1))
 #+end_src
 
 *** Emacs server
@@ -1325,19 +1318,14 @@ scan-error if not."
 
 *** selectrum
 #+begin_src emacs-lisp
-(when (grzm/use-selectrum-p)
-  (use-package selectrum
-    :config
-    (selectrum-mode +1)))
+(use-package selectrum
+  :init (selectrum-mode +1))
 #+end_src
 
 *** selectrum-prescient
-
 #+begin_src emacs-lisp
-(when (grzm/use-selectrum-p)
-  (use-package selectrum-prescient
-    :config
-    (selectrum-prescient-mode +1)))
+(use-package selectrum-prescient
+  :init (selectrum-prescient-mode +1))
 #+end_src
 
 *** shell-script-mode
