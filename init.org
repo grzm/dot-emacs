@@ -595,6 +595,7 @@ daily review]].
 
 #+begin_src emacs-lisp
 (put 'cider-clojure-cli-global-options 'safe-local-variable #'stringp)
+(put 'cider-preferred-build-tool 'safe-local-variable #'symbolp)
 (put 'cider-boot-parameters 'safe-local-variable #'stringp)
 #+end_src
 
