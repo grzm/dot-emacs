@@ -611,7 +611,6 @@ daily review]].
 #+begin_src emacs-lisp
 (use-package clojure-mode
   :config
-  (require 'flycheck-clj-kondo)
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically nil)
   (defun my-clojure-mode-hook ()
@@ -619,7 +618,10 @@ daily review]].
     (put-clojure-indent 'defui '(1 nil nil (1)))
     (rainbow-delimiters-mode))
   (add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
-  (add-hook 'clojure-mode-hook 'my-clojure-mode-hook))
+  (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp))
 #+end_src
 
 *** company
@@ -695,11 +697,6 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   :init (global-flycheck-mode))
 #+end_src
 
-*** flycheck-clj-kondo
-#+begin_src emacs-lisp
-(use-package flycheck-clj-kondo)
-#+end_src
-
 *** git-gutter and git-gutter-fringe
 #+begin_src emacs-lisp
 (let ((package-name (if (display-graphic-p) 'git-gutter-fringe 'git-gutter)))
@@ -771,6 +768,24 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
           enable-recursive-minibuffers t)
     (ivy-mode 1)
     :bind ("C-w" . ivy-backward-kill-word)))
+#+end_src
+
+*** lsp-mode
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :config
+  (setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      lsp-headerline-breadcrumb-enable nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      ;; lsp-lens-enable t
+      lsp-file-watch-threshold 10000
+      lsp-signature-auto-activate nil
+      lsp-enable-indentation nil ;; uncomment to use cider indentation instead of lsp
+      ;; lsp-enable-completion-at-point nil ;; uncomment to use cider completion instead of lsp
+))
 #+end_src
 
 *** lua
