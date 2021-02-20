@@ -15,3 +15,5 @@ bookmarks
 projectile-bookmarks.eld
 var
 auto-save-list
+.cache
+.lsp-session-v1
