@@ -613,6 +613,7 @@ daily review]].
 *** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
+  :delight " λ"
   :config
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically nil)
