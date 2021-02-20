@@ -755,13 +755,14 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
 #+begin_src emacs-lisp
 (use-package helm-bibtex
   :config
-  (setq bibtex-completion-bibliography grzm/zotero-bib
-        bibtex-completion-notes-path grzm/bibtex-notes-directory
-        bibtex-completion-pdf-field "file"
+  (unless (or work-p (is-linux-p))
+    (setq bibtex-completion-bibliography grzm/zotero-bib
+          bibtex-completion-notes-path grzm/bibtex-notes-directory
+          bibtex-completion-pdf-field "file"
 
-        bibtex-completion-notes-template-multiple-files
-        (f-read-text (expand-file-name "bibtex-completion-notes-template-multiple-files"
-                                       grzm/org-template-directory))))
+          bibtex-completion-notes-template-multiple-files
+          (f-read-text (expand-file-name "bibtex-completion-notes-template-multiple-files"
+                                         grzm/org-template-directory)))))
 #+end_src
 
 *** inf-clojure
@@ -897,7 +898,7 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
 The first time loading a fresh Emacs installation, this will fail, but
 then build pdf-tools. Subsequent loading should succeed.
 #+begin_src emacs-lisp
-(when (not (grzm/is-m1-arm-p))
+(when (not (or (grzm/is-m1-arm-p) work-p))
   (use-package pdf-tools
     :if window-system
     :config
@@ -1046,10 +1047,11 @@ I've included most of the configuration there.
 (use-package org-ref
   :demand t ;; I'd really like to autoload org-ref, but I don't know how.
   :config
-  (setq org-ref-default-bibliography (list grzm/zotero-bib)
-        ;; default completion library is org-ref-helm-bibtex
-        ;; org-ref-completion-library 'org-ref-helm-bibtex
-        org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex))
+  (unless (or work-p (is-linux-p))
+    (setq org-ref-default-bibliography (list grzm/zotero-bib)
+          ;; default completion library is org-ref-helm-bibtex
+          ;; org-ref-completion-library 'org-ref-helm-bibtex
+          org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex)))
 #+end_src
 
 *** org-roam
