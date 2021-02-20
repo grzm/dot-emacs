@@ -588,6 +588,8 @@ daily review]].
         cider-eval-result-prefix " ;; => "
         cider-font-lock-dynamically '(macro core function var)
         cider-repl-pop-to-buffer-on-connect 'display-only
+        cider-repl-display-help-banner nil
+        cider-repl-use-pretty-printing t
         cider-boot-parameters "cider repl -w wait"))
 #+end_src
 
