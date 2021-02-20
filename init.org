@@ -291,6 +291,15 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
   (setq auth-sources sources))
 #+end_src
 
+I don't want to hear about advice redefinitions, messages like
+#+begin_quote
+ad-handle-definition: ‘vc-revert’ got redefined
+#+end_quote
+From [[https://andrewjamesjohnson.com/suppressing-ad-handle-definition-warnings-in-emacs/][Andrew Johnson]]
+#+begin_src emacs-lisp
+(setq ad-redefinition-action 'accept)
+#+end_src
+
 ** UI settings
 
 Quiet startup: Don't display the splash screen, start with a clear
