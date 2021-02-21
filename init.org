@@ -903,6 +903,7 @@ then build pdf-tools. Subsequent loading should succeed.
 *** org
 #+begin_src emacs-lisp
 (use-package org
+  :delight org-mode "✎"
   :bind (("C-c l" . org-store-link)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda))
