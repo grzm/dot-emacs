@@ -574,6 +574,16 @@ daily review]].
   (beacon-mode 1))
 #+end_src
 
+*** blackout
+#+begin_src emacs-lisp
+(use-package blackout)
+
+(with-eval-after-load 'auto-revert
+    (blackout 'auto-revert-mode))
+
+(with-eval-after-load 'eldoc
+    (blackout 'eldoc-mode))
+#+end_src
 *** browse-kill-ring
 #+begin_src emacs-lisp
 (use-package browse-kill-ring)
@@ -613,7 +623,7 @@ daily review]].
 *** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
-  :delight " λ"
+  :blackout "λ"
   :config
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically nil)
@@ -631,6 +641,7 @@ daily review]].
 *** company
 #+begin_src emacs-lisp
 (use-package company
+  :blackout " ㍿"
   :init
   (setq company-idle-delay nil
         company-async-timeout 15
@@ -719,7 +730,7 @@ Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014
 
 #+begin_src emacs-lisp
 (use-package helm
-  :delight " Ⓗ"
+  :blackout " Ⓗ"
   :bind (("M-y" . helm-show-kill-ring)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
@@ -1037,7 +1048,7 @@ I've included most of the configuration there.
 #+begin_src emacs-lisp
 (use-package org-roam
   :if (is-mac-p)
-  :delight " 🅡"
+  :blackout " 🅡"
   :hook (after-init . org-roam-mode)
   :bind (("C-c n f" . org-roam-find-file)
          :map org-roam-mode-map
@@ -1162,7 +1173,7 @@ asterisk when making a heading prefix.
 *** paredit
 #+begin_src emacs-lisp
 (use-package paredit
-  :delight " (p)"
+  :blackout " 🄟"
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
   :config
   (defun check-region-parens ()
