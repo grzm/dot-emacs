@@ -1183,6 +1183,7 @@ asterisk when making a heading prefix.
 *** paredit
 #+begin_src emacs-lisp
 (use-package paredit
+  :straight (:host github :repo "emacsmirror/paredit" :flavor melpa)
   :blackout " 🄟"
   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
   :config
