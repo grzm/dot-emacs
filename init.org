@@ -1211,7 +1211,8 @@ scan-error if not."
               ("s-p" . projectile-command-map))
   :config
   ;; use completing-read https://github.com/raxod502/selectrum/issues/112#issuecomment-644815356
-  (setq projectile-completion-system 'default))
+  (setq projectile-completion-system 'default
+        projectile-use-git-grep t))
 #+end_src
 
 *** pollen
