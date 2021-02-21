@@ -1033,7 +1033,7 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
 
 *** org-pdftools
 #+begin_src emacs-lisp
-(when (not (grzm/is-m1-arm-p))
+(unless (or work-p (grzm/is-m1-arm-p))
   (use-package org-pdftools
     :if window-system
     :hook (org-mode . org-pdftools-setup-link)))
