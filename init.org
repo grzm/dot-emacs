@@ -714,7 +714,9 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
 #+begin_src emacs-lisp
 (let ((package-name (if (display-graphic-p) 'git-gutter-fringe 'git-gutter)))
   (eval `(use-package ,package-name
-    :init (global-git-gutter-mode))))
+           :init (global-git-gutter-mode))))
+;; Don't need git-gutter to tell us it's active.
+(setq git-gutter:lighter "")
 #+end_src
 
 *** graphviz-dot-mode
