@@ -1199,7 +1199,7 @@ scan-error if not."
 *** projectile
 #+begin_src emacs-lisp
 (use-package projectile
-  :delight '(:eval (concat " [🅟 " (projectile-project-name) "]"))
+  :delight '(:eval (concat " 𝓟/" (projectile-project-name)))
   :init (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)
