@@ -783,6 +783,11 @@ helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration i
 *** lsp-mode
 #+begin_src emacs-lisp
 (use-package lsp-mode
+  :delight '(" 𝕃" (lsp--buffer-workspaces
+                   ("/" (:eval (mapconcat (lambda (w)
+                                            (lsp--workspace-print w))
+                                          lsp--buffer-workspaces
+                                          "/")))))
   :config
   (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
