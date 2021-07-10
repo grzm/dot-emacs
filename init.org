@@ -1378,7 +1378,7 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
          (after-save . tide-auto-compile-file)))
 #+end_src
 
-***  typescript
+*** typescript
 #+begin_src emacs-lisp
 (use-package typescript-mode
   :blackout "𝓣"
