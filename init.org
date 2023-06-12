@@ -174,18 +174,6 @@ First, bootstrap straight.el.
 
 (defun grzm/is-m1-arm-p ()
   (grzm/is-koke-p))
-
-(defun grzm/use-selectrum-p ()
-  (grzm/is-koke-p))
-
-(defun grzm/use-prescient-p ()
-  (grzm/use-selectrum-p))
-
-(defun grzm/prefer-helm-p ()
-  (not (grzm/use-selectrum-p)))
-
-(defun grzm/use-ivy-p ()
-  (not (grzm/use-selectrum-p)))
 #+end_src
 
 The built-in ~window-system~ function and variable are also useful (and
@@ -726,62 +714,17 @@ Structural editing rocks. Use it for =emacs-lisp=, too.
   (setq graphviz-dot-ident-width 2))
 #+end_src
 
-*** helm
-
-Binding =M-y= to =helm-show-kill-ring= is from [[https://sachachua.com/blog/2014/12/emacs-m-y-helm-show-kill-ring/][Sacha Chua]].
-
-#+begin_src emacs-lisp
-(use-package helm
-  :blackout " Ⓗ"
-  :bind (("M-y" . helm-show-kill-ring)
-         :map helm-map
-         ("<tab>" . helm-execute-persistent-action)
-         ("C-z" . helm-select-action)
-         ("A-v" . helm-previous-page))
-  :config
-  (when (grzm/prefer-helm-p)
-    (helm-mode 1)
-    (helm-autoresize-mode 1)))
-#+end_src
-
-*** helm-org-rifle
-#+begin_src emacs-lisp
-(use-package helm-org-rifle)
-#+end_src
-
-*** helm-bibtex
-helm-bibtex includes bibtex-completion, so =bibtex-completion-*= configuration is here.
-
-#+begin_src emacs-lisp
-(use-package helm-bibtex
-  :config
-  (unless (or work-p (is-linux-p))
-    (setq bibtex-completion-bibliography grzm/zotero-bib
-          bibtex-completion-notes-path grzm/bibtex-notes-directory
-          bibtex-completion-pdf-field "file"
-
-          bibtex-completion-notes-template-multiple-files
-          (f-read-text (expand-file-name "bibtex-completion-notes-template-multiple-files"
-                                         grzm/org-template-directory)))))
-#+end_src
-
 *** inf-clojure
 #+begin_src emacs-lisp
 (use-package inf-clojure)
 #+end_src
 
-*** ivy
-#+begin_src emacs-lisp
-(when (grzm/use-ivy-p)
-  (use-package ivy
-    :config
-    (setq ivy-use-virtual-buffers t
-          enable-recursive-minibuffers t)
-    (ivy-mode 1)
-    :bind ("C-w" . ivy-backward-kill-word)))
-#+end_src
-
 *** lsp-mode
+**** Configuration notes
+lsp stores and caches information in various locations
+lsp-session-file stores information about which sessions lsp knows about.
+lsp project root directories have a =.lsp= directory which includes cached information about the code in the specific project.
+
 #+begin_src emacs-lisp
 (use-package lsp-mode
   :delight '(" 𝕃" (lsp--buffer-workspaces
@@ -972,11 +915,6 @@ then build pdf-tools. Subsequent loading should succeed.
    'org-babel-load-languages '((dot . t)))
   (add-hook 'org-mode-hook #'(lambda () (variable-pitch-mode t)))
 
-  ;; By default, org-file-apps has pdf mapped to 'default, which means
-  ;; org-open-file will open pdfs using the default for the system, which,
-  ;; on macOS is Preview. Which, if I want to open PDFs with pdf-tools,
-  ;; defeats the purpose.
-  (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (org-babel-do-load-languages
    'org-babel-load-languages '((dot . t))))
 #+end_src
