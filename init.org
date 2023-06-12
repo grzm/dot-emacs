@@ -360,10 +360,6 @@ Who likes to be interrupted by a bell? I certainly don't.
 #+end_src
 
 #+begin_src emacs-lisp
-(show-paren-mode t)
-#+end_src
-
-#+begin_src emacs-lisp
 
 ;; Use C-x C-m as a shortcut for M-x: Let's save our small fingers!
 ;; Hint from Steve Yegge: http://steve.yegge.googlepages.com/effective-emacs
@@ -598,16 +594,6 @@ daily review]].
 #+end_src
 
 
-*** clj-refactor
-#+begin_src emacs-lisp
-(use-package clj-refactor
-  :config
-  (setq cljr-assume-language-context (quote clj)
-        cljr-clojure-test-declaration "[clojure.test :as test :refer [are deftest is]]")
-  ;; :bind ("/" . cljr-slash)
-  )
-#+end_src
-
 *** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
@@ -649,6 +635,12 @@ isearch replacement
 (use-package ctrlf
   :config
   (ctrlf-mode t))
+#+end_src
+
+*** dash
+Required by lsp
+#+begin_src emacs-lisp
+(use-package dash)
 #+end_src
 
 *** delight
@@ -734,17 +726,18 @@ lsp project root directories have a =.lsp= directory which includes cached infor
                                           "/")))))
   :config
   (setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      lsp-headerline-breadcrumb-enable nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      ;; lsp-lens-enable t
-      lsp-file-watch-threshold 10000
-      lsp-signature-auto-activate nil
-      lsp-enable-indentation nil ;; uncomment to use cider indentation instead of lsp
-      ;; lsp-enable-completion-at-point nil ;; uncomment to use cider completion instead of lsp
-))
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        lsp-headerline-breadcrumb-enable nil
+        company-idle-delay 0.0
+        company-minimum-prefix-length 1
+        lsp-enable-snippet nil
+        ;; lsp-lens-enable t
+        lsp-file-watch-threshold 10000
+        lsp-signature-auto-activate nil
+        lsp-enable-indentation nil ;; uncomment to use cider indentation instead of lsp
+        ;; lsp-enable-completion-at-point nil ;; uncomment to use cider completion instead of lsp
+        ))
 #+end_src
 
 *** lua
