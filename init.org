@@ -1159,15 +1159,6 @@ scan-error if not."
         recentf-max-saved-items 100))
 #+end_src
 
-*** ruby-mode
-#+begin_src emacs-lisp
-(use-package ruby-mode
-  :mode (("\\.rake\'" . ruby-mode)
-         ("Rakefile\'" . ruby-mode)
-         ("rakefile\'" . ruby-mode)
-         ("\\.gemspec'" . ruby-mode)))
-#+end_src
-
 *** selectrum
 #+begin_src emacs-lisp
 (use-package selectrum
