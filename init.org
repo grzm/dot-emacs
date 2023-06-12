@@ -1179,15 +1179,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
 (add-to-list 'interpreter-mode-alist '("bash" . shell-script-mode))
 #+end_src
 
-*** solarized-theme
-#+begin_src emacs-lisp
-(use-package solarized-theme
-  :if window-system
-  :config
-  (setq solarized-distinct-fringe-background t
-        solarized-high-contrast-mode-line t))
-#+end_src
-
 *** tide
 #+begin_src emacs-lisp
 (use-package tide
