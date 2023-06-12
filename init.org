@@ -593,11 +593,21 @@ daily review]].
 (put 'cider-boot-parameters 'safe-local-variable #'stringp)
 #+end_src
 
+*** clerk
+#+begin_src emacs-lisp
+(defun clerk-show ()
+  (interactive)
+  (save-buffer)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (cider-interactive-eval (concat "(nextjournal.clerk/show! \"" filename "\")")))))
+#+end_src
 
 *** clojure-mode
 #+begin_src emacs-lisp
 (use-package clojure-mode
   :blackout "λ"
+  :bind (:map clojure-mode-map ("M-<return>" . clerk-show))
   :config
   (setq clojure-indent-style :align-arguments
         clojure-align-forms-automatically nil)
