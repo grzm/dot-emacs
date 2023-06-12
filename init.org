@@ -430,7 +430,6 @@ packages, so load them first.
   :commands (s-downcase s-join s-trim))
 #+end_src
 
-
 ** Work/Personal separation
 
 I have some work-specific Emacs configuration that I like to keep
@@ -1093,7 +1092,6 @@ scan-error if not."
          (append '(c-file-style) ignored-local-variables))))
 
 (add-hook 'c-mode-hook 'postgresql-c-mode-hook)
-
 
 ;;; Perl files
 
