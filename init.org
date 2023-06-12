@@ -1196,18 +1196,6 @@ Use =shell-script-mode= for scripts with a =bash= she-bang. Works with
   :init (setq typescript-indent-level 2))
 #+end_src
 
-*** typo
-#+begin_src emacs-lisp
-(use-package typo
-  :config
-  (progn
-    (setq-default typo-language "English")
-    (defun enable-typo-mode ()
-      (cond ((string-match "/_\\(drafts\\|posts\\)/.+\\.\\(markdown\\|\\md\\)$" buffer-file-name)
-             (typo-mode 1))))
-    (add-hook 'markdown-mode-hook 'enable-typo-mode)))
-#+end_src
-
 *** visual-fill-column
 #+begin_src emacs-lisp
 (use-package visual-fill-column
