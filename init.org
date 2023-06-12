@@ -972,118 +972,6 @@ https://www.mail-archive.com/emacs-orgmode@gnu.org/msg122243.html Better org-ind
             (lambda () (org-bullets-mode 1))))
 #+end_src
 
-*** org-pdftools
-#+begin_src emacs-lisp
-(unless (or work-p (grzm/is-m1-arm-p))
-  (use-package org-pdftools
-    :if window-system
-    :hook (org-mode . org-pdftools-setup-link)))
-#+end_src
-
-*** org-ref
-The =org-ref= package uses =helm-bibtex= as its default implementation, so
-I've included most of the configuration there.
-
-#+begin_src emacs-lisp
-(use-package org-ref
-  :demand t ;; I'd really like to autoload org-ref, but I don't know how.
-  :config
-  (unless (or work-p (is-linux-p))
-    (setq org-ref-default-bibliography (list grzm/zotero-bib)
-          ;; default completion library is org-ref-helm-bibtex
-          ;; org-ref-completion-library 'org-ref-helm-bibtex
-          org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex)))
-#+end_src
-
-*** org-roam
-#+begin_src emacs-lisp
-(use-package org-roam
-  :if (is-mac-p)
-  :blackout " 🅡"
-  :hook (after-init . org-roam-mode)
-  :bind (("C-c n f" . org-roam-find-file)
-         :map org-roam-mode-map
-         (("C-c n l" . org-roam)
-          ("C-c n b" . org-roam-switch-to-buffer)
-          ("C-c n g" . org-roam-graph))
-         :map org-mode-map
-         (("C-c n i" . org-roam-insert)))
-  :config
-  (setq org-roam-completion-system 'helm
-        org-roam-graph-executable "/opt/local/bin/dot"
-        org-roam-graph-extra-config '(("overlap" . "false"))
-        org-roam-graph-viewer  "~/bin/open-in-safari" ;; simple wrapper around "open -a Safari $1"
-
-        org-roam-capture-templates
-        '(("z" "zettelkästen" plain #'org-roam-capture--get-point
-           "%?"
-           ;; UTC timestamp in file name courtesy of https://github.com/jethrokuan/org-roam/issues/416
-           :file-name "%(format-time-string \"%Y%m%dT%H%M%SZ--${slug}\" (current-time) t)"
-           :head "#+TITLE: ${title}
-:PROPERTIES:
-:created-at: %(grzm/iso-8601 (current-time))
-:zk-id: %(grzm/crockford-encode-time (current-time))
-:END:
-"
-           :unnarrowed t))
-
-        org-roam-capture-ref-templates
-        '(("r" "ref" plain #'org-roam-capture--get-point
-           "%?"
-           :file-name "refs/%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
-           :head "#+TITLE: ${title}
-,#+ROAM_KEY: ${ref}
-:PROPERTIES:
-:created-at: %(grzm/iso-8601 (current-time))
-:zk-id: %(grzm/crockford-encode-time (current-time))
-:END:
-- source :: ${ref}"
-           :unnarrowed t))
-
-        org-roam-dailies-directory "daily/"
-
-        org-roam-dailies-capture-templates
-        '(("d" "default" entry
-           #'org-roam-capture--get-point
-           "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n\n"))
-        )
-  (require 'org-roam-protocol)
-  ;; Overriding org-roam--title-to-slug via https://github.com/jethrokuan/org-roam/issues/287
-  (defun org-roam--title-to-slug (title)
-    "Convert TITLE to a filename-suitable slug. Uses hyphens rather than underscores."
-    (cl-flet* ((nonspacing-mark-p (char)
-                                  (eq 'Mn (get-char-code-property char 'general-category)))
-               (strip-nonspacing-marks (s)
-                                       (apply #'string (seq-remove #'nonspacing-mark-p
-                                                                   (ucs-normalize-NFD-string s))))
-               (cl-replace (title pair)
-                           (replace-regexp-in-string (car pair) (cdr pair) title)))
-      (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-")  ;; convert anything not alphanumeric
-                      ("--*" . "-")  ;; remove sequential underscores
-                      ("^-" . "")  ;; remove starting underscore
-                      ("-$" . "")))  ;; remove ending underscore
-             (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
-        (s-downcase slug)))))
-#+end_src
-
-*** org-roam-server
-#+begin_src emacs-lisp
-(use-package org-roam-server
-  :if window-system
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-export-inline-images t
-        org-roam-server-authenticate nil
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
-#+end_src
-
 *** org-superstar
 I'd like better typography in Emacs for a number of reasons. One of
 which is to set proper indents so I would have more options for
@@ -1247,7 +1135,6 @@ scan-error if not."
 (load "server")
 (unless (server-running-p) (server-start))
 (require 'org-protocol)
-(require 'org-roam-protocol)
 #+end_src
 
 *** show-paren-mode
