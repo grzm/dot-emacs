@@ -797,7 +797,7 @@ lsp project root directories have a =.lsp= directory which includes cached infor
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :config
-  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown"
+  (setq markdown-command "/Users/grzm/homebrew/bin/multimarkdown" ;; XXX installation dependent
 
         markdown-css-paths
         '("https://cdn.rawgit.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css")
