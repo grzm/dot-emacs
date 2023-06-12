@@ -267,7 +267,8 @@ Use =y= and =n= in lieu of =yes= and =no= in mini-buffer prompts.
   "Indent the entire buffer."
   (interactive)
   (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil))
   (untabify (point-min) (point-max)))
 #+end_src
 
